@@ -29,15 +29,15 @@ ApplicationWindow {
     height: 720
     title: qsTr("3D Repo Recon")
 
-//    background: Image {
-//        source: "qrc:/resources/bg.png"
-//        width: 1920
-//        height: 948
-//    }
+//        background: Image {
+//            source: "qrc:/resources/bg.png"
+//            width: 1920
+//            height: 948
+//        }
 
-            background: Rectangle {
-                color: "#081028"
-            }
+    background: Rectangle {
+        color: "#081028"
+    }
 
 
     header: ToolBar {
@@ -48,6 +48,7 @@ ApplicationWindow {
         }
 
         RowLayout {
+            spacing: 0
             anchors.fill: parent
 
             ToolButton {
@@ -56,6 +57,9 @@ ApplicationWindow {
                 anchors.leftMargin: 4
                 implicitWidth: 84
                 implicitHeight: 84
+
+//                ToolTip.visible: hovered
+//                ToolTip.text: qsTr("Menu")
 
                 onClicked: drawer.open()
 
@@ -73,16 +77,38 @@ ApplicationWindow {
                 id: repoLogo
                 anchors.left: menuButton.right
                 anchors.leftMargin: 12
-                source: "qrc:/resources/3D-Repo_logo.svg"
+                source: "qrc:/resources/3D-Repo_white.svg"
                 fillMode: Image.PreserveAspectFit
                 antialiasing: true
             }
 
             ToolButton {
+                anchors.right: profileButton.left
+                anchors.rightMargin: -24
+                implicitWidth: 84
+                implicitHeight: 84
+
+                contentItem: Image {
+                    fillMode: Image.Pad
+                    horizontalAlignment: Image.AlignHCenter
+                    verticalAlignment: Image.AlignVCenter
+                    source: "image://materialicons/notificationsNone"
+                    sourceSize.width: 32
+                    sourceSize.height: 32
+                }
+
+            }
+
+            ToolButton {
+                id: profileButton
                 anchors.right: parent.right
                 anchors.rightMargin: 4
                 implicitWidth: 84
                 implicitHeight: 84
+
+//                ToolTip.visible: hovered
+//                ToolTip.text: qsTr("Profile")
+
                 contentItem: Image {
                     fillMode: Image.Pad
                     horizontalAlignment: Image.AlignHCenter
@@ -115,15 +141,19 @@ ApplicationWindow {
 
     ColumnLayout {
         id: buttonsColumn
-        spacing: -22
+        spacing: -24
         anchors.left: parent.left
+        anchors.top: toolbar.bottom
         anchors.leftMargin: 4
-//        anchors.topMargin: -10
+        anchors.topMargin: -12
 
         ToolButton {
             id: peopleButton
             implicitWidth: 84
             implicitHeight: 84
+
+//            ToolTip.visible: hovered
+//            ToolTip.text: qsTr("People")
 
             contentItem: Image {
                 fillMode: Image.Pad
@@ -140,7 +170,17 @@ ApplicationWindow {
             implicitWidth: 84
             implicitHeight: 84
 
+//            ToolTip.visible: hovered
+//            ToolTip.text: qsTr("Companies")
+
+//            ToolTip {
+//                    parent: businessButtonIcon
+//                    visible: businessButton.hovered
+//                    text: qsTr("Companies")
+//                }
+
             contentItem: Image {
+                id: businessButtonIcon
                 fillMode: Image.Pad
                 horizontalAlignment: Image.AlignHCenter
                 verticalAlignment: Image.AlignVCenter
@@ -170,7 +210,7 @@ ApplicationWindow {
         anchors.left: buttonsColumn.right
         height: parent.height
         anchors.leftMargin: 12
-//        anchors.topMargin: 10
+        //        anchors.topMargin: 10
         width: 500
         antialiasing: true
         color: "white"
@@ -178,43 +218,5 @@ ApplicationWindow {
     }
 
 
-    Drawer {
-        id: drawer
-        width: 300
-        height: window.height
-
-        ListView {
-            id: listView
-
-            focus: true
-            currentIndex: -1
-            anchors.fill: parent
-
-            delegate: ItemDelegate {
-                width: parent.width
-                text: model.title
-                highlighted: ListView.isCurrentItem
-                onClicked: {
-                    listView.currentIndex = index
-                    stackView.push(model.source)
-                    drawer.close()
-
-                    // This needs fixing as sometimes this would not be RepoCameraPage object
-                    var camera = stackView.currentItem
-                    camera.tagCodeDetected.connect(relay)
-                }
-            }
-
-            model: ListModel {
-                ListElement { title: "Crossrail C530"; }
-                ListElement { title: "Crossrail C512"; }
-                ListElement { title: "Camera"; source: "qrc:/src/RepoCameraPage.qml" }
-                ListElement { title: "Drawing"; source: "qrc:/src/RepoDrawing.qml" }
-            }
-
-            ScrollIndicator.vertical: ScrollIndicator { }
-        }
-    }
-
-
+    RepoDrawer { id: drawer }
 }

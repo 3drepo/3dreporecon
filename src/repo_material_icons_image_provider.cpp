@@ -41,6 +41,10 @@ QPixmap RepoMaterialIconsImageProvider::requestPixmap(
         pixmap = RepoMaterialIcons::getAccountCircleIcon().pixmap(width, height);
     else if (id == "business")
         pixmap = RepoMaterialIcons::getBusinessIcon().pixmap(width, height);
+    else if (id == "arrowBack")
+        pixmap = RepoMaterialIcons::getArrowBackIcon().pixmap(width, height);
+    else if (id == "notificationsNone")
+        pixmap = RepoMaterialIcons::getNotificationsNoneIcon().pixmap(width, height);
 
     *size = QSize(width, height);
     return pixmap;

@@ -2,8 +2,10 @@
     <qresource prefix="/">
         <file>src/main.qml</file>
         <file>qtquickcontrols2.conf</file>
-	<file>resources/MaterialIcons-Regular.ttf</file>
-	<file>resources/3D-Repo_logo.svg</file>
-	<file>resources/bg.png</file>
+        <file>resources/MaterialIcons-Regular.ttf</file>
+        <file>resources/3D-Repo_white.svg</file>
+        <file>resources/3D-Repo_black.svg</file>
+        <file>resources/bg.png</file>
+        <file>src/RepoDrawer.qml</file>
     </qresource>
 </RCC>

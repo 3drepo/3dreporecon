@@ -96,6 +96,16 @@ public:
         return getIconStatic(0xE851, color);
     }
 
+    static QIcon getArrowBackIcon(const QColor &color = QColor(Qt::white))
+    {
+        return getIconStatic(0xE5C4, color);
+    }
+
+    static QIcon getNotificationsNoneIcon(const QColor &color = QColor(Qt::white))
+    {
+        return getIconStatic(0xE7F5, color);
+    }
+
 //    //! Returns commit icon.
 //    static QIcon getCommitIcon()
 //    {
