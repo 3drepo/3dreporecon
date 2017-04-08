@@ -5,7 +5,10 @@
         <file>resources/MaterialIcons-Regular.ttf</file>
         <file>resources/3D-Repo_white.svg</file>
         <file>resources/3D-Repo_black.svg</file>
+        <file>resources/circles.svg</file>
         <file>resources/bg.png</file>
         <file>src/RepoDrawer.qml</file>
+        <file>src/RepoGraph.qml</file>
+        <file>src/RepoListView.qml</file>
     </qresource>
 </RCC>

@@ -14,12 +14,22 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 HEADERS += \
-        src/repo_material_icons.h \
-        src/repo_material_icons_image_provider.h
+    $$PWD/src/repo_material_icons.h \
+    $$PWD/src/repo_material_icons_image_provider.h \
+    $$PWD/src/repo_node.h \
+    $$PWD/src/repo_node_person.h \
+    $$PWD/src/repo_node_project.h \
+    $$PWD/src/repo_node_company.h \
+    $$PWD/src/repo_model.h
 
 SOURCES +=  \
-        src/main.cpp \
-        src/repo_material_icons.cpp \
-        src/repo_material_icons_image_provider.cpp
+    $$PWD/src/main.cpp \
+    $$PWD/src/repo_material_icons.cpp \
+    $$PWD/src/repo_material_icons_image_provider.cpp \
+    $$PWD/src/repo_node.cpp \
+    $$PWD/src/repo_node_person.cpp \
+    $$PWD/src/repo_node_project.cpp \
+    $$PWD/src/repo_node_company.cpp \
+    $$PWD/src/repo_model.cpp
 
 FORMS += 

@@ -127,6 +127,7 @@ Drawer {
 
         model: ListModel {
             ListElement { title: qsTr("People"); icon: "image://materialicons/people" }
+            ListElement { title: qsTr("Projects"); icon: "image://materialicons/assignment" }
             ListElement { title: qsTr("Companies"); icon: "image://materialicons/business" }
         }
 

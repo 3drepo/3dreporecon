@@ -106,6 +106,22 @@ public:
         return getIconStatic(0xE7F5, color);
     }
 
+    static QIcon getClearIcon(const QColor &color = QColor(Qt::white))
+    {
+        return getIconStatic(0xE5CD, color);
+    }
+
+    static QIcon getSearchIcon(const QColor &color = QColor(Qt::white))
+    {
+        return getIconStatic(0xE8B6, color);
+    }
+
+    static QIcon getAssignmentIcon(const QColor &color = QColor(Qt::white))
+    {
+        return getIconStatic(0xE85D, color);
+    }
+
+
 //    //! Returns commit icon.
 //    static QIcon getCommitIcon()
 //    {

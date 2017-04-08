@@ -45,6 +45,12 @@ QPixmap RepoMaterialIconsImageProvider::requestPixmap(
         pixmap = RepoMaterialIcons::getArrowBackIcon().pixmap(width, height);
     else if (id == "notificationsNone")
         pixmap = RepoMaterialIcons::getNotificationsNoneIcon().pixmap(width, height);
+    else if (id == "clear")
+        pixmap = RepoMaterialIcons::getClearIcon().pixmap(width, height);
+    else if (id == "search")
+        pixmap = RepoMaterialIcons::getSearchIcon().pixmap(width, height);
+    else if (id == "assignment")
+        pixmap = RepoMaterialIcons::getAssignmentIcon().pixmap(width, height);
 
     *size = QSize(width, height);
     return pixmap;

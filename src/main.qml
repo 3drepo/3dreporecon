@@ -35,9 +35,11 @@ ApplicationWindow {
 //            height: 948
 //        }
 
-    background: Rectangle {
-        color: "#081028"
-    }
+//    background: Rectangle {
+//        color: "#081028"
+//    }
+
+    background: RepoGraph {}
 
 
     header: ToolBar {
@@ -166,6 +168,24 @@ ApplicationWindow {
         }
 
         ToolButton {
+            id: projectsButton
+            implicitWidth: 84
+            implicitHeight: 84
+
+//            ToolTip.visible: hovered
+//            ToolTip.text: qsTr("People")
+
+            contentItem: Image {
+                fillMode: Image.Pad
+                horizontalAlignment: Image.AlignHCenter
+                verticalAlignment: Image.AlignVCenter
+                source: "image://materialicons/assignment"
+                sourceSize.width: 32
+                sourceSize.height: 32
+            }
+        }
+
+        ToolButton {
             id: businessButton
             implicitWidth: 84
             implicitHeight: 84
@@ -215,6 +235,13 @@ ApplicationWindow {
         antialiasing: true
         color: "white"
         radius: 4
+
+        RepoListView {
+            id: listView
+            anchors.fill: parent
+            highlightFollowsCurrentItem: true
+            highlightMoveDuration: 200
+        }
     }
 
 
