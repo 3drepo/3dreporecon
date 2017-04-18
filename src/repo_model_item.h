@@ -17,25 +17,54 @@
 
 #pragma once
 
-#include <QUrl>
 #include <QString>
+#include <QStandardItem>
 
 #include "repo_node.h"
+#include "repo_node_company.h"
+#include "repo_node_person.h"
+#include "repo_node_project.h"
 
 namespace repo
 {
 
-class RepoNodeCompany : public RepoNode
+class RepoModelItem : public QStandardItem
 {
 
 public :
 
-    RepoNodeCompany(const RepoNode &node) : RepoNode(node) {}
+    enum ItemRoles {
+
+        //-------
+        // Node
+        //-------
+        ID = Qt::UserRole + 1,
+        Name,
+        Type,
+        Image,
+        Point,
+
+        //-------
+        // Person
+        //-------
+        FirstName,
+        LastName,
+        JobTitle,
+        LinkedIn,
+        Email
+    };
 
 public:
 
-    QUrl website() const;
+    RepoModelItem(const RepoNode &node);
 
+    QVariant data(int role = Qt::UserRole + 1) const;
+
+    RepoNode getNode() { return node; }
+
+private :
+
+    RepoNode node;
 };
 
 }

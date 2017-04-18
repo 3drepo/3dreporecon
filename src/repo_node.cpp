@@ -24,6 +24,11 @@ QUuid RepoNode::id() const
     return value("_id").toUuid();
 }
 
+QString RepoNode::name() const
+{
+    return value("name").toString();
+}
+
 QString RepoNode::type() const
 {
     return value("type").toString();
@@ -33,6 +38,7 @@ QImage RepoNode::image() const
 {
      //value("image").toByteArray()
 //    return QImage(
+    qDebug() << "qrc:/resources/alvise.jpg";
     return QImage();
 }
 
@@ -41,7 +47,4 @@ QPoint RepoNode::point() const
     return value("point").toPoint();
 }
 
-QString RepoNode::name() const
-{
-    return value("name").toString();
-}
+

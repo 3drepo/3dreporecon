@@ -76,6 +76,16 @@ public:
         return getIconStatic(0xE5D4, color);
     }
 
+    static QIcon getAddIcon(const QColor &color = QColor(Qt::white))
+    {
+        return getIconStatic(0xE145, color);
+    }
+
+    static QIcon getPersonIcon(const QColor &color = QColor(Qt::white))
+    {
+        return getIconStatic(0xE7FD, color);
+    }
+
     static QIcon getPeopleIcon(const QColor &color = QColor(Qt::white))
     {
         return getIconStatic(0xE7EF, color);

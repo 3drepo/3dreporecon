@@ -22,16 +22,24 @@ import QtGraphicalEffects 1.0
 import QtQuick.Controls 2.1
 import QtQuick.Controls.Material 2.0
 
+import repo 1.0
+
 ListView {
     id: listView
     focus: true
     currentIndex: -1
     snapMode: ListView.SnapToItem
+    clip: true
+
+    model: RepoModel {
+        id: model
+    }
 
     header: Rectangle {
         width: listView.width
-        height: 64
-        color: "transparent"
+        height: 84
+        color: "white"
+        radius: 4
         z: 2
 
         CheckBox {
@@ -104,31 +112,37 @@ ListView {
     headerPositioning: ListView.OverlayHeader // ListView.PullBackHeader
 
 
-//    footer: Rectangle {
-//        width: listView.width
-//        height: 84
-//        color: "transparent"
-//        z: 2
+    footer: Rectangle {
+        width: listView.width
+        height: 84
+        color: "transparent"
+        z: 2
 
-//        RoundButton {
-//            id: createButton
-//            anchors.right: parent.right
-//            anchors.top: parent.top
-//            anchors.rightMargin: 10
-//            anchors.bottomMargin: 10
-//            Material.background: Material.accent
-//            Material.theme: Material.Light
-//            width: 74
-//            height: width
-//            contentItem: Image {
-//                fillMode: Image.Pad
-//                horizontalAlignment: Image.AlignHCenter
-//                verticalAlignment: Image.AlignVCenter
-//                source: "qrc:/images/create.png"
-//            }
+        RoundButton {
+            id: createButton
+            anchors.right: parent.right
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.margins: 10
+            Material.background: Material.Green
+            Material.theme: Material.Light
+            width: 74
+            height: width
+            contentItem: Image {
+                fillMode: Image.Pad
+                horizontalAlignment: Image.AlignHCenter
+                verticalAlignment: Image.AlignVCenter
+                source:  "image://materialicons/add"
+            }
+        }
+    }
+    footerPositioning: ListView.OverlayFooter // ListView.PullBackHeader
+
+    delegate: RepoNodesListViewDelegate {
+        highlighted: ListView.isCurrentItem
+//        onClicked: {
+//            assetListView.currentIndex = index
 //        }
-//    }
-//    footerPositioning: ListView.OverlayFooter // ListView.PullBackHeader
+    }
 
     ScrollIndicator.vertical: ScrollIndicator {}
 }

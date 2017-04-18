@@ -35,6 +35,10 @@ QPixmap RepoMaterialIconsImageProvider::requestPixmap(
         pixmap = RepoMaterialIcons::getMenuIcon().pixmap(width, height);
     else if (id == "moreVert")
         pixmap = RepoMaterialIcons::getMoreVertIcon().pixmap(width, height);
+    else if (id == "add")
+        pixmap = RepoMaterialIcons::getAddIcon().pixmap(width, height);
+    else if (id == "person")
+        pixmap = RepoMaterialIcons::getPersonIcon().pixmap(width, height);
     else if (id == "people")
         pixmap = RepoMaterialIcons::getPeopleIcon().pixmap(width, height);
     else if (id == "accountCircle")

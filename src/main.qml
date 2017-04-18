@@ -39,7 +39,7 @@ ApplicationWindow {
 //        color: "#081028"
 //    }
 
-    background: RepoGraph {}
+    background: RepoCanvas {}
 
 
     header: ToolBar {
@@ -236,7 +236,7 @@ ApplicationWindow {
         color: "white"
         radius: 4
 
-        RepoListView {
+        RepoNodesListView {
             id: listView
             anchors.fill: parent
             highlightFollowsCurrentItem: true

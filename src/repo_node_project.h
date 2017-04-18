@@ -29,6 +29,10 @@ namespace repo
 class RepoNodeProject : public RepoNode
 {
 
+public :
+
+    RepoNodeProject(const RepoNode &node) : RepoNode(node) {}
+
 public:
 
     QString description() const;

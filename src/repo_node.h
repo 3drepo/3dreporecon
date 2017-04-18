@@ -22,6 +22,7 @@
 #include <QString>
 #include <QImage>
 #include <QUuid>
+#include <QDebug>
 
 namespace repo
 {
@@ -33,14 +34,13 @@ public:
 
     QUuid id() const;
 
+    QString name() const;
+
     QString type() const;
 
     QImage image() const;
 
     QPoint point() const;
-
-    virtual QString name() const;
-
 };
 
 }

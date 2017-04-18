@@ -7,8 +7,11 @@
         <file>resources/3D-Repo_black.svg</file>
         <file>resources/circles.svg</file>
         <file>resources/bg.png</file>
+        <file>resources/alvise.jpg</file>
         <file>src/RepoDrawer.qml</file>
         <file>src/RepoGraph.qml</file>
-        <file>src/RepoListView.qml</file>
+        <file>src/RepoNodesListView.qml</file>
+        <file>src/RepoNodesListViewDelegate.qml</file>
+        <file>src/RepoCanvas.qml</file>
     </qresource>
 </RCC>

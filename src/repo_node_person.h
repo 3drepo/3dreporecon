@@ -17,9 +17,8 @@
 
 #pragma once
 
-#include <QMap>
-#include <QVariant>
 #include <QString>
+#include <QUrl>
 
 #include "repo_node.h"
 
@@ -29,14 +28,23 @@ namespace repo
 class RepoNodePerson : public RepoNode
 {
 
+public :
+
+    RepoNodePerson(const RepoNode &node) : RepoNode(node) {}
+
 public:
 
     QString firstName() const;
 
     QString lastName() const;
 
-    QString name() const;
+    QString jobTitle() const;
+
+    QUrl linkedIn() const;
+
+    QString email() const;
 
 };
+
 }
 

@@ -18,12 +18,12 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
-//#include "repo_material_icons.h"
 #include "repo_material_icons_image_provider.h"
+#include "repo_model.h"
 
 int main(int argc, char *argv[])
 {
-//    qmlRegisterType<repo::RepoMaterialIcons>("repo", 1, 0, "RepoMaterialIcons");
+    qmlRegisterType<repo::RepoModel>("repo", 1, 0, "RepoModel");
 
     QGuiApplication::setApplicationName("3D Repo Recon");
     QGuiApplication::setOrganizationName("3D Repo");

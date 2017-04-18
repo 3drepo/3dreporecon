@@ -17,25 +17,30 @@
 
 #pragma once
 
-#include <QUrl>
+#include <QObject>
+#include <QFile>
+#include <QTextStream>
+#include <QIODevice>
+#include <QVector>
 #include <QString>
 
+#include <iostream>
 #include "repo_node.h"
 
-namespace repo
+namespace repo {
+
+class RepoCSVParser : public QObject
 {
-
-class RepoNodeCompany : public RepoNode
-{
-
-public :
-
-    RepoNodeCompany(const RepoNode &node) : RepoNode(node) {}
+    Q_OBJECT
 
 public:
 
-    QUrl website() const;
+    static QList<RepoNode> read(const QString &filepath,
+                                const QString &delimiter = ",");
 
+    static void write(const QList<RepoNode> &nodes,
+                      const QString &filepath,
+                      const QString &delimiter = ",");
 };
 
 }

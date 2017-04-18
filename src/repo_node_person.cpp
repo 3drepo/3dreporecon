@@ -29,7 +29,17 @@ QString RepoNodePerson::lastName() const
     return value("lastName").toString();
 }
 
-QString RepoNodePerson::name() const
+QString RepoNodePerson::jobTitle() const
 {
-    return firstName() + " " + lastName();
+    return value("jobTitle").toString();
+}
+
+QUrl RepoNodePerson::linkedIn() const
+{
+    return value("linkedIn").toUrl();
+}
+
+QString RepoNodePerson::email() const
+{
+    return value("email").toString();
 }

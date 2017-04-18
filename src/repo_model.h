@@ -19,6 +19,12 @@
 
 #include <QSortFilterProxyModel>
 #include <QStandardItemModel>
+#include <QFileInfo>
+#include <QDebug>
+
+#include "repo_model_item.h"
+#include "repo_node.h"
+#include "repo_csv_parser.h"
 
 namespace repo
 {
@@ -33,10 +39,14 @@ public:
 
     ~RepoModel();
 
+    void populate();
+
 public :
 
     //! See http://doc.qt.io/qt-5/qtquick-modelviewsdata-cppmodels.html
     QHash<int, QByteArray> roleNames() const;
+
+    QList<RepoNode> nodes() const;
 
 private :
 
