@@ -38,7 +38,6 @@ ItemDelegate {
     // http://stackoverflow.com/questions/6090740/image-rounded-corners-in-qml
     Image {
         id: img
-
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: checkBox.right
         anchors.leftMargin: 10

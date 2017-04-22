@@ -20,10 +20,12 @@
 
 #include "repo_material_icons_image_provider.h"
 #include "repo_model.h"
+#include "repo_model_item_painter.h"
 
 int main(int argc, char *argv[])
 {
     qmlRegisterType<repo::RepoModel>("repo", 1, 0, "RepoModel");
+    qmlRegisterType<repo::RepoModelItemPainter>("repo", 1, 0, "RepoModelItemPainter");
 
     QGuiApplication::setApplicationName("3D Repo Recon");
     QGuiApplication::setOrganizationName("3D Repo");

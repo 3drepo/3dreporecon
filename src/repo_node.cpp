@@ -42,9 +42,24 @@ QImage RepoNode::image() const
     return QImage();
 }
 
-QPoint RepoNode::point() const
+int RepoNode::x() const
 {
-    return value("point").toPoint();
+    return value("x").toInt();
+}
+
+int RepoNode::y() const
+{
+    return value("y").toInt();
+}
+
+void RepoNode::setX(int x)
+{
+    insert("x", x);
+}
+
+void RepoNode::setY(int y)
+{
+    insert("y", y);
 }
 
 

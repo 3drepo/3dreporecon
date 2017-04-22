@@ -17,6 +17,7 @@
 
 import QtQuick 2.0
 import QtQuick 2.6
+import QtQuick 2.7
 import QtQuick.Controls 2.1
 import QtMultimedia 5.8
 import QtQuick.Dialogs 1.2
@@ -26,46 +27,114 @@ import QtQuick.Controls.Material 2.1
 import QtQuick.Controls.Universal 2.1
 import Qt.labs.settings 1.0
 
+import repo 1.0
+
 Flickable {
+    property QtObject graphModel
+    property int w: 19200
+    property int h: 10800
+
     id: flick
-    anchors.fill: parent
-    contentWidth: canvas.width
-    contentHeight: canvas.height
+    contentWidth: w
+    contentHeight: h
+    flickableDirection: Flickable.HorizontalAndVerticalFlick
+    pixelAligned: true
 
-    Canvas {
-        id: canvas
-        anchors.fill: parent
-        width: 19200
-        height: 10800
-        renderStrategy : Canvas.Threaded
-        renderTarget: Canvas.FramebufferObject
-        onPaint: {
-            var ctx = getContext("2d");
-            ctx.fillStyle = Qt.rgba(0.03, 0.06, 0.15, 1);
-            ctx.fillRect(0, 0, width, height);
-        }
-    }
+    DropArea {
+        anchors.fill: parent.fill
 
-    PinchArea {
-        id: pincher
-        anchors.fill: parent
-        pinch.target: canvas
-        pinch.minimumRotation: 0
-        pinch.maximumRotation: 0
-        pinch.minimumScale: 0.1
-        pinch.maximumScale: 10
-        pinch.dragAxis: Pinch.XAndYAxis
+        // Main canvas rectangle
+        Rectangle {
+            id: canvas
+            width: w
+            height: h
+            color: "transparent"
+            border.color: "grey"
+            border.width: 5
 
-        MouseArea{
-            anchors.fill: parent
-            hoverEnabled: true
-            scrollGestureEnabled: false
-            onWheel: {
-                if (wheel.modifiers && Qt.ControlModifier) {
-                    drawingImage.scale += (wheel.angleDelta.y / 120) * 0.1
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: true
+                onDoubleClicked: model.addNode(mouseX, mouseY)
+                onWheel: {
+                    if (wheel.modifiers && Qt.ControlModifier) {
+                        canvas.scale += (wheel.angleDelta.y / 120) * 0.1
+                        console.log(contentX + ", " + contentY)
+                    }
+                }
+            }
+
+            // Individual items to be painted
+            Repeater {
+                model: graphModel
+                delegate: RepoModelItemPainter {
+                    width: 100
+                    height: 100
+                    Drag.active: draggable.drag.active
+                    focus: true
+
+                    x: model.x - width/2
+                    y: model.y - height/2
+
+                    //                    Binding on x {
+                    //                        when: x !== model.x - width/2
+                    //                        value: model.x - width/2
+                    //                    }
+                    //                    Binding on y {
+                    //                        when: y !== model.y - height/2
+                    //                        value: model.y - height/2
+                    //                    }
+
+                    onXChanged: graphModel.setData(index, x + width/2, "x")
+                    onYChanged: graphModel.setData(index, y + height/2, "y")
+
+
+                    Text {
+                        id: nameText
+                        y: parent.height + 5
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: firstName + " " + lastName
+                        font.pointSize: 10
+                        font.weight: Font.DemiBold
+                        elide: Text.ElideRight
+                        color: "blue"
+                    }
+
+                    Text {
+                        text: activeFocus ? "YES" : "NO"
+                        color: "red"
+                    }
+
+                    MouseArea {
+                        id: draggable
+                        anchors.fill: parent
+                        drag.target: parent
+                        hoverEnabled: true
+                    }
                 }
             }
         }
-
     }
+
+
+    //        PinchArea {
+    //            id: pincher
+    //            anchors.fill: parent
+    //            pinch.target: canvas
+    //            pinch.minimumRotation: 0
+    //            pinch.maximumRotation: 0
+    //            pinch.minimumScale: 0.1
+    //            pinch.maximumScale: 10
+    //            pinch.dragAxis: Pinch.XAndYAxis
+    //            //            onPinchUpdated: {
+    //            //                flick.contentWidth = drawingImage.width * pincher.scale
+    //            //                flick.contentHeight = drawingImage.height * pincher.scale
+    //            //            }
+
+
+
+    //        }
+
+
+
 }

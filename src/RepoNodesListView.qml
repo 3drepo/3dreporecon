@@ -31,10 +31,6 @@ ListView {
     snapMode: ListView.SnapToItem
     clip: true
 
-    model: RepoModel {
-        id: model
-    }
-
     header: Rectangle {
         width: listView.width
         height: 84

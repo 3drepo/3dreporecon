@@ -41,8 +41,11 @@ QVariant RepoModelItem::data(int role) const
     case Image:
         data = node.image();
         break;
-    case Point:
-        data = node.point();
+    case X:
+        data = node.x();
+        break;
+    case Y:
+        data = node.y();
         break;
     case FirstName:
         data = ((RepoNodePerson) node).firstName();
@@ -60,6 +63,18 @@ QVariant RepoModelItem::data(int role) const
         data = ((RepoNodePerson) node).email();
         break;
     }
-
     return data;
+}
+
+void RepoModelItem::setData(const QVariant &value, int role)
+{
+    switch (role)
+    {
+    case X:
+        node.setX(value.toInt());
+        break;
+    case Y:
+        node.setY(value.toInt());
+        break;
+    }
 }

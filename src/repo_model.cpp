@@ -3,16 +3,17 @@
 using namespace repo;
 
 QHash<int, QByteArray> RepoModel::roles = {
-    {RepoModelItem::ItemRoles::ID,  "id"},
-    {RepoModelItem::ItemRoles::Name, "name"},
-    {RepoModelItem::ItemRoles::Type, "type"},
-    {RepoModelItem::ItemRoles::Image, "image"},
-    {RepoModelItem::ItemRoles::Point, "point"},
-    {RepoModelItem::ItemRoles::FirstName, "firstName"},
-    {RepoModelItem::ItemRoles::LastName, "lastName"},
-    {RepoModelItem::ItemRoles::JobTitle, "jobTitle"},
-    {RepoModelItem::ItemRoles::LinkedIn, "linkedIn"},
-    {RepoModelItem::ItemRoles::Email, "email"}
+    {RepoModelItem::ItemRole::ID,  "id"},
+    {RepoModelItem::ItemRole::Name, "name"},
+    {RepoModelItem::ItemRole::Type, "type"},
+    {RepoModelItem::ItemRole::Image, "image"},
+    {RepoModelItem::ItemRole::X, "x"},
+    {RepoModelItem::ItemRole::Y, "y"},
+    {RepoModelItem::ItemRole::FirstName, "firstName"},
+    {RepoModelItem::ItemRole::LastName, "lastName"},
+    {RepoModelItem::ItemRole::JobTitle, "jobTitle"},
+    {RepoModelItem::ItemRole::LinkedIn, "linkedIn"},
+    {RepoModelItem::ItemRole::Email, "email"}
 };
 
 RepoModel::RepoModel()
@@ -37,16 +38,15 @@ RepoModel::~RepoModel()
 
 void RepoModel::populate()
 {
-    emit beginInsertRows(QModelIndex(), 0, 0);
-
     QFileInfo file("c:\\Users\\jozef\\workspace\\3DRepo\\3dreporecon\\resources\\nodes.csv");
     QList<RepoNode> nodes = RepoCSVParser::read(file.absoluteFilePath());
+
+    //    emit beginInsertRows(QModelIndex(), 0, nodes.size());
     for (RepoNode node : nodes)
     {
         model->appendRow(new RepoModelItem(node));
     }
-
-    emit endInsertRows();
+    //    emit endInsertRows();
 }
 
 QHash<int, QByteArray> RepoModel::roleNames() const
@@ -64,4 +64,34 @@ QList<RepoNode> RepoModel::nodes() const
             nodes.append(item->getNode());
     }
     return nodes;
+}
+
+void RepoModel::addNode(int x, int y)
+{
+    RepoNode node;
+    node.setX(x);
+    node.setY(y);
+    model->appendRow(new RepoModelItem(node));
+}
+
+bool RepoModel::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+    bool success;
+    RepoModelItem *item = (RepoModelItem*) model->itemFromIndex(mapToSource(index));
+    if (success = (item != NULL))
+    {
+        item->setData(value, role);
+//        emit dataChanged(index, index, QVector<int>() << role);
+    }
+    return success;
+}
+
+bool RepoModel::setData(int row, const QVariant &value, const QVariant &roleName)
+{
+    return setData(index(row, 0), value, role(roleName));
+}
+
+int RepoModel::role(const QVariant &roleName) const
+{
+    return roles.key(roleName.toByteArray(), -1);
 }

@@ -15,31 +15,44 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "repo_node_person.h"
+#pragma once
 
-using namespace repo;
+#include <QQuickPaintedItem>
+#include <QBrush>
+#include <QPoint>
+#include <QPainter>
 
-QString RepoNodePerson::firstName() const
+namespace repo
 {
-    return value("firstName", "<undefined>").toString();
-}
 
-QString RepoNodePerson::lastName() const
+class RepoModelItemPainter : public QQuickPaintedItem
 {
-    return value("lastName", "<undefined>").toString();
-}
+    Q_OBJECT
+//    Q_PROPERTY(int x READ getX WRITE setX NOTIFY xChanged)
+//    Q_PROPERTY(int y READ getY WRITE setY NOTIFY yChanged)
 
-QString RepoNodePerson::jobTitle() const
-{
-    return value("jobTitle").toString();
-}
 
-QUrl RepoNodePerson::linkedIn() const
-{
-    return value("linkedIn").toUrl();
-}
+public:
 
-QString RepoNodePerson::email() const
-{
-    return value("email").toString();
+    RepoModelItemPainter(QQuickItem *parent = 0);
+
+    void paint(QPainter *painter);
+
+//    int getX() const { return x; }
+//    void setX(int x) { this->x = x; }
+
+//    int getY() const { return y; }
+//    void setY(int y) { this->y = y; }
+
+private :
+
+//    QPoint point;
+
+signals :
+
+//    void xChanged();
+//    void yChanged();
+
+};
+
 }

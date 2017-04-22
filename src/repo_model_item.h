@@ -33,7 +33,7 @@ class RepoModelItem : public QStandardItem
 
 public :
 
-    enum ItemRoles {
+    enum ItemRole {
 
         //-------
         // Node
@@ -42,7 +42,8 @@ public :
         Name,
         Type,
         Image,
-        Point,
+        X,
+        Y,
 
         //-------
         // Person
@@ -59,6 +60,8 @@ public:
     RepoModelItem(const RepoNode &node);
 
     QVariant data(int role = Qt::UserRole + 1) const;
+
+    void setData(const QVariant &value, int role = Qt::UserRole + 1);
 
     RepoNode getNode() { return node; }
 

@@ -48,6 +48,14 @@ public :
 
     QList<RepoNode> nodes() const;
 
+    Q_INVOKABLE void addNode(int x, int y);
+
+    Q_INVOKABLE bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::UserRole + 1);
+
+    Q_INVOKABLE bool setData(int row, const QVariant &value, const QVariant &roleName);
+
+    Q_INVOKABLE int role(const QVariant &roleName) const;
+
 private :
 
     QStandardItemModel *model; //! Source model

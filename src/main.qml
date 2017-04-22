@@ -22,6 +22,8 @@ import QtQuick.Controls.Material 2.1
 import QtQuick.Controls 2.1
 import QtQuick.Controls.Styles 1.4
 
+import repo 1.0
+
 ApplicationWindow {
     id: window
     visible: true
@@ -39,7 +41,22 @@ ApplicationWindow {
 //        color: "#081028"
 //    }
 
-    background: RepoCanvas {}
+    RepoModel {
+        id: model
+    }
+
+    background: Rectangle {
+        id: bg
+        color: "#081028"
+
+        RepoCanvas {
+            id: canvas
+            width: parent.width
+            height: parent.height
+            graphModel: model
+        }
+    }
+
 
 
     header: ToolBar {
@@ -210,21 +227,27 @@ ApplicationWindow {
             }
         }
     }
-    //    RoundButton {
-    //        id: createButton
-    //        Material.background: Material.accent
-    //        Material.theme: Material.Light
-    //        width: 74
-    //        height: 74
-    //        contentItem: Image {
-    //            fillMode: Image.Pad
-    //            horizontalAlignment: Image.AlignHCenter
-    //            verticalAlignment: Image.AlignVCenter
-    //            source: "image://materialicons/people"
-    //            sourceSize.width: 32
-    //            sourceSize.height: 32
-    //        }
-    //    }
+//        RoundButton {
+//            id: createButton
+//            Material.background: Material.accent
+//            Material.theme: Material.Light
+//            width: 74
+//            height: 74
+//            contentItem: Image {
+//                fillMode: Image.Pad
+//                horizontalAlignment: Image.AlignHCenter
+//                verticalAlignment: Image.AlignVCenter
+//                source: "image://materialicons/people"
+//                sourceSize.width: 32
+//                sourceSize.height: 32
+//            }
+//            onPressed : {
+//                canvas.contentItem.scale *= 0.9
+//                canvas.contentX += (canvas.width / 2) * canvas.contentItem.scale
+//                canvas.contentY += (canvas.height / 2) * canvas.contentItem.scale
+//                console.log(canvas.contentX + ", " + canvas.contentY + " s: " + canvas.contentItem.scale)
+//            }
+//        }
 
     Rectangle {
         anchors.left: buttonsColumn.right
@@ -241,6 +264,7 @@ ApplicationWindow {
             anchors.fill: parent
             highlightFollowsCurrentItem: true
             highlightMoveDuration: 200
+            model: model
         }
     }
 

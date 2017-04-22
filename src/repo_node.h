@@ -40,7 +40,13 @@ public:
 
     QImage image() const;
 
-    QPoint point() const;
+    int x() const;
+
+    int y() const;
+
+    void setX(int x);
+
+    void setY(int y);
 };
 
 }
