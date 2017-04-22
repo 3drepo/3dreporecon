@@ -37,8 +37,13 @@ Flickable {
     id: flick
     contentWidth: w
     contentHeight: h
+    width: parent.width
+    height: parent.height
     flickableDirection: Flickable.HorizontalAndVerticalFlick
     pixelAligned: true
+
+    contentX: w/2
+    contentY: h/2
 
     DropArea {
         anchors.fill: parent.fill
@@ -50,16 +55,19 @@ Flickable {
             height: h
             color: "transparent"
             border.color: "grey"
-            border.width: 5
+            border.width: 25
 
             MouseArea {
                 anchors.fill: parent
                 hoverEnabled: true
                 onDoubleClicked: model.addNode(mouseX, mouseY)
+                propagateComposedEvents: false
                 onWheel: {
                     if (wheel.modifiers && Qt.ControlModifier) {
-                        canvas.scale += (wheel.angleDelta.y / 120) * 0.1
-                        console.log(contentX + ", " + contentY)
+                        flick.scale += (wheel.angleDelta.y / 120) * 0.1
+                        flick.scale = Math.min(flick.scale, 1.0)
+                        flick.scale = Math.max(flick.scale, 0.01)
+                        wheel.accepted = true
                     }
                 }
             }
@@ -73,17 +81,17 @@ Flickable {
                     Drag.active: draggable.drag.active
                     focus: true
 
-                    x: model.x - width/2
-                    y: model.y - height/2
+                    //                    x: model.x - width/2
+                    //                    y: model.y - height/2
 
-                    //                    Binding on x {
-                    //                        when: x !== model.x - width/2
-                    //                        value: model.x - width/2
-                    //                    }
-                    //                    Binding on y {
-                    //                        when: y !== model.y - height/2
-                    //                        value: model.y - height/2
-                    //                    }
+                    Binding on x {
+                        when: x !== model.x - width/2
+                        value: model.x - width/2
+                    }
+                    Binding on y {
+                        when: y !== model.y - height/2
+                        value: model.y - height/2
+                    }
 
                     onXChanged: graphModel.setData(index, x + width/2, "x")
                     onYChanged: graphModel.setData(index, y + height/2, "y")
@@ -110,6 +118,10 @@ Flickable {
                         anchors.fill: parent
                         drag.target: parent
                         hoverEnabled: true
+
+                        onClicked: {
+                            console.log("clicked")
+                        }
                     }
                 }
             }

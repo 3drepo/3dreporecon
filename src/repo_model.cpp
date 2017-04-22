@@ -81,7 +81,7 @@ bool RepoModel::setData(const QModelIndex &index, const QVariant &value, int rol
     if (success = (item != NULL))
     {
         item->setData(value, role);
-//        emit dataChanged(index, index, QVector<int>() << role);
+        emit dataChanged(index, index, QVector<int>() << role);
     }
     return success;
 }

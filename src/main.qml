@@ -51,8 +51,6 @@ ApplicationWindow {
 
         RepoCanvas {
             id: canvas
-            width: parent.width
-            height: parent.height
             graphModel: model
         }
     }
