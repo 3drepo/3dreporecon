@@ -56,12 +56,18 @@ public :
 
     Q_INVOKABLE int role(const QVariant &roleName) const;
 
+    bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const;
+
+    Q_INVOKABLE void filter(const QString &filter);
+
 private :
 
     QStandardItemModel *model; //! Source model
 
     //! Roles associated with items in the model
     static QHash<int, QByteArray> roles;
+
+    QString _filter;
 };
 
 }

@@ -64,7 +64,7 @@ ListView {
                 border.width: 0
             }
             onTextChanged: {
-                filterTagCode(text)
+                model.filter(text)
             }
         }
 

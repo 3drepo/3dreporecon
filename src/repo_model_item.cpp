@@ -53,6 +53,9 @@ QVariant RepoModelItem::data(int role) const
     case LastName:
         data = ((RepoNodePerson) node).lastName();
         break;
+    case FullName :
+        data = this->data(FirstName).toString() + " " + this->data(LastName).toString();
+        break;
     case JobTitle:
         data = ((RepoNodePerson) node).jobTitle();
         break;

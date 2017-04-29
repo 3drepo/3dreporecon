@@ -95,3 +95,26 @@ int RepoModel::role(const QVariant &roleName) const
 {
     return roles.key(roleName.toByteArray(), -1);
 }
+
+bool RepoModel::filterAcceptsRow(int sourceRow, const QModelIndex &) const
+{
+    bool accept = false;
+    RepoModelItem *item = (RepoModelItem*) model->item(sourceRow);
+    if (item != NULL)
+    {
+        QString comparator = filterCaseSensitivity() == Qt::CaseInsensitive
+                ? _filter.toLower()
+                : _filter;
+        QString fullName = filterCaseSensitivity() == Qt::CaseInsensitive
+                ? item->data(RepoModelItem::FullName).toString().toLower()
+                : item->data(RepoModelItem::FullName).toString();
+        accept = fullName.contains(comparator);
+    }
+    return accept;
+}
+
+void RepoModel::filter(const QString &filter)
+{
+    _filter = filter;
+    invalidateFilter();
+}

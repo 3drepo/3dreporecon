@@ -50,6 +50,7 @@ public :
         //-------
         FirstName,
         LastName,
+        FullName,
         JobTitle,
         LinkedIn,
         Email

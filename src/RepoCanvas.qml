@@ -33,6 +33,10 @@ Flickable {
     property QtObject graphModel
     property int w: 19200
     property int h: 10800
+    property RepoModelItemPainter start
+
+    property int prevMouseX: w/2
+    property int prevMouseY: h/2
 
     id: flick
     contentWidth: w
@@ -45,6 +49,17 @@ Flickable {
     contentX: w/2
     contentY: h/2
 
+
+    // Prevent flick scrolling
+    MouseArea {
+        anchors.fill: parent
+        onWheel: {
+            wheel.accepted = true
+        }
+    }
+
+
+
     DropArea {
         anchors.fill: parent.fill
 
@@ -54,30 +69,61 @@ Flickable {
             width: w
             height: h
             color: "transparent"
-            border.color: "grey"
-            border.width: 25
+            border.color: "#081744"
+            border.width: 500
+
+
 
             MouseArea {
+
                 anchors.fill: parent
                 hoverEnabled: true
                 onDoubleClicked: model.addNode(mouseX, mouseY)
-                propagateComposedEvents: false
+                propagateComposedEvents: true
+                preventStealing: false
+
                 onWheel: {
                     if (wheel.modifiers && Qt.ControlModifier) {
-                        flick.scale += (wheel.angleDelta.y / 120) * 0.1
-                        flick.scale = Math.min(flick.scale, 1.0)
-                        flick.scale = Math.max(flick.scale, 0.01)
+                        canvas.scale += (wheel.angleDelta.y / 120) * 0.1
+                        canvas.scale = Math.min(canvas.scale, 1.0)
+                        canvas.scale = Math.max(canvas.scale, 0.01)
+
+
+                        if (canvas.scale != 0.01 || canvas.scale != 1.0) {
+
+
+                            var offsetX = (prevMouseX - mouseX)/100
+                            var offsetY = (prevMouseY - mouseY)/100
+
+
+                            console.log("mouseXY: [" + mouseX + ", " + mouseY + "]")
+                            console.log("prevMouseXY: [" + prevMouseX + ", " + prevMouseY + "]")
+                            console.log("offsetXY: [" + offsetX + ", " + offsetY + "]")
+                            console.log("contentXY: [" + flick.contentX + ", " + flick.contentY + "]")
+                            console.log("")
+
+                            prevMouseX = mouseX
+                            prevMouseY = mouseY
+
+                            flick.contentX += offsetX
+                            flick.contentY += offsetY
+
+
+                        }
                         wheel.accepted = true
                     }
+
                 }
             }
+
+
 
             // Individual items to be painted
             Repeater {
                 model: graphModel
                 delegate: RepoModelItemPainter {
-                    width: 100
-                    height: 100
+                    width: 200
+                    height: 200
                     Drag.active: draggable.drag.active
                     focus: true
 
@@ -99,18 +145,20 @@ Flickable {
 
                     Text {
                         id: nameText
-                        y: parent.height + 5
+                        y: parent.height * 1.05
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: firstName + " " + lastName
-                        font.pointSize: 10
+                        font.pointSize: parent.width / 10
                         font.weight: Font.DemiBold
                         elide: Text.ElideRight
                         color: "blue"
                     }
 
                     Text {
-                        text: activeFocus ? "YES" : "NO"
+                        text: activeFocus ? "YES" : "*"
                         color: "red"
+                        font.pointSize: parent.width / 10
+                        anchors.right: parent.right
                     }
 
                     MouseArea {
@@ -118,13 +166,25 @@ Flickable {
                         anchors.fill: parent
                         drag.target: parent
                         hoverEnabled: true
+                        propagateComposedEvents: false
 
                         onClicked: {
-                            console.log("clicked")
+                            console.log(start)
+                            if (start)
+                            {
+                                // parent is end point
+                                start = null
+                            }
+                            else
+                            {
+                                start = parent
+                            }
                         }
                     }
                 }
             }
+
+
         }
     }
 
