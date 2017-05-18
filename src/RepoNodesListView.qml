@@ -26,7 +26,7 @@ import repo 1.0
 
 ListView {
     id: listView
-    focus: true
+//    focus: true
     currentIndex: -1
     snapMode: ListView.SnapToItem
     clip: true
@@ -58,7 +58,7 @@ ListView {
             topPadding: 20
             leftPadding: 10
             rightPadding: 10
-            focus: true
+//            focus: true
             background: Rectangle {
                 color: "transparent"
                 border.width: 0

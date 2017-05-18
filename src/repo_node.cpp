@@ -24,6 +24,16 @@ QUuid RepoNode::id() const
     return value("_id").toUuid();
 }
 
+void RepoNode::setId()
+{
+    setId(QUuid::createUuid());
+}
+
+void RepoNode::setId(const QUuid &id)
+{
+    insert("_id", id);
+}
+
 QString RepoNode::name() const
 {
     return value("name").toString();

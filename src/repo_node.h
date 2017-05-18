@@ -34,6 +34,10 @@ public:
 
     QUuid id() const;
 
+    void setId();
+
+    void setId(const QUuid &id);
+
     QString name() const;
 
     QString type() const;

@@ -48,7 +48,11 @@ public :
 
     QList<RepoNode> nodes() const;
 
-    Q_INVOKABLE void addNode(int x, int y);
+    Q_INVOKABLE QUuid appendRow(int x, int y);
+
+    Q_INVOKABLE QUuid appendRow(RepoModelItem *item);
+
+    Q_INVOKABLE bool removeRow(int proxyRow, const QModelIndex &parent = QModelIndex());
 
     Q_INVOKABLE bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::UserRole + 1);
 
@@ -60,6 +64,8 @@ public :
 
     Q_INVOKABLE void filter(const QString &filter);
 
+    Q_INVOKABLE RepoModelItem* item(int proxyRow) const;
+
 private :
 
     QStandardItemModel *model; //! Source model
@@ -68,6 +74,8 @@ private :
     static QHash<int, QByteArray> roles;
 
     QString _filter;
+
+    QHash<QUuid, RepoModelItem *> itemsByID;
 };
 
 }

@@ -31,15 +31,17 @@ ApplicationWindow {
     height: 720
     title: qsTr("3D Repo Recon")
 
-//        background: Image {
-//            source: "qrc:/resources/bg.png"
-//            width: 1920
-//            height: 948
-//        }
+    //        background: Image {
+    //            source: "qrc:/resources/bg.png"
+    //            width: 1920
+    //            height: 948
+    //        }
 
-//    background: Rectangle {
-//        color: "#081028"
-//    }
+    //    background: Rectangle {
+    //        color: "#081028"
+    //    }
+
+
 
     RepoModel {
         id: model
@@ -53,6 +55,8 @@ ApplicationWindow {
             id: canvas
             graphModel: model
         }
+
+
     }
 
 
@@ -63,6 +67,18 @@ ApplicationWindow {
         background: Rectangle {
             color: "transparent"
         }
+
+//        focus: true
+
+//        Keys.onPressed: {
+//            console.log("key")
+////            if (event.key == Qt.ControlModifier) {
+
+//                canvas.activateZoom()
+//                event.accepted = true;
+////            }
+//        }
+
 
         RowLayout {
             spacing: 0
@@ -75,8 +91,8 @@ ApplicationWindow {
                 implicitWidth: 84
                 implicitHeight: 84
 
-//                ToolTip.visible: hovered
-//                ToolTip.text: qsTr("Menu")
+                //                ToolTip.visible: hovered
+                //                ToolTip.text: qsTr("Menu")
 
                 onClicked: drawer.open()
 
@@ -123,8 +139,8 @@ ApplicationWindow {
                 implicitWidth: 84
                 implicitHeight: 84
 
-//                ToolTip.visible: hovered
-//                ToolTip.text: qsTr("Profile")
+                //                ToolTip.visible: hovered
+                //                ToolTip.text: qsTr("Profile")
 
                 contentItem: Image {
                     fillMode: Image.Pad
@@ -169,8 +185,8 @@ ApplicationWindow {
             implicitWidth: 84
             implicitHeight: 84
 
-//            ToolTip.visible: hovered
-//            ToolTip.text: qsTr("People")
+            //            ToolTip.visible: hovered
+            //            ToolTip.text: qsTr("People")
 
             contentItem: Image {
                 fillMode: Image.Pad
@@ -187,8 +203,8 @@ ApplicationWindow {
             implicitWidth: 84
             implicitHeight: 84
 
-//            ToolTip.visible: hovered
-//            ToolTip.text: qsTr("People")
+            //            ToolTip.visible: hovered
+            //            ToolTip.text: qsTr("People")
 
             contentItem: Image {
                 fillMode: Image.Pad
@@ -205,14 +221,14 @@ ApplicationWindow {
             implicitWidth: 84
             implicitHeight: 84
 
-//            ToolTip.visible: hovered
-//            ToolTip.text: qsTr("Companies")
+            //            ToolTip.visible: hovered
+            //            ToolTip.text: qsTr("Companies")
 
-//            ToolTip {
-//                    parent: businessButtonIcon
-//                    visible: businessButton.hovered
-//                    text: qsTr("Companies")
-//                }
+            //            ToolTip {
+            //                    parent: businessButtonIcon
+            //                    visible: businessButton.hovered
+            //                    text: qsTr("Companies")
+            //                }
 
             contentItem: Image {
                 id: businessButtonIcon
@@ -225,27 +241,27 @@ ApplicationWindow {
             }
         }
     }
-//        RoundButton {
-//            id: createButton
-//            Material.background: Material.accent
-//            Material.theme: Material.Light
-//            width: 74
-//            height: 74
-//            contentItem: Image {
-//                fillMode: Image.Pad
-//                horizontalAlignment: Image.AlignHCenter
-//                verticalAlignment: Image.AlignVCenter
-//                source: "image://materialicons/people"
-//                sourceSize.width: 32
-//                sourceSize.height: 32
-//            }
-//            onPressed : {
-//                canvas.contentItem.scale *= 0.9
-//                canvas.contentX += (canvas.width / 2) * canvas.contentItem.scale
-//                canvas.contentY += (canvas.height / 2) * canvas.contentItem.scale
-//                console.log(canvas.contentX + ", " + canvas.contentY + " s: " + canvas.contentItem.scale)
-//            }
-//        }
+    //        RoundButton {
+    //            id: createButton
+    //            Material.background: Material.accent
+    //            Material.theme: Material.Light
+    //            width: 74
+    //            height: 74
+    //            contentItem: Image {
+    //                fillMode: Image.Pad
+    //                horizontalAlignment: Image.AlignHCenter
+    //                verticalAlignment: Image.AlignVCenter
+    //                source: "image://materialicons/people"
+    //                sourceSize.width: 32
+    //                sourceSize.height: 32
+    //            }
+    //            onPressed : {
+    //                canvas.contentItem.scale *= 0.9
+    //                canvas.contentX += (canvas.width / 2) * canvas.contentItem.scale
+    //                canvas.contentY += (canvas.height / 2) * canvas.contentItem.scale
+    //                console.log(canvas.contentX + ", " + canvas.contentY + " s: " + canvas.contentItem.scale)
+    //            }
+    //        }
 
     Rectangle {
         anchors.left: buttonsColumn.right

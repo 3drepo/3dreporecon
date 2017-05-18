@@ -3,17 +3,17 @@
 using namespace repo;
 
 QHash<int, QByteArray> RepoModel::roles = {
-    {RepoModelItem::ItemRole::ID,  "id"},
-    {RepoModelItem::ItemRole::Name, "name"},
-    {RepoModelItem::ItemRole::Type, "type"},
-    {RepoModelItem::ItemRole::Image, "image"},
-    {RepoModelItem::ItemRole::X, "x"},
-    {RepoModelItem::ItemRole::Y, "y"},
-    {RepoModelItem::ItemRole::FirstName, "firstName"},
-    {RepoModelItem::ItemRole::LastName, "lastName"},
-    {RepoModelItem::ItemRole::JobTitle, "jobTitle"},
-    {RepoModelItem::ItemRole::LinkedIn, "linkedIn"},
-    {RepoModelItem::ItemRole::Email, "email"}
+    {RepoModelItem::ID,  "id"},
+    {RepoModelItem::Name, "name"},
+    {RepoModelItem::Type, "type"},
+    {RepoModelItem::Image, "image"},
+    {RepoModelItem::X, "x"},
+    {RepoModelItem::Y, "y"},
+    {RepoModelItem::FirstName, "firstName"},
+    {RepoModelItem::LastName, "lastName"},
+    {RepoModelItem::JobTitle, "jobTitle"},
+    {RepoModelItem::LinkedIn, "linkedIn"},
+    {RepoModelItem::Email, "email"}
 };
 
 RepoModel::RepoModel()
@@ -41,12 +41,10 @@ void RepoModel::populate()
     QFileInfo file("c:\\Users\\jozef\\workspace\\3DRepo\\3dreporecon\\resources\\nodes.csv");
     QList<RepoNode> nodes = RepoCSVParser::read(file.absoluteFilePath());
 
-    //    emit beginInsertRows(QModelIndex(), 0, nodes.size());
     for (RepoNode node : nodes)
     {
-        model->appendRow(new RepoModelItem(node));
+        appendRow(new RepoModelItem(node));
     }
-    //    emit endInsertRows();
 }
 
 QHash<int, QByteArray> RepoModel::roleNames() const
@@ -66,12 +64,34 @@ QList<RepoNode> RepoModel::nodes() const
     return nodes;
 }
 
-void RepoModel::addNode(int x, int y)
+QUuid RepoModel::appendRow(int x, int y)
 {
     RepoNode node;
+    node.setId();
     node.setX(x);
     node.setY(y);
-    model->appendRow(new RepoModelItem(node));
+    return appendRow(new RepoModelItem(node));
+}
+
+QUuid RepoModel::appendRow(RepoModelItem *item)
+{
+    model->appendRow(item);
+    QUuid id = item->data(RepoModelItem::ID).toUuid();
+    itemsByID.insert(id, item);
+    return id;
+}
+
+bool RepoModel::removeRow(int proxyRow, const QModelIndex &)
+{    
+    RepoModelItem* item = this->item(proxyRow);
+    bool success = false;
+    if (item)
+    {
+        itemsByID.remove(item->data(RepoModelItem::ID).toUuid());
+        success = model->removeRow(model->indexFromItem(item).row());
+    }
+    // TODO: make sure all links are deleted as well
+    return success;
 }
 
 bool RepoModel::setData(const QModelIndex &index, const QVariant &value, int role)
@@ -117,4 +137,10 @@ void RepoModel::filter(const QString &filter)
 {
     _filter = filter;
     invalidateFilter();
+}
+
+
+RepoModelItem* RepoModel::item(int proxyRow) const
+{
+    return (RepoModelItem*) model->itemFromIndex(mapToSource(index(proxyRow, 0)));
 }
