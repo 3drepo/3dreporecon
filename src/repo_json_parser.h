@@ -17,53 +17,25 @@
 
 #pragma once
 
-#include <QMap>
-#include <QVariant>
-#include <QString>
-#include <QImage>
-#include <QUuid>
-#include <QDebug>
 #include <QList>
+#include <QJsonDocument>
+#include <QJsonArray>
+#include "repo_node.h"
 
-namespace repo
-{
+namespace repo {
 
-class RepoNode : public QMap<QString, QVariant>
+class RepoJsonParser: public QObject
 {
+    Q_OBJECT
 
 public:
 
-    RepoNode() : QMap<QString, QVariant>() {}
+    static QList<QVariant> read(const QString &filepath);
 
-    RepoNode(const QMap<QString, QVariant> &map);
+    static void write(const QList<QVariant> &list,
+                      const QString &filepath,
+                      QJsonDocument::JsonFormat format = QJsonDocument::Indented);
 
-    RepoNode(const RepoNode &node);
-
-    QUuid id() const;
-
-    void setId();
-
-    void setId(const QUuid &id);
-
-    QString name() const;
-
-    QString type() const;
-
-    QImage image() const;
-
-    double x() const;
-
-    double y() const;
-
-    void setX(double x);
-
-    void setY(double y);
-
-    QList<QVariant> links() const;
-
-    void setLinks(QList<QVariant> &links);
-
-//    void addLink(const QUuid &id);
 };
 
 }

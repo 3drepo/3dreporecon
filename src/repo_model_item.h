@@ -28,8 +28,12 @@
 namespace repo
 {
 
-class RepoModelItem : public QStandardItem
+class RepoModelItem : public QObject, public QStandardItem
 {
+    Q_OBJECT
+
+    Q_PROPERTY(double x READ getX WRITE setX NOTIFY xChanged)
+    Q_PROPERTY(double y READ getY WRITE setY NOTIFY yChanged)
 
 public :
 
@@ -38,7 +42,7 @@ public :
         //-------
         // Node
         //-------
-        ID = Qt::UserRole + 1,
+        Id = Qt::UserRole + 1,
         Name,
         Type,
         Image,
@@ -53,18 +57,30 @@ public :
         FullName,
         JobTitle,
         LinkedIn,
-        Email
+        Email,
+        Links,
     };
 
 public:
 
-    RepoModelItem(const RepoNode &node);
+    RepoModelItem(const RepoNode &node = RepoNode());
 
     QVariant data(int role = Qt::UserRole + 1) const;
 
     void setData(const QVariant &value, int role = Qt::UserRole + 1);
 
     RepoNode getNode() { return node; }
+
+    double getX() const;
+    double getY() const;
+
+    void setX(double x);
+    void setY(double y);
+
+signals:
+
+    void xChanged();
+    void yChanged();
 
 private :
 

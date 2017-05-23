@@ -23,21 +23,19 @@ using namespace repo;
 
 RepoModelItemPainter::RepoModelItemPainter(QQuickItem *parent)
     : QQuickPaintedItem(parent)
-{
-
-}
+{}
 
 void RepoModelItemPainter::paint(QPainter *painter)
 {
-    int border = boundingRect().width() * 0.03;
-    int gap = boundingRect().width() * 0.06;
-    int innerCircle = border + gap;
-    int icon = innerCircle + 10;
+    painter->setRenderHint(QPainter::Antialiasing);
 
     int w = boundingRect().width();
     int h = boundingRect().height();
 
-    painter->setRenderHint(QPainter::Antialiasing);
+    int border = w * 0.03;
+    int gap = w * 0.06;
+    int innerCircle = border + gap;
+    int icon = innerCircle + 10;
 
 
     // Border
@@ -54,26 +52,32 @@ void RepoModelItemPainter::paint(QPainter *painter)
     // Inner circle
     //    painter->drawEllipse(innerCircle, innerCircle, w - 2 * innerCircle, h - 2 * innerCircle);
 
-
     // Icon
     //    painter->setFont(RepoMaterialIcons::getInstance().getFont(w - 2 * icon));
     //    painter->setPen(QColor("#081028"));
     //    painter->drawText(QRectF(icon, icon, w - 2 * icon, h - 2 * icon), QChar(0xE7FD),
     //                      QTextOption(Qt::AlignCenter | Qt::AlignVCenter));
 
-        QPainterPath path;
-        path.addEllipse(innerCircle, innerCircle, w - 2 * innerCircle, h - 2 * innerCircle);
-        painter->setClipPath(path);
-
-
-
+    QPainterPath path;
+    path.addEllipse(innerCircle, innerCircle, w - 2 * innerCircle, h - 2 * innerCircle);
+    painter->setClipPath(path);
 
     QRectF target(0, 0, w, h);
     QImage image(":/resources/alvise.jpg");
 
     painter->drawImage(target, image);
+}
 
+QUuid RepoModelItemPainter::getUuid() const
+{
+    return _uuid;
+}
 
-
-
+void RepoModelItemPainter::setUuid(const QUuid &uuid)
+{
+    if (_uuid != uuid)
+    {
+        _uuid = uuid;
+        emit uuidChanged();
+    }
 }

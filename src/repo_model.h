@@ -21,10 +21,12 @@
 #include <QStandardItemModel>
 #include <QFileInfo>
 #include <QDebug>
+#include <QPoint>
 
 #include "repo_model_item.h"
 #include "repo_node.h"
 #include "repo_csv_parser.h"
+#include "repo_json_parser.h"
 
 namespace repo
 {
@@ -48,15 +50,23 @@ public :
 
     QList<RepoNode> nodes() const;
 
+    QList<QVariant> toList() const;
+
     Q_INVOKABLE QUuid appendRow(int x, int y);
 
     Q_INVOKABLE QUuid appendRow(RepoModelItem *item);
 
-    Q_INVOKABLE bool removeRow(int proxyRow, const QModelIndex &parent = QModelIndex());
+    Q_INVOKABLE bool removeRow(int proxyRow, const QModelIndex &proxyParentIndex = QModelIndex());
 
-    Q_INVOKABLE bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::UserRole + 1);
+//    Q_INVOKABLE virtual QVariant data(const QModelIndex &index, int role = Qt::UserRole + 1) const;
+
+    Q_INVOKABLE bool setData(RepoModelItem *item, const QVariant &value, int role = Qt::UserRole + 1);
+
+    Q_INVOKABLE bool setData(const QModelIndex &proxyIndex, const QVariant &value, int role = Qt::UserRole + 1);
 
     Q_INVOKABLE bool setData(int row, const QVariant &value, const QVariant &roleName);
+
+    Q_INVOKABLE bool setData(const QUuid &id, const QVariant &value, const QVariant &roleName);
 
     Q_INVOKABLE int role(const QVariant &roleName) const;
 
@@ -64,7 +74,26 @@ public :
 
     Q_INVOKABLE void filter(const QString &filter);
 
-    Q_INVOKABLE RepoModelItem* item(int proxyRow) const;
+    Q_INVOKABLE RepoModelItem* item(int proxyRow, const QModelIndex &proxyParentIndex = QModelIndex()) const;
+
+    Q_INVOKABLE RepoModelItem* item(const QUuid &id) const;
+
+    /**
+     * Returns links as a list of end points given current proxy row.
+     *
+     * @brief links
+     * @param proxyRow
+     * @return
+     */
+    Q_INVOKABLE QList<QObject *> links(const RepoModelItem *item) const;
+
+    //! Overloaded function
+    Q_INVOKABLE QList<QObject *> links(int proxyRow) const;
+
+    //! Overloaded function
+    Q_INVOKABLE QList<QObject *> links(const QUuid &id) const;
+
+    Q_INVOKABLE void addLink(const QUuid &id1, const QUuid &id2);
 
 private :
 

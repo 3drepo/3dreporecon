@@ -19,6 +19,14 @@
 
 using namespace repo;
 
+RepoNode::RepoNode(const QMap<QString, QVariant> &map)
+    : QMap<QString, QVariant>(map)
+{}
+
+RepoNode::RepoNode(const RepoNode &node)
+    : QMap<QString, QVariant>(node)
+{}
+
 QUuid RepoNode::id() const
 {
     return value("_id").toUuid();
@@ -46,30 +54,48 @@ QString RepoNode::type() const
 
 QImage RepoNode::image() const
 {
-     //value("image").toByteArray()
-//    return QImage(
+    //value("image").toByteArray()
+    //    return QImage(
     qDebug() << "qrc:/resources/alvise.jpg";
     return QImage();
 }
 
-int RepoNode::x() const
+double RepoNode::x() const
 {
-    return value("x").toInt();
+    return value("x").toDouble();
 }
 
-int RepoNode::y() const
+double RepoNode::y() const
 {
-    return value("y").toInt();
+    return value("y").toDouble();
 }
 
-void RepoNode::setX(int x)
+void RepoNode::setX(double x)
 {
     insert("x", x);
 }
 
-void RepoNode::setY(int y)
+void RepoNode::setY(double y)
 {
     insert("y", y);
 }
 
+QList<QVariant> RepoNode::links() const
+{
+    return value("links").toList();
+}
 
+void RepoNode::setLinks(QList<QVariant> &links)
+{
+    insert("links", links);
+}
+
+//void RepoNode::addLink(const QUuid &id)
+//{
+//    QList<QVariant> links = this->links();
+//    if (!links.contains(id))
+//    {
+//        links.append(id);
+//        setLinks(links);
+//    }
+//}

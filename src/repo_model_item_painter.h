@@ -21,6 +21,7 @@
 #include <QBrush>
 #include <QPoint>
 #include <QPainter>
+#include <QUuid>
 
 namespace repo
 {
@@ -28,9 +29,8 @@ namespace repo
 class RepoModelItemPainter : public QQuickPaintedItem
 {
     Q_OBJECT
-//    Q_PROPERTY(int x READ getX WRITE setX NOTIFY xChanged)
-//    Q_PROPERTY(int y READ getY WRITE setY NOTIFY yChanged)
 
+    Q_PROPERTY(QUuid uuid READ getUuid WRITE setUuid NOTIFY uuidChanged)
 
 public:
 
@@ -38,20 +38,17 @@ public:
 
     void paint(QPainter *painter);
 
-//    int getX() const { return x; }
-//    void setX(int x) { this->x = x; }
+    QUuid getUuid() const;
 
-//    int getY() const { return y; }
-//    void setY(int y) { this->y = y; }
-
-private :
-
-//    QPoint point;
+    void setUuid(const QUuid &uuid);
 
 signals :
 
-//    void xChanged();
-//    void yChanged();
+    void uuidChanged();
+
+private :
+
+    QUuid _uuid;
 
 };
 

@@ -19,7 +19,8 @@
 
 using namespace repo;
 
-QList<RepoNode> RepoCSVParser::read(const QString &filepath, const QString &delimiter)
+QList<RepoNode> RepoCSVParser::read(const QString &filepath,
+                                    const QString &delimiter)
 {
     QList<RepoNode> nodes;
     QFile file(filepath);
@@ -69,7 +70,7 @@ void RepoCSVParser::write(const QList<RepoNode> &nodes,
 
     // Extract and write individual rows
     for (RepoNode node : nodes)
-    {
+    {        
         for (QString key : header)
         {
             if (node.contains(key))

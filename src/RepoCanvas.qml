@@ -33,7 +33,7 @@ Flickable {
     property QtObject graphModel
     property int w: 19200
     property int h: 10800
-    property RepoModelItemPainter start
+    property RepoModelItemPainter start: null
 
     property int zoomTargetX: w/2
     property int zoomTargetY: h/2
@@ -63,9 +63,6 @@ Flickable {
     Behavior on contentX { NumberAnimation { duration: 100 } }
     Behavior on contentY { NumberAnimation { duration: 100 } }
 
-
-
-
     DropArea {
         anchors.fill: parent.fill
 
@@ -79,13 +76,12 @@ Flickable {
             border.width: 500
 
 
-            RepoModelItemLinkPainter {
-                id: link
-                x: 19200/2
-                y: 10800/2
-                width: 19200
-                height: 10800
-            }
+//            RepoModelItemLinkPainter {
+//                id: link
+//                visible: false
+//                width: 0
+//                height:0
+//            }
 
             MouseArea {
                 anchors.fill: parent
@@ -95,46 +91,14 @@ Flickable {
                 preventStealing: false
 
                 onPositionChanged: {
-
-                    link.x2 = mouseX //Qt.binding(function() { return mouseX - link.x; })
-                    link.y2 = mouseY //Qt.binding(function() { return mouseY - link.y; })
-
-                    if (link.x1 < link.x2)
-                    {
-                        link.x = link.x1
-                        link.width = link.x2 - link.x1
-                    }
-                    else
-                    {
-                        link.x = link.x2
-                        link.width = link.x1 - link.x2
-                    }
-
-                    if (link.y1 < link.y2)
-                    {
-                        link.y = link.y1
-                        link.height = link.y2 - link.y1
-                    }
-                    else
-                    {
-                        link.y = link.y2
-                        link.height = link.y1 - link.y2
-                    }
-
-
-
+//                    if (link.visible)
+//                    {
+//                        link.x2 = mouseX //Qt.binding(function() { return mouseX - link.x; })
+//                        link.y2 = mouseY //Qt.binding(function() { return mouseY - link.y; })
+//                    }
                 }
 
                 onClicked: {
-
-                    link.x = mouseX
-                    link.y = mouseY
-
-                    link.x1 = mouseX
-                    link.y1 = mouseY
-
-                    link.x2 = mouseX
-                    link.y2 = mouseY
 
                     zoomTargetX = Math.round(mouseX)
                     zoomTargetY = Math.round(mouseY)
@@ -170,17 +134,22 @@ Flickable {
                     height: 200
                     Drag.active: draggable.drag.active
                     focus: true
+                    uuid: model.id
+                    id : node
+                    z: 1
 
+                    x: model.x - width/2
+                    y: model.y - height/2
 
-
-
-                    Binding on x {
-                        when: x !== model.x - width/2
-                        value: model.x - width/2
-                    }
-                    Binding on y {
-                        when: y !== model.y - height/2
-                        value: model.y - height/2
+                    Repeater {
+                        model: graphModel.links(index)
+                        delegate: RepoModelItemLinkPainter {
+                            x1: parent.width / 2
+                            y1: parent.height / 2
+                            x2: model.modelData.x - node.x
+                            y2: model.modelData.y - node.y
+                            z: -1
+                        }
                     }
 
                     onXChanged: graphModel.setData(index, x + width/2, "x")
@@ -199,7 +168,7 @@ Flickable {
                     }
 
                     Text {
-                        text: activeFocus ? "YES" : "*"
+                        text: model.links.length
                         color: "red"
                         font.pointSize: parent.width / 10
                         anchors.right: parent.right
@@ -213,21 +182,29 @@ Flickable {
                         propagateComposedEvents: false
                         acceptedButtons: Qt.AllButtons
 
+//                        onPositionChanged: {
+//                            link.x2 = model.x //Qt.binding(function() { return mouseX - link.x; })
+//                            link.y2 = model.y //Qt.binding(function() { return mouseY - link.y; })
+//                        }
+
                         onClicked: {
 
-                            console.log(start)
-                            if (start)
-                            {
+//                            link.x1 = model.x
+//                            link.y1 = model.y
+//                            link.visible = true
 
-                                // parent is end point
-                                start = null
+
+                            if (start == null)
+                            {
+                                start = parent;
                             }
                             else
                             {
-                                start = parent
-
-
-
+                                if (start != parent)
+                                {
+                                    graphModel.addLink(start.uuid, parent.uuid);
+                                }
+                                start = null;
                             }
 
                             // Delete on right click

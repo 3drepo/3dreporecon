@@ -26,6 +26,7 @@
 int main(int argc, char *argv[])
 {
     qmlRegisterType<repo::RepoModel>("repo", 1, 0, "RepoModel");
+    qmlRegisterType<repo::RepoModelItem>("repo", 1, 0, "RepoModelItem");
     qmlRegisterType<repo::RepoModelItemPainter>("repo", 1, 0, "RepoModelItemPainter");
     qmlRegisterType<repo::RepoModelItemLinkPainter>("repo", 1, 0, "RepoModelItemLinkPainter");
 

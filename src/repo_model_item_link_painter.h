@@ -20,6 +20,7 @@
 #include <QQuickPaintedItem>
 #include <QBrush>
 #include <QPoint>
+#include <QLine>
 #include <QPainter>
 
 namespace repo
@@ -59,16 +60,19 @@ signals :
 
 private :
 
-    // Start point of the drawn line (and centre of the bounding rectangle)
+    // Start point of the line in world coords
     int _x1;
     int _y1;
 
-    // End point of the drawn line
+    // End point of the line in world coords
     int _x2;
     int _y2;
 
-    QPen pen;
+    // Line in local coordinates
+    QLine line;
 
+    QPen pen;
+    int lineThickness;
 };
 
 }

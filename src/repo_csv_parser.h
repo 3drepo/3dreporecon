@@ -42,5 +42,4 @@ public:
                       const QString &filepath,
                       const QString &delimiter = ",");
 };
-
 }

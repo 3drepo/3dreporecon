@@ -3,7 +3,7 @@
 using namespace repo;
 
 QHash<int, QByteArray> RepoModel::roles = {
-    {RepoModelItem::ID,  "id"},
+    {RepoModelItem::Id,  "id"},
     {RepoModelItem::Name, "name"},
     {RepoModelItem::Type, "type"},
     {RepoModelItem::Image, "image"},
@@ -13,7 +13,8 @@ QHash<int, QByteArray> RepoModel::roles = {
     {RepoModelItem::LastName, "lastName"},
     {RepoModelItem::JobTitle, "jobTitle"},
     {RepoModelItem::LinkedIn, "linkedIn"},
-    {RepoModelItem::Email, "email"}
+    {RepoModelItem::Email, "email"},
+    {RepoModelItem::Links, "links"}
 };
 
 RepoModel::RepoModel()
@@ -30,20 +31,17 @@ RepoModel::RepoModel()
 
 RepoModel::~RepoModel()
 {
-    QFileInfo file("c:\\Users\\jozef\\workspace\\3DRepo\\3dreporecon\\resources\\nodes.csv");
-    RepoCSVParser::write(nodes(), file.absoluteFilePath());
-
+    QFileInfo jsonFile("c:\\Users\\jozef\\workspace\\3DRepo\\3dreporecon\\resources\\nodes.json");
+    RepoJsonParser::write(this->toList(), jsonFile.absoluteFilePath());
     delete model;
 }
 
 void RepoModel::populate()
 {
-    QFileInfo file("c:\\Users\\jozef\\workspace\\3DRepo\\3dreporecon\\resources\\nodes.csv");
-    QList<RepoNode> nodes = RepoCSVParser::read(file.absoluteFilePath());
-
-    for (RepoNode node : nodes)
+    QFileInfo jsonFile("c:\\Users\\jozef\\workspace\\3DRepo\\3dreporecon\\resources\\nodes.json");
+    for (QVariant node : RepoJsonParser::read(jsonFile.absoluteFilePath()))
     {
-        appendRow(new RepoModelItem(node));
+        appendRow(new RepoModelItem((RepoNode)(node.toMap())));
     }
 }
 
@@ -55,6 +53,18 @@ QHash<int, QByteArray> RepoModel::roleNames() const
 QList<RepoNode> RepoModel::nodes() const
 {
     QList<RepoNode> nodes;
+    for (int i = 0; i < model->rowCount(); ++i)
+    {
+        RepoModelItem *item = (RepoModelItem *) (model->item(i));
+        if (item)
+            nodes.append(item->getNode());
+    }
+    return nodes;
+}
+
+QList<QVariant> RepoModel::toList() const
+{
+    QList<QVariant> nodes;
     for (int i = 0; i < model->rowCount(); ++i)
     {
         RepoModelItem *item = (RepoModelItem *) (model->item(i));
@@ -76,39 +86,62 @@ QUuid RepoModel::appendRow(int x, int y)
 QUuid RepoModel::appendRow(RepoModelItem *item)
 {
     model->appendRow(item);
-    QUuid id = item->data(RepoModelItem::ID).toUuid();
+    QUuid id = item->data(RepoModelItem::Id).toUuid();
     itemsByID.insert(id, item);
     return id;
 }
 
-bool RepoModel::removeRow(int proxyRow, const QModelIndex &)
+bool RepoModel::removeRow(int proxyRow, const QModelIndex &proxyParentIndex)
 {    
-    RepoModelItem* item = this->item(proxyRow);
+    RepoModelItem* item = this->item(proxyRow, proxyParentIndex);
     bool success = false;
     if (item)
     {
-        itemsByID.remove(item->data(RepoModelItem::ID).toUuid());
+        for (QVariant id : item->data(RepoModelItem::Links).toList())
+        {
+            RepoModelItem* linkedItem = itemsByID[id.toUuid()];
+            if (linkedItem)
+            {
+                QList<QVariant> links = linkedItem->data(RepoModelItem::Links).toList();
+                links.removeAll(item->data(RepoModelItem::Id));
+                this->setData(linkedItem, links, RepoModelItem::Links);
+            }
+        }
+        itemsByID.remove(item->data(RepoModelItem::Id).toUuid());
         success = model->removeRow(model->indexFromItem(item).row());
+        item = NULL; // item has been deleted by removeRow
     }
-    // TODO: make sure all links are deleted as well
     return success;
 }
 
-bool RepoModel::setData(const QModelIndex &index, const QVariant &value, int role)
+bool RepoModel::setData(RepoModelItem *item, const QVariant &value, int role)
 {
-    bool success;
-    RepoModelItem *item = (RepoModelItem*) model->itemFromIndex(mapToSource(index));
+    bool success = false;
     if (success = (item != NULL))
     {
-        item->setData(value, role);
-        emit dataChanged(index, index, QVector<int>() << role);
+        if (success = (value != item->data(role)))
+        {
+            item->setData(value, role);
+            QModelIndex index = model->indexFromItem(item);
+            emit dataChanged(index, index, QVector<int>() << role);
+        }
     }
     return success;
+}
+
+bool RepoModel::setData(const QModelIndex &proxyIndex, const QVariant &value, int role)
+{
+    return setData((RepoModelItem*) model->itemFromIndex(mapToSource(proxyIndex)), value, role);
 }
 
 bool RepoModel::setData(int row, const QVariant &value, const QVariant &roleName)
 {
     return setData(index(row, 0), value, role(roleName));
+}
+
+bool RepoModel::setData(const QUuid &id, const QVariant &value, const QVariant &roleName)
+{
+    return setData(this->item(id), value, role(roleName));
 }
 
 int RepoModel::role(const QVariant &roleName) const
@@ -139,8 +172,63 @@ void RepoModel::filter(const QString &filter)
     invalidateFilter();
 }
 
-
-RepoModelItem* RepoModel::item(int proxyRow) const
+RepoModelItem* RepoModel::item(int proxyRow, const QModelIndex &proxyParentIndex) const
 {
-    return (RepoModelItem*) model->itemFromIndex(mapToSource(index(proxyRow, 0)));
+    return (RepoModelItem*) model->itemFromIndex(mapToSource(index(proxyRow, 0, proxyParentIndex)));
+}
+
+RepoModelItem* RepoModel::item(const QUuid &id) const
+{
+    return itemsByID[id];
+}
+
+QList<QObject *> RepoModel::links(const RepoModelItem* item) const
+{
+    QList<QObject *> endPoints;
+    if (item)
+    {
+        QList<QVariant> links = item->data(RepoModelItem::Links).toList();
+        for (QVariant l : links)
+        {
+            RepoModelItem *endItem = this->item(l.toUuid());
+            if (endItem)
+            {
+                endPoints.append(endItem);
+            }
+        }
+    }
+    return endPoints;
+}
+
+QList<QObject *> RepoModel::links(int proxyRow) const
+{
+    return links(this->item(proxyRow));
+}
+
+QList<QObject *> RepoModel::links(const QUuid &id) const
+{
+    return links(item(id));
+}
+
+void RepoModel::addLink(const QUuid &id1, const QUuid &id2)
+{
+    RepoModelItem *item1 = itemsByID[id1];
+    RepoModelItem *item2 = itemsByID[id2];
+
+    if (item1 && item2)
+    {
+        QList<QVariant> links1 = item1->data(RepoModelItem::Links).toList();
+        if (!links1.contains(id2))
+        {
+            links1.append(id2);
+            this->setData(item1, links1, RepoModelItem::Links);
+        }
+
+        QList<QVariant> links2 = item2->data(RepoModelItem::Links).toList();
+        if (!links2.contains(id1))
+        {
+            links2.append(id1);
+            this->setData(item2, links2, RepoModelItem::Links);
+        }
+    }
 }
