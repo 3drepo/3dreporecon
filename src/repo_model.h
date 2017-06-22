@@ -45,6 +45,9 @@ public:
 
 public :
 
+    virtual QVariant data(const QModelIndex &proxyIndex,
+                          int role = Qt::UserRole + 1) const;
+
     //! See http://doc.qt.io/qt-5/qtquick-modelviewsdata-cppmodels.html
     QHash<int, QByteArray> roleNames() const;
 
@@ -57,8 +60,6 @@ public :
     Q_INVOKABLE QUuid appendRow(RepoModelItem *item);
 
     Q_INVOKABLE bool removeRow(int proxyRow, const QModelIndex &proxyParentIndex = QModelIndex());
-
-//    Q_INVOKABLE virtual QVariant data(const QModelIndex &index, int role = Qt::UserRole + 1) const;
 
     Q_INVOKABLE bool setData(RepoModelItem *item, const QVariant &value, int role = Qt::UserRole + 1);
 
@@ -105,6 +106,8 @@ private :
     QString _filter;
 
     QHash<QUuid, RepoModelItem *> itemsByID;
+
+    QFileInfo jsonFile;
 };
 
 }

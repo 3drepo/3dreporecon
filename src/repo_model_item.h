@@ -30,6 +30,9 @@ namespace repo
 
 class RepoModelItem : public QObject, public QStandardItem
 {
+
+public :
+
     Q_OBJECT
 
     Q_PROPERTY(double x READ getX WRITE setX NOTIFY xChanged)

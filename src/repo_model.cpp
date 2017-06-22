@@ -20,6 +20,7 @@ QHash<int, QByteArray> RepoModel::roles = {
 RepoModel::RepoModel()
     : QSortFilterProxyModel()
     , model(new QStandardItemModel())
+    , jsonFile("c:\\Users\\jozef\\workspace\\3DRepo\\3dreporecon\\resources\\nodes.json")
 {
     setDynamicSortFilter(true);
     setFilterCaseSensitivity(Qt::CaseInsensitive);
@@ -31,18 +32,29 @@ RepoModel::RepoModel()
 
 RepoModel::~RepoModel()
 {
-    QFileInfo jsonFile("c:\\Users\\jozef\\workspace\\3DRepo\\3dreporecon\\resources\\nodes.json");
     RepoJsonParser::write(this->toList(), jsonFile.absoluteFilePath());
     delete model;
 }
 
 void RepoModel::populate()
 {
-    QFileInfo jsonFile("c:\\Users\\jozef\\workspace\\3DRepo\\3dreporecon\\resources\\nodes.json");
     for (QVariant node : RepoJsonParser::read(jsonFile.absoluteFilePath()))
-    {
         appendRow(new RepoModelItem((RepoNode)(node.toMap())));
+}
+
+QVariant RepoModel::data(const QModelIndex &proxyIndex, int role) const
+{
+    QVariant data;
+    if (role == RepoModelItem::Links)
+    {
+        QList<QObject *> links = this->links(this->item(proxyIndex.row()));
+        data.setValue(links);
     }
+    else
+    {
+        data = QSortFilterProxyModel::data(proxyIndex, role);
+    }
+    return data;
 }
 
 QHash<int, QByteArray> RepoModel::roleNames() const
@@ -106,7 +118,8 @@ bool RepoModel::removeRow(int proxyRow, const QModelIndex &proxyParentIndex)
                 links.removeAll(item->data(RepoModelItem::Id));
                 this->setData(linkedItem, links, RepoModelItem::Links);
             }
-        }
+        }        
+        this->setData(item, QList<QVariant>(), RepoModelItem::Links);
         itemsByID.remove(item->data(RepoModelItem::Id).toUuid());
         success = model->removeRow(model->indexFromItem(item).row());
         item = NULL; // item has been deleted by removeRow
@@ -190,8 +203,7 @@ QList<QObject *> RepoModel::links(const RepoModelItem* item) const
         QList<QVariant> links = item->data(RepoModelItem::Links).toList();
         for (QVariant l : links)
         {
-            RepoModelItem *endItem = this->item(l.toUuid());
-            if (endItem)
+            if (RepoModelItem *endItem = this->item(l.toUuid()))
             {
                 endPoints.append(endItem);
             }

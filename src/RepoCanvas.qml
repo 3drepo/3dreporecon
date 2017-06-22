@@ -76,12 +76,12 @@ Flickable {
             border.width: 500
 
 
-//            RepoModelItemLinkPainter {
-//                id: link
-//                visible: false
-//                width: 0
-//                height:0
-//            }
+            //            RepoModelItemLinkPainter {
+            //                id: link
+            //                visible: false
+            //                width: 0
+            //                height:0
+            //            }
 
             MouseArea {
                 anchors.fill: parent
@@ -91,11 +91,11 @@ Flickable {
                 preventStealing: false
 
                 onPositionChanged: {
-//                    if (link.visible)
-//                    {
-//                        link.x2 = mouseX //Qt.binding(function() { return mouseX - link.x; })
-//                        link.y2 = mouseY //Qt.binding(function() { return mouseY - link.y; })
-//                    }
+                    //                    if (link.visible)
+                    //                    {
+                    //                        link.x2 = mouseX //Qt.binding(function() { return mouseX - link.x; })
+                    //                        link.y2 = mouseY //Qt.binding(function() { return mouseY - link.y; })
+                    //                    }
                 }
 
                 onClicked: {
@@ -117,7 +117,7 @@ Flickable {
                             flick.contentX += offsetX
                             flick.contentY += offsetY
 
-//                            console.log(flick.contentX + ", " + flick.contentY)
+                            //                            console.log(flick.contentX + ", " + flick.contentY)
                         }
                         wheel.accepted = true
                     }
@@ -128,33 +128,40 @@ Flickable {
 
             // Individual items to be painted
             Repeater {
+                id: masterRepeater
                 model: graphModel
                 delegate: RepoModelItemPainter {
-                    width: 200
-                    height: 200
+                    id : node
+                    width: 200 // 50 * model.links.length + 100
+                    height: 200 // 50 * model.links.length + 100
                     Drag.active: draggable.drag.active
                     focus: true
                     uuid: model.id
-                    id : node
-                    z: 1
+
+                    //                    z: model.links
+
+
+                    // State machine
+                    // http://doc.qt.io/qt-4.8/qml-propertychanges.html
 
                     x: model.x - width/2
                     y: model.y - height/2
 
+                    property var nodeModelLinks : model.links
                     Repeater {
-                        model: graphModel.links(index)
+                        id: linkRepeater
+                        model: nodeModelLinks
                         delegate: RepoModelItemLinkPainter {
                             x1: parent.width / 2
                             y1: parent.height / 2
                             x2: model.modelData.x - node.x
                             y2: model.modelData.y - node.y
-                            z: -1
+                            //                            z: -1
                         }
                     }
 
                     onXChanged: graphModel.setData(index, x + width/2, "x")
                     onYChanged: graphModel.setData(index, y + height/2, "y")
-
 
                     Text {
                         id: nameText
@@ -182,16 +189,17 @@ Flickable {
                         propagateComposedEvents: false
                         acceptedButtons: Qt.AllButtons
 
-//                        onPositionChanged: {
-//                            link.x2 = model.x //Qt.binding(function() { return mouseX - link.x; })
-//                            link.y2 = model.y //Qt.binding(function() { return mouseY - link.y; })
-//                        }
+                        //                        onPositionChanged: {
+                        //                            link.x2 = model.x //Qt.binding(function() { return mouseX - link.x; })
+                        //                            link.y2 = model.y //Qt.binding(function() { return mouseY - link.y; })
+                        //                        }
 
                         onClicked: {
 
-//                            link.x1 = model.x
-//                            link.y1 = model.y
-//                            link.visible = true
+                            //                            link.x1 = model.x
+                            //                            link.y1 = model.y
+                            //                            link.visible = true
+
 
 
                             if (start == null)
@@ -202,17 +210,16 @@ Flickable {
                             {
                                 if (start != parent)
                                 {
-                                    graphModel.addLink(start.uuid, parent.uuid);
+                                    graphModel.addLink(start.uuid, parent.uuid)
                                 }
                                 start = null;
                             }
 
                             // Delete on right click
-                            if (mouse.button == Qt.RightButton)
+                            if (mouse.button === Qt.RightButton)
                             {
                                 // TODO: show confirmation dialog to prevent
                                 // accidental deletes
-                                console.log(model.id)
                                 graphModel.removeRow(index)
                             }
 
