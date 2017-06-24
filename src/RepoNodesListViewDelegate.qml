@@ -27,7 +27,6 @@ ItemDelegate {
     width: parent.width
     height: 100
 
-
     CheckBox {
         id: checkBox
         anchors.verticalCenter: parent.verticalCenter
@@ -35,31 +34,14 @@ ItemDelegate {
         anchors.leftMargin: 10
     }
 
-    // http://stackoverflow.com/questions/6090740/image-rounded-corners-in-qml
-    Image {
+
+    RepoNodeImage {
         id: img
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: checkBox.right
         anchors.leftMargin: 10
-        fillMode: Image.Pad
-        horizontalAlignment: Image.AlignHCenter
-        verticalAlignment: Image.AlignVCenter
-        source: model.image //"qrc:/resources/alvise.jpg"    //"image://materialicons/person"
         sourceSize.width: 60
         sourceSize.height: 60
-        layer.enabled: true
-        layer.effect: OpacityMask {
-            maskSource: Item {
-                width: img.width
-                height: img.height
-                Rectangle {
-                    anchors.centerIn: parent
-                    width: img.width
-                    height: img.height
-                    radius: Math.min(width, height)
-                }
-            }
-        }
     }
 
 

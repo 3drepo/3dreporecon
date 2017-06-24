@@ -24,6 +24,11 @@ QString RepoNodePerson::firstName() const
     return value("firstName", "<undefined>").toString();
 }
 
+void RepoNodePerson::setFirstName(RepoNode &node, const QString &firstName)
+{
+    node.insert("firstName", firstName);
+}
+
 QString RepoNodePerson::lastName() const
 {
     return value("lastName", "<undefined>").toString();
@@ -32,6 +37,11 @@ QString RepoNodePerson::lastName() const
 QString RepoNodePerson::jobTitle() const
 {
     return value("jobTitle").toString();
+}
+
+void RepoNodePerson::setJobTitle(RepoNode &node, const QString &jobTitle)
+{
+    node.insert("jobTitle", jobTitle);
 }
 
 QUrl RepoNodePerson::linkedIn() const

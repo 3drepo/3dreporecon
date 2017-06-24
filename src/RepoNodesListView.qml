@@ -28,7 +28,7 @@ ListView {
     id: listView
 //    focus: true
     currentIndex: -1
-    snapMode: ListView.SnapToItem
+//    snapMode: ListView.SnapToItem
     clip: true
 
     header: Rectangle {
@@ -133,12 +133,12 @@ ListView {
     }
     footerPositioning: ListView.OverlayFooter // ListView.PullBackHeader
 
-    delegate: RepoNodesListViewDelegate {
-        highlighted: ListView.isCurrentItem
+//    delegate: RepoNodesListViewDelegate {
+//        highlighted: ListView.isCurrentItem
 //        onClicked: {
-//            assetListView.currentIndex = index
+//            listView.currentIndex = index
 //        }
-    }
+//    }
 
     ScrollIndicator.vertical: ScrollIndicator {}
 }

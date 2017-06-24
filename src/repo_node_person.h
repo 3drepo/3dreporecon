@@ -44,6 +44,10 @@ public:
 
     QString email() const;
 
+    static void setFirstName(RepoNode &node, const QString &fristName);
+
+    static void setJobTitle(RepoNode &node, const QString &jobTitle);
+
 };
 
 }

@@ -28,33 +28,41 @@ QPixmap RepoMaterialIconsImageProvider::requestPixmap(
 {
     QPixmap pixmap;
 
+    QStringList iconInstructions = id.split("/");
+    QString icon = iconInstructions[0];
+    QColor color("white");
+    if (iconInstructions.length() == 2)
+    {
+        color = QColor(iconInstructions[1]);
+    }
+
     int width = requestedSize.width() > 0 ? requestedSize.width() : 32;
     int height = requestedSize.height() > 0 ? requestedSize.height() : 32;
 
-    if (id == "menu")
-        pixmap = RepoMaterialIcons::getMenuIcon().pixmap(width, height);
-    else if (id == "moreVert")
-        pixmap = RepoMaterialIcons::getMoreVertIcon().pixmap(width, height);
-    else if (id == "add")
-        pixmap = RepoMaterialIcons::getAddIcon().pixmap(width, height);
-    else if (id == "person")
-        pixmap = RepoMaterialIcons::getPersonIcon().pixmap(width, height);
-    else if (id == "people")
-        pixmap = RepoMaterialIcons::getPeopleIcon().pixmap(width, height);
-    else if (id == "accountCircle")
-        pixmap = RepoMaterialIcons::getAccountCircleIcon().pixmap(width, height);
-    else if (id == "business")
-        pixmap = RepoMaterialIcons::getBusinessIcon().pixmap(width, height);
-    else if (id == "arrowBack")
-        pixmap = RepoMaterialIcons::getArrowBackIcon().pixmap(width, height);
-    else if (id == "notificationsNone")
+    if (icon == "menu")
+        pixmap = RepoMaterialIcons::getMenuIcon(color).pixmap(width, height);
+    else if (icon == "moreVert")
+        pixmap = RepoMaterialIcons::getMoreVertIcon(color).pixmap(width, height);
+    else if (icon == "add")
+        pixmap = RepoMaterialIcons::getAddIcon(color).pixmap(width, height);
+    else if (icon == "person")
+        pixmap = RepoMaterialIcons::getPersonIcon(color).pixmap(width, height);
+    else if (icon == "people")
+        pixmap = RepoMaterialIcons::getPeopleIcon(color).pixmap(width, height);
+    else if (icon == "accountCircle")
+        pixmap = RepoMaterialIcons::getAccountCircleIcon(color).pixmap(width, height);
+    else if (icon == "business")
+        pixmap = RepoMaterialIcons::getBusinessIcon(color).pixmap(width, height);
+    else if (icon == "arrowBack")
+        pixmap = RepoMaterialIcons::getArrowBackIcon(color).pixmap(width, height);
+    else if (icon == "notificationsNone")
         pixmap = RepoMaterialIcons::getNotificationsNoneIcon().pixmap(width, height);
-    else if (id == "clear")
-        pixmap = RepoMaterialIcons::getClearIcon().pixmap(width, height);
-    else if (id == "search")
-        pixmap = RepoMaterialIcons::getSearchIcon().pixmap(width, height);
-    else if (id == "assignment")
-        pixmap = RepoMaterialIcons::getAssignmentIcon().pixmap(width, height);
+    else if (icon == "clear")
+        pixmap = RepoMaterialIcons::getClearIcon(color).pixmap(width, height);
+    else if (icon == "search")
+        pixmap = RepoMaterialIcons::getSearchIcon(color).pixmap(width, height);
+    else if (icon == "assignment")
+        pixmap = RepoMaterialIcons::getAssignmentIcon(color).pixmap(width, height);
 
     *size = QSize(width, height);
     return pixmap;

@@ -48,6 +48,8 @@ public:
 
     QString name() const;
 
+    void setName(const QString &name);
+
     QString type() const;
 
     QImage image() const;

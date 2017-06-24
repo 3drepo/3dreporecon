@@ -168,7 +168,11 @@ Flickable {
                     Drag.active: draggable.drag.active
                     focus: true
                     uuid: model.id
-                    image: model.image
+
+                    Binding on image {
+                        when: model.image !== "undefined"
+                        value: model.image
+                    }
 
                     // State machine
                     // http://doc.qt.io/qt-4.8/qml-propertychanges.html
@@ -238,6 +242,9 @@ Flickable {
                                 // accidental deletes
                                 graphModel.removeRow(index)
                             }
+                            else {
+                                console.log(graphModel.index)
+                            }
 
 
                         }
@@ -267,6 +274,8 @@ Flickable {
 
 
     //        }
+
+
 
 
 

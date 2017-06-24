@@ -62,16 +62,16 @@ ApplicationWindow {
             color: "transparent"
         }
 
-//        focus: true
+        //        focus: true
 
-//        Keys.onPressed: {
-//            console.log("key")
-////            if (event.key == Qt.ControlModifier) {
+        //        Keys.onPressed: {
+        //            console.log("key")
+        ////            if (event.key == Qt.ControlModifier) {
 
-//                canvas.activateZoom()
-//                event.accepted = true;
-////            }
-//        }
+        //                canvas.activateZoom()
+        //                event.accepted = true;
+        ////            }
+        //        }
 
 
         RowLayout {
@@ -261,19 +261,36 @@ ApplicationWindow {
         anchors.left: buttonsColumn.right
         height: parent.height
         anchors.leftMargin: 12
-        //        anchors.topMargin: 10
         width: 500
         antialiasing: true
         color: "white"
         radius: 4
 
-        RepoNodesListView {
-            id: listView
+        StackView {
+            id: stackView
             anchors.fill: parent
-            highlightFollowsCurrentItem: true
-            highlightMoveDuration: 200
-            model: repoModel
+            clip: true
+            initialItem: RepoNodesListView {
+                id: listView
+                highlightFollowsCurrentItem: true
+                highlightMoveDuration: 200
+                model: repoModel
+
+                delegate: RepoNodesListViewDelegate {
+                    highlighted: ListView.isCurrentItem
+                    onClicked: {
+                        listView.currentIndex = index
+                        stackView.push("qrc:/src/RepoNodePersonListView.qml")
+                        var personal = stackView.currentItem
+//                        personal.select(index)
+                        stackView.currentItem.currentIndex = index
+
+                    }
+                }
+            }
+
         }
+        //
     }
 
 

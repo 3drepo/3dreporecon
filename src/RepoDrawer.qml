@@ -45,22 +45,14 @@ Drawer {
                 anchors.leftMargin: 4
                 implicitWidth: 84
                 implicitHeight: 84
-
                 onClicked: drawer.close()
-
                 contentItem: Image {
                     fillMode: Image.Pad
                     horizontalAlignment: Image.AlignHCenter
                     verticalAlignment: Image.AlignVCenter
-                    source: "image://materialicons/arrowBack"
+                    source: "image://materialicons/arrowBack/black"
                     sourceSize.width: 32
                     sourceSize.height: 32
-
-                    ColorOverlay {
-                        anchors.fill: parent
-                        source: parent
-                        color: "#FF000000"
-                    }
                 }
             }
 

@@ -47,6 +47,11 @@ QString RepoNode::name() const
     return value("name").toString();
 }
 
+void RepoNode::setName(const QString &name)
+{
+    insert("name", name);
+}
+
 QString RepoNode::type() const
 {
     return value("type").toString();
@@ -56,7 +61,8 @@ QImage RepoNode::image() const
 {
     QImage image;
     QByteArray encoded = value("image").toString().toLatin1();
-    image.loadFromData(QByteArray::fromBase64(encoded), "PNG");
+    if (!encoded.isEmpty())
+        image.loadFromData(QByteArray::fromBase64(encoded), "PNG");
     return image;
 }
 
