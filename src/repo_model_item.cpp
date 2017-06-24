@@ -76,6 +76,12 @@ void RepoModelItem::setData(const QVariant &value, int role)
 {
     switch (role)
     {
+    case Image:
+    {
+        QImage image = value.value<QImage>();
+        node.setImage(image);
+        break;
+    }
     case X:
         if (data(role) != value)
         {

@@ -17,8 +17,11 @@
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 
 #include "repo_material_icons_image_provider.h"
+#include "repo_model.h"
+#include "repo_model_image_provider.h"
 #include "repo_model.h"
 #include "repo_model_item_painter.h"
 #include "repo_model_item_link_painter.h"
@@ -35,8 +38,11 @@ int main(int argc, char *argv[])
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
 
+    repo::RepoModel model;
     QQmlApplicationEngine engine;
+    engine.rootContext()->setContextProperty("repoModel", &model);
     engine.addImageProvider(QLatin1String("materialicons"), new repo::RepoMaterialIconsImageProvider);
+    engine.addImageProvider(QLatin1String("modelimages"), new repo::RepoModelImageProvider(&model));
     engine.load(QUrl(QLatin1String("qrc:/src/main.qml")));
 
     return app.exec();

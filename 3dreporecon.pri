@@ -25,7 +25,8 @@ HEADERS += \
     $$PWD/src/repo_csv_parser.h \
     $$PWD/src/repo_model_item_painter.h \
     $$PWD/src/repo_model_item_link_painter.h \
-    $$PWD/src/repo_json_parser.h
+    $$PWD/src/repo_json_parser.h \
+    $$PWD/src/repo_model_image_provider.h
 
 SOURCES +=  \
     $$PWD/src/main.cpp \
@@ -40,6 +41,7 @@ SOURCES +=  \
     $$PWD/src/repo_csv_parser.cpp \
     $$PWD/src/repo_model_item_painter.cpp \
     $$PWD/src/repo_model_item_link_painter.cpp \
-    $$PWD/src/repo_json_parser.cpp
+    $$PWD/src/repo_json_parser.cpp \
+    $$PWD/src/repo_model_image_provider.cpp
 
 FORMS += 

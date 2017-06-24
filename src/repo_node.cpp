@@ -54,10 +54,19 @@ QString RepoNode::type() const
 
 QImage RepoNode::image() const
 {
-    //value("image").toByteArray()
-    //    return QImage(
-    qDebug() << "qrc:/resources/alvise.jpg";
-    return QImage();
+    QImage image;
+    QByteArray encoded = value("image").toString().toLatin1();
+    image.loadFromData(QByteArray::fromBase64(encoded), "PNG");
+    return image;
+}
+
+void RepoNode::setImage(const QImage &image)
+{
+    QByteArray data;
+    QBuffer buffer(&data);
+    buffer.open(QIODevice::WriteOnly);
+    image.save(&buffer, "PNG");
+    insert("image", QString::fromLatin1(data.toBase64()));
 }
 
 double RepoNode::x() const

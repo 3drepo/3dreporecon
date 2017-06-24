@@ -86,7 +86,7 @@ Flickable {
             MouseArea {
                 anchors.fill: parent
                 hoverEnabled: true
-                onDoubleClicked: model.appendRow(mouseX, mouseY)
+                onDoubleClicked: graphModel.appendRow(mouseX, mouseY)
                 propagateComposedEvents: true
                 preventStealing: false
 
@@ -125,40 +125,56 @@ Flickable {
             }
 
 
-
-            // Individual items to be painted
+            //------------------------------------------------------------------
+            //
+            // Links repeater
+            //
+            //------------------------------------------------------------------
             Repeater {
-                id: masterRepeater
                 model: graphModel
-                delegate: RepoModelItemPainter {
+                delegate: Rectangle {
                     id : node
-                    width: 200 // 50 * model.links.length + 100
-                    height: 200 // 50 * model.links.length + 100
-                    Drag.active: draggable.drag.active
-                    focus: true
-                    uuid: model.id
-
-                    //                    z: model.links
-
-
-                    // State machine
-                    // http://doc.qt.io/qt-4.8/qml-propertychanges.html
-
-                    x: model.x - width/2
-                    y: model.y - height/2
+                    width: 0
+                    height: 0
+                    focus: false
+                    color: "transparent"
+                    x: model.x
+                    y: model.y
 
                     property var nodeModelLinks : model.links
                     Repeater {
                         id: linkRepeater
                         model: nodeModelLinks
                         delegate: RepoModelItemLinkPainter {
-                            x1: parent.width / 2
-                            y1: parent.height / 2
+                            x1: 0
+                            y1: 0
                             x2: model.modelData.x - node.x
                             y2: model.modelData.y - node.y
-                            //                            z: -1
                         }
                     }
+                }
+            }
+
+            //------------------------------------------------------------------
+            //
+            // Nodes repeater
+            //
+            //------------------------------------------------------------------
+            Repeater {
+                model: graphModel
+                delegate: RepoModelItemPainter {
+                    width: 200 // 50 * model.links.length + 100
+                    height: 200 // 50 * model.links.length + 100
+                    Drag.active: draggable.drag.active
+                    focus: true
+                    uuid: model.id
+                    image: model.image
+
+                    // State machine
+                    // http://doc.qt.io/qt-4.8/qml-propertychanges.html
+
+                    x: model.x - width/2
+                    y: model.y - height/2
 
                     onXChanged: graphModel.setData(index, x + width/2, "x")
                     onYChanged: graphModel.setData(index, y + height/2, "y")

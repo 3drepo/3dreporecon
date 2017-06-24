@@ -17,56 +17,25 @@
 
 #pragma once
 
-#include <QMap>
-#include <QVariant>
-#include <QString>
-#include <QImage>
-#include <QUuid>
-#include <QDebug>
-#include <QList>
-#include <QBuffer>
+#include <QQuickImageProvider>
+#include "repo_model.h"
 
 namespace repo
 {
 
-class RepoNode : public QMap<QString, QVariant>
+class RepoModelImageProvider : public QQuickImageProvider
 {
 
 public:
 
-    RepoNode() : QMap<QString, QVariant>() {}
+    RepoModelImageProvider(RepoModel *model);
 
-    RepoNode(const QMap<QString, QVariant> &map);
+    QImage requestImage(const QString &id, QSize *size, const QSize &requestedSize);
 
-    RepoNode(const RepoNode &node);
+private:
 
-    QUuid id() const;
-
-    void setId();
-
-    void setId(const QUuid &id);
-
-    QString name() const;
-
-    QString type() const;
-
-    QImage image() const;
-
-    void setImage(const QImage &image);
-
-    double x() const;
-
-    double y() const;
-
-    void setX(double x);
-
-    void setY(double y);
-
-    QList<QVariant> links() const;
-
-    void setLinks(QList<QVariant> &links);
-
-//    void addLink(const QUuid &id);
+    RepoModel *model;
 };
 
 }
+

@@ -49,23 +49,26 @@ void RepoModelItemPainter::paint(QPainter *painter)
                      h - 2 * border,
                      0, 5760);
 
-    // Inner circle
-    //    painter->drawEllipse(innerCircle, innerCircle, w - 2 * innerCircle, h - 2 * innerCircle);
 
-    // Icon
-    //    painter->setFont(RepoMaterialIcons::getInstance().getFont(w - 2 * icon));
-    //    painter->setPen(QColor("#081028"));
-    //    painter->drawText(QRectF(icon, icon, w - 2 * icon, h - 2 * icon), QChar(0xE7FD),
-    //                      QTextOption(Qt::AlignCenter | Qt::AlignVCenter));
+    if (_image.isNull())
+    {
+        // Inner circle
+        painter->drawEllipse(innerCircle, innerCircle, w - 2 * innerCircle, h - 2 * innerCircle);
 
-    QPainterPath path;
-    path.addEllipse(innerCircle, innerCircle, w - 2 * innerCircle, h - 2 * innerCircle);
-    painter->setClipPath(path);
+        // Icon
+        painter->setFont(RepoMaterialIcons::getInstance().getFont(w - 2 * icon));
+        painter->setPen(QColor("#081028"));
+        painter->drawText(QRectF(icon, icon, w - 2 * icon, h - 2 * icon), QChar(0xE7FD),
+                          QTextOption(Qt::AlignCenter | Qt::AlignVCenter));
+    }
+    else
+    {
+        QPainterPath path;
+        path.addEllipse(innerCircle, innerCircle, w - 2 * innerCircle, h - 2 * innerCircle);
+        painter->setClipPath(path);
 
-    QRectF target(0, 0, w, h);
-    QImage image(":/resources/alvise.jpg");
-
-    painter->drawImage(target, image);
+        painter->drawImage(QRectF(0, 0, w, h), _image);
+    }
 }
 
 QUuid RepoModelItemPainter::getUuid() const
@@ -79,5 +82,19 @@ void RepoModelItemPainter::setUuid(const QUuid &uuid)
     {
         _uuid = uuid;
         emit uuidChanged();
+    }
+}
+
+QImage RepoModelItemPainter::getImage() const
+{
+    return _image;
+}
+
+void RepoModelItemPainter::setImage(const QImage &image)
+{
+    if (_image != image)
+    {
+        _image = image;
+        emit imageChanged();
     }
 }

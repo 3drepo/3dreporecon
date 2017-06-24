@@ -44,7 +44,7 @@ ItemDelegate {
         fillMode: Image.Pad
         horizontalAlignment: Image.AlignHCenter
         verticalAlignment: Image.AlignVCenter
-        source: "qrc:/resources/alvise.jpg"    //"image://materialicons/person"
+        source: model.image //"qrc:/resources/alvise.jpg"    //"image://materialicons/person"
         sourceSize.width: 60
         sourceSize.height: 60
         layer.enabled: true

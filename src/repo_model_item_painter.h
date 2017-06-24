@@ -32,6 +32,8 @@ class RepoModelItemPainter : public QQuickPaintedItem
 
     Q_PROPERTY(QUuid uuid READ getUuid WRITE setUuid NOTIFY uuidChanged)
 
+    Q_PROPERTY(QImage image READ getImage WRITE setImage NOTIFY imageChanged)
+
 public:
 
     RepoModelItemPainter(QQuickItem *parent = 0);
@@ -42,13 +44,21 @@ public:
 
     void setUuid(const QUuid &uuid);
 
+    QImage getImage() const;
+
+    void setImage(const QImage &image);
+
 signals :
 
     void uuidChanged();
 
+    void imageChanged();
+
 private :
 
     QUuid _uuid;
+
+    QImage _image;
 
 };
 

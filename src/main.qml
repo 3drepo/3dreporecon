@@ -41,19 +41,13 @@ ApplicationWindow {
     //        color: "#081028"
     //    }
 
-
-
-    RepoModel {
-        id: model
-    }
-
     background: Rectangle {
         id: bg
         color: "#081028"
 
         RepoCanvas {
             id: canvas
-            graphModel: model
+            graphModel: repoModel
         }
 
 
@@ -278,7 +272,7 @@ ApplicationWindow {
             anchors.fill: parent
             highlightFollowsCurrentItem: true
             highlightMoveDuration: 200
-            model: model
+            model: repoModel
         }
     }
 
