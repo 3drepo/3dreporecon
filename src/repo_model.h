@@ -71,6 +71,8 @@ public :
 
     Q_INVOKABLE bool setData(const QUuid &id, const QVariant &value, const QVariant &roleName);
 
+    Q_INVOKABLE bool setImage(int row, const QUrl &fileUrl);
+
     Q_INVOKABLE int role(const QVariant &roleName) const;
 
     bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const;

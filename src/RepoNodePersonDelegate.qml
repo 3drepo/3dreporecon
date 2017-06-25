@@ -39,15 +39,21 @@ Item {
 
             RepoModelItemPainter {
                 id: img
-                Binding on image {
-                    when: model.image !== "undefined"
-                    value: model.image
-                }
+//                Binding on image {
+//                    when: model.image !== "undefined"
+//                    value: model.image
+//                }
+                image: model.image
                 width: 200
                 height: 200
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.topMargin: 20
                 anchors.top: parent.top
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: fileDialog.open()
+                }
             }
 
             Grid {
@@ -63,10 +69,10 @@ Item {
                     id: nameField
                     width: parent.width
                     placeholderText: qsTr("Name")
-                    text: firstName
+                    text: name
                     font.pointSize: 12
                     onTextChanged: {
-                        repoModel.setData(index, text, "firstName")
+                        repoModel.setData(index, text, "name")
                     }
                 }
 
@@ -76,7 +82,7 @@ Item {
                     width: parent.width
                     anchors.topMargin: 2
                     font.pointSize: 10
-                    //            color: "grey"
+                    // see http://www.qtcentre.org/threads/65095-How-to-elide-text-in-TextEdit
                     onTextChanged: {
                         repoModel.setData(index, text, "jobTitle")
                     }
@@ -88,7 +94,6 @@ Item {
                     width: parent.width
                     anchors.topMargin: 2
                     font.pointSize: 10
-                    //            color: "grey"
                     onTextChanged: {
                         repoModel.setData(index, text, "organisation")
                     }
@@ -155,7 +160,8 @@ Item {
         visible: false
         nameFilters: [ "Image files (*.jpg *.png)", "All files (*)" ]
         onAccepted: {
-            console.log("You chose: " + fileDialog.fileUrls)
+            repoModel.setImage(index, fileDialog.fileUrl)
+
         }
         onRejected: {
             console.log("Canceled")

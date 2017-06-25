@@ -53,18 +53,18 @@ ItemDelegate {
 
         Text {
             id: nameText
-            text: firstName + " " + lastName
+            text: name
             font.pointSize: 10
-            width: delegateItem.width - img.width - checkBox.width - 40
+            width: delegateItem.width - img.width - checkBox.width - 60
             elide: Text.ElideRight
         }
 
         Text {
             id: jobTitleText
             text: jobTitle
+            width: nameText.width
             font.pointSize: 9
             color: "#999"
-            width: nameText.width
             elide: Text.ElideRight
         }
     }

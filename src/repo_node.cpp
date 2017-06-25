@@ -52,6 +52,16 @@ void RepoNode::setName(const QString &name)
     insert("name", name);
 }
 
+QString RepoNode::notes() const
+{
+    return value("notes").toString();
+}
+
+void RepoNode::setNotes(const QString &notes)
+{
+    insert("notes", notes);
+}
+
 QString RepoNode::type() const
 {
     return value("type").toString();

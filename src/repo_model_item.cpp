@@ -19,7 +19,7 @@
 
 using namespace repo;
 
-RepoModelItem::RepoModelItem(const RepoNode &node)
+RepoModelItem::RepoModelItem(RepoNode *node)
     : node(node)
 {
 
@@ -30,47 +30,50 @@ QVariant RepoModelItem::data(int role) const
     QVariant data;
     switch (role) {
     case Id:
-        data = node.id();
+        data = node->id();
         break;
     case Name:
-        data = node.name();
+        data = node->name();
+        break;
+    case Notes:
+        data = node->notes();
         break;
     case Type:
-        data = node.type();
+        data = node->type();
         break;
     case Image:
     {
-        QImage image = node.image();
+        QImage image = node->image();
         if (!image.isNull())
-            data = node.image();
+            data = node->image();
         break;
     }
     case X:
-        data = node.x();
+        data = node->x();
         break;
     case Y:
-        data = node.y();
-        break;
-    case FirstName:
-        data = ((RepoNodePerson) node).firstName();
-        break;
-    case LastName:
-        data = ((RepoNodePerson) node).lastName();
-        break;
-    case FullName :
-        data = this->data(FirstName).toString() + " " + this->data(LastName).toString();
+        data = node->y();
         break;
     case JobTitle:
-        data = ((RepoNodePerson) node).jobTitle();
+        data = ((RepoNodePerson*) node)->jobTitle();
         break;
     case LinkedIn:
-        data = ((RepoNodePerson) node).linkedIn();
+        data = ((RepoNodePerson*) node)->linkedIn();
         break;
     case Email:
-        data = ((RepoNodePerson) node).email();
+        data = ((RepoNodePerson*) node)->email();
+        break;
+    case Organisation:
+        data = ((RepoNodePerson*) node)->organisation();
+        break;
+    case Mobile:
+        data = ((RepoNodePerson*) node)->mobile();
+        break;
+    case Work:
+        data = ((RepoNodePerson*) node)->work();
         break;
     case Links:
-        data = node.links();
+        data = node->links();
         break;
     }
     return data;
@@ -80,48 +83,55 @@ void RepoModelItem::setData(const QVariant &value, int role)
 {
     switch (role)
     {
-    case FirstName:
-    {
-        RepoNodePerson::setFirstName(node, value.toString());
-        break;
-    }
     case JobTitle:
     {
-        RepoNodePerson::setJobTitle(node, value.toString());
+        ((RepoNodePerson*)node)->setJobTitle(value.toString());
         break;
     }
     case Email:
     {
-        RepoNodePerson::setEmail(node, value.toString());
+        ((RepoNodePerson*)node)->setEmail(value.toString());
         break;
     }
     case Name:
     {
-        node.setName(value.toString());
+        node->setName(value.toString());
         break;
     }
+    case Notes:
+        node->setNotes(value.toString());
+        break;
     case Image:
     {
         QImage image = value.value<QImage>();
-        node.setImage(image);
+        node->setImage(image);
         break;
     }
     case X:
         if (data(role) != value)
         {
-            node.setX(value.toDouble());
+            node->setX(value.toDouble());
             emit xChanged();
         }
         break;
     case Y:
         if (data(role) != value)
         {
-            node.setY(value.toDouble());
+            node->setY(value.toDouble());
             emit yChanged();
         }
         break;
+    case Organisation:
+        ((RepoNodePerson*) node)->setOrganisation(value.toString());
+        break;
+    case Mobile:
+        ((RepoNodePerson*) node)->setMobile(value.toString());
+        break;
+    case Work:
+        ((RepoNodePerson*) node)->setWork(value.toString());
+        break;
     case Links:
-        node.setLinks(value.toList());
+        node->setLinks(value.toList());
         break;
     }
 }

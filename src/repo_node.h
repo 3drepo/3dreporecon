@@ -50,6 +50,10 @@ public:
 
     void setName(const QString &name);
 
+    QString notes() const;
+
+    void setNotes(const QString &notes);
+
     QString type() const;
 
     QImage image() const;

@@ -169,10 +169,12 @@ Flickable {
                     focus: true
                     uuid: model.id
 
-                    Binding on image {
-                        when: model.image !== "undefined"
-                        value: model.image
-                    }
+//                    Binding on image {
+//                        when: model.image !== "undefined"
+//                        value: model.image
+//                    }
+
+                    image: model.image
 
                     // State machine
                     // http://doc.qt.io/qt-4.8/qml-propertychanges.html
@@ -187,7 +189,7 @@ Flickable {
                         id: nameText
                         y: parent.height * 1.05
                         anchors.horizontalCenter: parent.horizontalCenter
-                        text: firstName + " " + lastName
+                        text: name
                         font.pointSize: parent.width / 10
                         font.weight: Font.DemiBold
                         elide: Text.ElideRight

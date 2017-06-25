@@ -19,29 +19,14 @@
 
 using namespace repo;
 
-QString RepoNodePerson::firstName() const
-{
-    return value("firstName", "<undefined>").toString();
-}
-
-void RepoNodePerson::setFirstName(RepoNode &node, const QString &firstName)
-{
-    node.insert("firstName", firstName);
-}
-
-QString RepoNodePerson::lastName() const
-{
-    return value("lastName", "<undefined>").toString();
-}
-
 QString RepoNodePerson::jobTitle() const
 {
     return value("jobTitle").toString();
 }
 
-void RepoNodePerson::setJobTitle(RepoNode &node, const QString &jobTitle)
+void RepoNodePerson::setJobTitle(const QString &jobTitle)
 {
-    node.insert("jobTitle", jobTitle);
+    insert("jobTitle", jobTitle);
 }
 
 QUrl RepoNodePerson::linkedIn() const
@@ -49,12 +34,47 @@ QUrl RepoNodePerson::linkedIn() const
     return value("linkedIn").toUrl();
 }
 
+void RepoNodePerson::setLinkedIn(const QUrl &linkedIn)
+{
+    insert("linkedIn", linkedIn.toString());
+}
+
 QString RepoNodePerson::email() const
 {
     return value("email").toString();
 }
 
-void RepoNodePerson::setEmail(RepoNode &node, const QString &email)
+void RepoNodePerson::setEmail(const QString &email)
 {
-    node.insert("email", email);
+    insert("email", email);
+}
+
+QString RepoNodePerson::organisation() const
+{
+    return value("organisation").toString();
+}
+
+void RepoNodePerson::setOrganisation(const QString &organisation)
+{
+    insert("organisation", organisation);
+}
+
+QString RepoNodePerson::mobile() const
+{
+    return value("mobile").toString();
+}
+
+void RepoNodePerson::setMobile(const QString &mobile)
+{
+    insert("mobile", mobile);
+}
+
+QString RepoNodePerson::work() const
+{
+    return value("work").toString();
+}
+
+void RepoNodePerson::setWork(const QString &work)
+{
+    insert("work", work);
 }

@@ -5,15 +5,17 @@ using namespace repo;
 QHash<int, QByteArray> RepoModel::roles = {
     {RepoModelItem::Id,  "id"},
     {RepoModelItem::Name, "name"},
+    {RepoModelItem::Notes, "notes"},
     {RepoModelItem::Type, "type"},
     {RepoModelItem::Image, "image"},
     {RepoModelItem::X, "x"},
     {RepoModelItem::Y, "y"},
-    {RepoModelItem::FirstName, "firstName"},
-    {RepoModelItem::LastName, "lastName"},
     {RepoModelItem::JobTitle, "jobTitle"},
     {RepoModelItem::LinkedIn, "linkedIn"},
     {RepoModelItem::Email, "email"},
+    {RepoModelItem::Organisation, "organisation"},
+    {RepoModelItem::Mobile, "mobile"},
+    {RepoModelItem::Work, "work"},
     {RepoModelItem::Links, "links"}
 };
 
@@ -39,7 +41,7 @@ RepoModel::~RepoModel()
 void RepoModel::populate()
 {
     for (QVariant node : RepoJsonParser::read(jsonFile.absoluteFilePath()))
-        appendRow(new RepoModelItem((RepoNode)(node.toMap())));
+        appendRow(new RepoModelItem(new (RepoNode)(node.toMap())));
 }
 
 QVariant RepoModel::data(const QModelIndex &proxyIndex, int role) const
@@ -74,7 +76,7 @@ QList<RepoNode> RepoModel::nodes() const
     {
         RepoModelItem *item = (RepoModelItem *) (model->item(i));
         if (item)
-            nodes.append(item->getNode());
+            nodes.append(*(item->getNode()));
     }
     return nodes;
 }
@@ -86,17 +88,17 @@ QList<QVariant> RepoModel::toList() const
     {
         RepoModelItem *item = (RepoModelItem *) (model->item(i));
         if (item)
-            nodes.append(item->getNode());
+            nodes.append(*(item->getNode()));
     }
     return nodes;
 }
 
 QUuid RepoModel::appendRow(int x, int y)
 {
-    RepoNode node;
-    node.setId();
-    node.setX(x);
-    node.setY(y);
+    RepoNode *node = new RepoNode();
+    node->setId();
+    node->setX(x);
+    node->setY(y);
     return appendRow(new RepoModelItem(node));
 }
 
@@ -162,6 +164,12 @@ bool RepoModel::setData(const QUuid &id, const QVariant &value, const QVariant &
     return setData(this->item(id), value, role(roleName));
 }
 
+bool RepoModel::setImage(int row, const QUrl &fileUrl)
+{
+    QImage image(fileUrl.toLocalFile());
+    return setData(row, image, "image");
+}
+
 int RepoModel::role(const QVariant &roleName) const
 {
     return roles.key(roleName.toByteArray(), -1);
@@ -176,10 +184,10 @@ bool RepoModel::filterAcceptsRow(int sourceRow, const QModelIndex &) const
         QString comparator = filterCaseSensitivity() == Qt::CaseInsensitive
                 ? _filter.toLower()
                 : _filter;
-        QString fullName = filterCaseSensitivity() == Qt::CaseInsensitive
-                ? item->data(RepoModelItem::FullName).toString().toLower()
-                : item->data(RepoModelItem::FullName).toString();
-        accept = fullName.contains(comparator);
+        QString name = filterCaseSensitivity() == Qt::CaseInsensitive
+                ? item->data(RepoModelItem::Name).toString().toLower()
+                : item->data(RepoModelItem::Name).toString();
+        accept = name.contains(comparator);
     }
     return accept;
 }

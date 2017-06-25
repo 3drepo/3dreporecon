@@ -47,6 +47,7 @@ public :
         //-------
         Id = Qt::UserRole + 1,
         Name,
+        Notes,
         Type,
         Image,
         X,
@@ -55,24 +56,24 @@ public :
         //-------
         // Person
         //-------
-        FirstName,
-        LastName,
-        FullName,
         JobTitle,
         LinkedIn,
         Email,
         Links,
+        Organisation,
+        Mobile,
+        Work
     };
 
 public:
 
-    RepoModelItem(const RepoNode &node = RepoNode());
+    RepoModelItem(RepoNode *node = NULL);
 
     QVariant data(int role = Qt::UserRole + 1) const;
 
     void setData(const QVariant &value, int role = Qt::UserRole + 1);
 
-    RepoNode getNode() { return node; }
+    RepoNode* getNode() { return node; }
 
     double getX() const;
     double getY() const;
@@ -87,7 +88,7 @@ signals:
 
 private :
 
-    RepoNode node;
+    RepoNode *node;
 };
 
 }

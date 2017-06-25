@@ -34,22 +34,29 @@ public :
 
 public:
 
-    QString firstName() const;
-
-    QString lastName() const;
-
     QString jobTitle() const;
+
+    void setJobTitle(const QString &jobTitle);
 
     QUrl linkedIn() const;
 
+    void setLinkedIn(const QUrl &linkedIn);
+
     QString email() const;
 
-    static void setFirstName(RepoNode &node, const QString &fristName);
+    void setEmail(const QString &email);
 
-    static void setJobTitle(RepoNode &node, const QString &jobTitle);
+    QString organisation() const;
 
-    static void setEmail(RepoNode &node, const QString &email);
+    void setOrganisation(const QString &organisation);
 
+    QString mobile() const;
+
+    void setMobile(const QString &mobile);
+
+    QString work() const;
+
+    void setWork(const QString &work);
 };
 
 }
