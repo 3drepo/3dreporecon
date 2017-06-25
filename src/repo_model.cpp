@@ -57,6 +57,11 @@ QVariant RepoModel::data(const QModelIndex &proxyIndex, int role) const
     return data;
 }
 
+QVariant RepoModel::data(int row, const QString &roleName) const
+{
+    return data(index(row, 0), role(roleName));
+}
+
 QHash<int, QByteArray> RepoModel::roleNames() const
 {
     return roles;

@@ -53,3 +53,8 @@ QString RepoNodePerson::email() const
 {
     return value("email").toString();
 }
+
+void RepoNodePerson::setEmail(RepoNode &node, const QString &email)
+{
+    node.insert("email", email);
+}

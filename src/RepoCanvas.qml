@@ -30,7 +30,7 @@ import Qt.labs.settings 1.0
 import repo 1.0
 
 Flickable {
-    property QtObject graphModel
+//    property QtObject graphModel
     property int w: 19200
     property int h: 10800
     property RepoModelItemPainter start: null
@@ -86,7 +86,7 @@ Flickable {
             MouseArea {
                 anchors.fill: parent
                 hoverEnabled: true
-                onDoubleClicked: graphModel.appendRow(mouseX, mouseY)
+                onDoubleClicked: repoModel.appendRow(mouseX, mouseY)
                 propagateComposedEvents: true
                 preventStealing: false
 
@@ -131,7 +131,7 @@ Flickable {
             //
             //------------------------------------------------------------------
             Repeater {
-                model: graphModel
+                model: repoModel
                 delegate: Rectangle {
                     id : node
                     width: 0
@@ -161,7 +161,7 @@ Flickable {
             //
             //------------------------------------------------------------------
             Repeater {
-                model: graphModel
+                model: repoModel
                 delegate: RepoModelItemPainter {
                     width: 200 // 50 * model.links.length + 100
                     height: 200 // 50 * model.links.length + 100
@@ -180,8 +180,8 @@ Flickable {
                     x: model.x - width/2
                     y: model.y - height/2
 
-                    onXChanged: graphModel.setData(index, x + width/2, "x")
-                    onYChanged: graphModel.setData(index, y + height/2, "y")
+                    onXChanged: repoModel.setData(index, x + width/2, "x")
+                    onYChanged: repoModel.setData(index, y + height/2, "y")
 
                     Text {
                         id: nameText
@@ -230,7 +230,7 @@ Flickable {
                             {
                                 if (start != parent)
                                 {
-                                    graphModel.addLink(start.uuid, parent.uuid)
+                                    repoModel.addLink(start.uuid, parent.uuid)
                                 }
                                 start = null;
                             }
@@ -240,10 +240,10 @@ Flickable {
                             {
                                 // TODO: show confirmation dialog to prevent
                                 // accidental deletes
-                                graphModel.removeRow(index)
+                                repoModel.removeRow(index)
                             }
                             else {
-                                console.log(graphModel.index)
+//                                console.log(graphModel.index)
                             }
 
 

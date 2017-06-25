@@ -13,8 +13,8 @@
         <file>src/RepoNodesListView.qml</file>
         <file>src/RepoNodesListViewDelegate.qml</file>
         <file>src/RepoCanvas.qml</file>
-        <file>src/RepoNodePersonListView.qml</file>
-        <file>src/RepoNodePersonListViewDelegate.qml</file>
         <file>src/RepoNodeImage.qml</file>
+        <file>src/RepoNodeDetailsView.qml</file>
+        <file>src/RepoNodePersonDelegate.qml</file>
     </qresource>
 </RCC>

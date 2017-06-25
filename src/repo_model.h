@@ -48,6 +48,8 @@ public :
     virtual QVariant data(const QModelIndex &proxyIndex,
                           int role = Qt::UserRole + 1) const;
 
+    Q_INVOKABLE QVariant data(int row, const QString &roleName) const;
+
     //! See http://doc.qt.io/qt-5/qtquick-modelviewsdata-cppmodels.html
     QHash<int, QByteArray> roleNames() const;
 

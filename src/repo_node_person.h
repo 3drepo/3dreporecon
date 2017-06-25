@@ -48,6 +48,8 @@ public:
 
     static void setJobTitle(RepoNode &node, const QString &jobTitle);
 
+    static void setEmail(RepoNode &node, const QString &email);
+
 };
 
 }

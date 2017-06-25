@@ -47,7 +47,6 @@ ApplicationWindow {
 
         RepoCanvas {
             id: canvas
-            graphModel: repoModel
         }
 
 
@@ -265,6 +264,7 @@ ApplicationWindow {
         antialiasing: true
         color: "white"
         radius: 4
+        clip: true
 
         StackView {
             id: stackView
@@ -280,17 +280,14 @@ ApplicationWindow {
                     highlighted: ListView.isCurrentItem
                     onClicked: {
                         listView.currentIndex = index
-                        stackView.push("qrc:/src/RepoNodePersonListView.qml")
+                        stackView.push("qrc:/src/RepoNodeDetailsView.qml")
                         var personal = stackView.currentItem
-//                        personal.select(index)
-                        stackView.currentItem.currentIndex = index
-
+                        personal.select(index)
                     }
                 }
             }
-
         }
-        //
+
     }
 
 

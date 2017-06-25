@@ -90,6 +90,11 @@ void RepoModelItem::setData(const QVariant &value, int role)
         RepoNodePerson::setJobTitle(node, value.toString());
         break;
     }
+    case Email:
+    {
+        RepoNodePerson::setEmail(node, value.toString());
+        break;
+    }
     case Name:
     {
         node.setName(value.toString());

@@ -63,6 +63,10 @@ QPixmap RepoMaterialIconsImageProvider::requestPixmap(
         pixmap = RepoMaterialIcons::getSearchIcon(color).pixmap(width, height);
     else if (icon == "assignment")
         pixmap = RepoMaterialIcons::getAssignmentIcon(color).pixmap(width, height);
+    else if (icon == "email")
+        pixmap = RepoMaterialIcons::getEmailIcon(color).pixmap(width, height);
+    else if (icon == "delete")
+        pixmap = RepoMaterialIcons::getDeleteIcon(color).pixmap(width, height);
 
     *size = QSize(width, height);
     return pixmap;

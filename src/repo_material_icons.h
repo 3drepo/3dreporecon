@@ -131,6 +131,16 @@ public:
         return getIconStatic(0xE85D, color);
     }
 
+    static QIcon getEmailIcon(const QColor &color = QColor(Qt::white))
+    {
+        return getIconStatic(0xE0BE, color);
+    }
+
+    static QIcon getDeleteIcon(const QColor &color = QColor(Qt::white))
+    {
+        return getIconStatic(0xE872, color);
+    }
+
 
 //    //! Returns commit icon.
 //    static QIcon getCommitIcon()
