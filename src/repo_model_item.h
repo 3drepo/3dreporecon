@@ -68,6 +68,7 @@ public :
 public:
 
     RepoModelItem(RepoNode *node = NULL);
+    ~RepoModelItem();
 
     QVariant data(int role = Qt::UserRole + 1) const;
 
