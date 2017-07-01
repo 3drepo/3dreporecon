@@ -22,6 +22,7 @@
 #include <QPoint>
 #include <QPainter>
 #include <QUuid>
+#include <QTime>
 
 namespace repo
 {

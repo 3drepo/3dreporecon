@@ -62,8 +62,8 @@ Item {
 
             Dial {
                 id: dial
-                width: 200
-                height: 200
+                width: 290
+                height: 290
                 value: percentage
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
@@ -71,8 +71,8 @@ Item {
                     img.support = value
                      repoModel.setData(index, value, "percentage")
                 }
-                snapMode: Dial.SnapOnRelease
-                stepSize: 0.1
+                snapMode: Dial.SnapAlways
+                stepSize: 0.2
                 Material.accent: img.getSupportColor(value)
 
 
@@ -80,7 +80,7 @@ Item {
                     color: "transparent"
                     radius: width / 2
                     border.color: img.getSupportColor(dial.value)
-                    border.width: 16
+                    border.width: 0
                 }
             }
         }

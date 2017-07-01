@@ -55,6 +55,7 @@ ItemDelegate {
         rimColor: "green"
         backgroundColor: "transparent"
         foregroundColor: "#ddd"
+        support: percentage
 
     }
 

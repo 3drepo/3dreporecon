@@ -26,11 +26,12 @@ RepoModelItemPainter::RepoModelItemPainter(QQuickItem *parent)
     , _rimColor(Qt::blue)
     , _backgroundColor(QColor("#081028"))
     , _foregroundColor(Qt::blue)
-    , _support(0.5)
 {}
 
 void RepoModelItemPainter::paint(QPainter *painter)
 {
+    qDebug() << QTime::currentTime().toString() << " painting";
+
     painter->setRenderHint(QPainter::Antialiasing);
 
     int w = boundingRect().width();
@@ -48,13 +49,13 @@ void RepoModelItemPainter::paint(QPainter *painter)
 
     // Outter rim border
     QPen p;
-//    p.setWidth(border);
-//    p.setColor(getSupportColor(_support)); //_rimColor);
-//    painter->setPen(p);
-//    painter->drawArc(border, border,
-//                     w - 2 * border,
-//                     h - 2 * border,
-//                     0, 5760);
+    p.setWidth(border);
+    p.setColor(getSupportColor(_support)); //_rimColor);
+    painter->setPen(p);
+    painter->drawArc(border, border,
+                     w - 2 * border,
+                     h - 2 * border,
+                     0, 5760);
 
     if (_image.isNull())
     {

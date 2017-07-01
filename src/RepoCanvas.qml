@@ -174,6 +174,7 @@ Flickable {
                     height: 200 // 50 * model.links.length + 100
                     Drag.active: draggable.drag.active
                     focus: true
+                    support: percentage
 
 
                     // State machine
@@ -193,7 +194,7 @@ Flickable {
                         font.pointSize: parent.width / 10
                         font.weight: Font.DemiBold
                         elide: Text.ElideRight
-                        color: "blue"
+                        color: parent.getSupportColor(percentage)
                     }
 
                     Text {
