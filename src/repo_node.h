@@ -72,6 +72,10 @@ public:
 
     void setLinks(QList<QVariant> &links);
 
+    float percentage() const;
+
+    void setPercentage(float percentage);
+
 //    void addLink(const QUuid &id);
 };
 

@@ -20,8 +20,8 @@
 using namespace repo;
 
 RepoModelImageProvider::RepoModelImageProvider(RepoModel *model)
-    : QQuickImageProvider(QQuickImageProvider::Image,
-                          QQmlImageProviderBase::ForceAsynchronousImageLoading)
+    : QQuickImageProvider(QQuickImageProvider::Image/*,
+                          QQmlImageProviderBase::ForceAsynchronousImageLoading*/)
     , model(model)
 {}
 
@@ -30,7 +30,6 @@ QImage RepoModelImageProvider::requestImage(const QString &id, QSize *size, cons
     QImage image;
     int width = requestedSize.width() > 0 ? requestedSize.width() : 32;
     int height = requestedSize.height() > 0 ? requestedSize.height() : 32;
-
 
     // ID comes in as %7Bf77cf295-1817-48aa-aaef-a9f627c5edfa%7D
     // where "%7B" corresponds to "{" and "%7D" to "}"
@@ -43,8 +42,6 @@ QImage RepoModelImageProvider::requestImage(const QString &id, QSize *size, cons
     {
         image = item->data(RepoModelItem::Image).value<QImage>();
         image = image.scaled(width, height);
-
-
     }
     *size = QSize(width, height);
     return image;

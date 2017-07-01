@@ -121,13 +121,13 @@ Item {
         keyNavigationWraps: true
 
 
-        onHighlightItemChanged: {
-            console.log(currentItem)
-        }
+//        onHighlightItemChanged: {
+//            console.log(currentItem)
+//        }
 
-        onCurrentIndexChanged: {
-            console.log(currentItem)
-        }
+//        onCurrentIndexChanged: {
+//            console.log(currentItem)
+//        }
     }
 
     function select(index) {

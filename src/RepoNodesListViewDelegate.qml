@@ -35,13 +35,27 @@ ItemDelegate {
     }
 
 
-    RepoNodeImage {
+    //    RepoNodeImage {
+    ////        id: img
+
+    //    }
+
+    RepoModelItemPainter {
         id: img
+        uuid: model.id
+        Binding on image {
+            when: model.image !== "undefined"
+            value: model.image
+        }
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: checkBox.right
         anchors.leftMargin: 10
-        sourceSize.width: 60
-        sourceSize.height: 60
+        width: 60
+        height: 60
+        rimColor: "green"
+        backgroundColor: "transparent"
+        foregroundColor: "#ddd"
+
     }
 
 

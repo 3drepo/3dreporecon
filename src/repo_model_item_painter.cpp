@@ -23,6 +23,10 @@ using namespace repo;
 
 RepoModelItemPainter::RepoModelItemPainter(QQuickItem *parent)
     : QQuickPaintedItem(parent)
+    , _rimColor(Qt::blue)
+    , _backgroundColor(QColor("#081028"))
+    , _foregroundColor(Qt::blue)
+    , _support(0.5)
 {}
 
 void RepoModelItemPainter::paint(QPainter *painter)
@@ -32,33 +36,32 @@ void RepoModelItemPainter::paint(QPainter *painter)
     int w = boundingRect().width();
     int h = boundingRect().height();
 
-    int border = w * 0.03;
-    int gap = w * 0.06;
+    int border = w * 0.06;
+    int gap = w * 0.08;
     int innerCircle = border + gap;
-    int icon = innerCircle + 10;
+    int icon = w * 0.07;
 
+    // Inner filled circle
+    painter->setPen(Qt::NoPen);
+    painter->setBrush(_backgroundColor);
+    painter->drawEllipse(0, 0, w, h);
 
-    // Border
+    // Outter rim border
     QPen p;
-    p.setWidth(border);
-    p.setColor(Qt::blue);
-    painter->setPen(p);
-    painter->setBrush(Qt::blue);
-    painter->drawArc(border, border,
-                     w - 2 * border,
-                     h - 2 * border,
-                     0, 5760);
-
+//    p.setWidth(border);
+//    p.setColor(getSupportColor(_support)); //_rimColor);
+//    painter->setPen(p);
+//    painter->drawArc(border, border,
+//                     w - 2 * border,
+//                     h - 2 * border,
+//                     0, 5760);
 
     if (_image.isNull())
     {
-        // Inner circle
-        painter->drawEllipse(innerCircle, innerCircle, w - 2 * innerCircle, h - 2 * innerCircle);
-
         // Icon
         painter->setFont(RepoMaterialIcons::getInstance().getFont(w - 2 * icon));
-        painter->setPen(QColor("#081028"));
-        painter->drawText(QRectF(icon, icon, w - 2 * icon, h - 2 * icon), QChar(0xE7FD),
+        painter->setPen(_foregroundColor);//QColor("#081028"));
+        painter->drawText(QRectF(icon, icon, w - 2 * icon, h - 2 * icon),QChar(0xE853), // QChar(0xE7FD),
                           QTextOption(Qt::AlignCenter | Qt::AlignVCenter));
     }
     else
@@ -66,8 +69,7 @@ void RepoModelItemPainter::paint(QPainter *painter)
         QPainterPath path;
         path.addEllipse(innerCircle, innerCircle, w - 2 * innerCircle, h - 2 * innerCircle);
         painter->setClipPath(path);
-
-        painter->drawImage(QRectF(0, 0, w, h), _image);
+        painter->drawImage(boundingRect(), _image);
     }
 }
 
@@ -95,6 +97,79 @@ void RepoModelItemPainter::setImage(const QImage &image)
     if (_image != image)
     {
         _image = image;
+        this->update(boundingRect().toRect());
         emit imageChanged();
     }
+}
+
+QColor RepoModelItemPainter::getRimColor() const
+{
+    return _rimColor;
+}
+
+void RepoModelItemPainter::setRimColor(const QColor &color)
+{
+    if (_rimColor != color)
+    {
+        _rimColor = color;
+        this->update(boundingRect().toRect());
+        emit rimColorChanged();
+    }
+}
+
+QColor RepoModelItemPainter::getBackgroundColor() const
+{
+    return _backgroundColor;
+}
+
+void RepoModelItemPainter::setBackgroundColor(const QColor &color)
+{
+    if (_backgroundColor != color)
+    {
+        _backgroundColor = color;
+        this->update(boundingRect().toRect());
+        emit backgroundColorChanged();
+    }
+}
+
+QColor RepoModelItemPainter::getForegroundColor() const
+{
+    return _foregroundColor;
+}
+
+void RepoModelItemPainter::setForegroundColor(const QColor &color)
+{
+    if (_foregroundColor != color)
+    {
+        _foregroundColor = color;
+        this->update(boundingRect().toRect());
+        emit foregroundColorChanged();
+    }
+}
+
+float RepoModelItemPainter::getSupport() const
+{
+    return _support;
+}
+
+void RepoModelItemPainter::setSupport(float support)
+{
+    if (_support != support)
+    {
+        _support = support;
+        this->update(boundingRect().toRect());
+        emit supportChanged();
+    }
+}
+
+
+QColor RepoModelItemPainter::getSupportColor(float support)
+{
+    int r = 255;
+    int g = 255;
+    if (support < 0.5)
+        g = (support * 2 * 255);
+    else
+        r = ((1 - support) * 2 ) * 255;
+    return QColor(r, g, (1 - support) * 128);
 }

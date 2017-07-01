@@ -10,6 +10,7 @@ QHash<int, QByteArray> RepoModel::roles = {
     {RepoModelItem::Image, "image"},
     {RepoModelItem::X, "x"},
     {RepoModelItem::Y, "y"},
+    {RepoModelItem::Percentage, "percentage"},
     {RepoModelItem::JobTitle, "jobTitle"},
     {RepoModelItem::LinkedIn, "linkedIn"},
     {RepoModelItem::Email, "email"},
@@ -142,7 +143,7 @@ bool RepoModel::setData(RepoModelItem *item, const QVariant &value, int role)
         if (success = (value != item->data(role)))
         {
             item->setData(value, role);
-            QModelIndex index = model->indexFromItem(item);
+            QModelIndex index = this->mapFromSource(model->indexFromItem(item));
             emit dataChanged(index, index, QVector<int>() << role);
         }
     }

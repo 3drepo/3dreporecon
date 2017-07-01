@@ -163,18 +163,18 @@ Flickable {
             Repeater {
                 model: repoModel
                 delegate: RepoModelItemPainter {
+
+                    uuid: model.id
+                    Binding on image {
+                        when: model.image !== "undefined"
+                        value: model.image
+                    }
+
                     width: 200 // 50 * model.links.length + 100
                     height: 200 // 50 * model.links.length + 100
                     Drag.active: draggable.drag.active
                     focus: true
-                    uuid: model.id
 
-//                    Binding on image {
-//                        when: model.image !== "undefined"
-//                        value: model.image
-//                    }
-
-                    image: model.image
 
                     // State machine
                     // http://doc.qt.io/qt-4.8/qml-propertychanges.html

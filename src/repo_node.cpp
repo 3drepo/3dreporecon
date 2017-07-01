@@ -115,6 +115,16 @@ void RepoNode::setLinks(QList<QVariant> &links)
     insert("links", links);
 }
 
+float RepoNode::percentage() const
+{
+    return value("percentage").toFloat();
+}
+
+void RepoNode::setPercentage(float percentage)
+{
+    insert("percentage", percentage);
+}
+
 //void RepoNode::addLink(const QUuid &id)
 //{
 //    QList<QVariant> links = this->links();

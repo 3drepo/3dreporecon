@@ -81,15 +81,9 @@ ListView {
                 fillMode: Image.Pad
                 horizontalAlignment: Image.AlignHCenter
                 verticalAlignment: Image.AlignVCenter
-                source: searchField.text.length > 0 ? "image://materialicons/clear" : "image://materialicons/search"
+                source: searchField.text.length > 0 ? "image://materialicons/clear/#FF757575" : "image://materialicons/search/#FF757575"
                 sourceSize.width: 32
                 sourceSize.height: 32
-
-                ColorOverlay {
-                    anchors.fill: parent
-                    source: parent
-                    color: "#FF757575"
-                }
             }
             onClicked: {
                 if (searchField.text.length > 0)
@@ -140,5 +134,7 @@ ListView {
 //        }
 //    }
 
-    ScrollIndicator.vertical: ScrollIndicator {}
+    ScrollIndicator.vertical: ScrollIndicator {
+        z : -1
+    }
 }

@@ -61,6 +61,9 @@ QVariant RepoModelItem::data(int role) const
         case Y:
             data = node->y();
             break;
+        case Percentage:
+            data = node->percentage();
+            break;
         case JobTitle:
             data = ((RepoNodePerson*) node)->jobTitle();
             break;
@@ -130,6 +133,9 @@ void RepoModelItem::setData(const QVariant &value, int role)
                 node->setY(value.toDouble());
                 emit yChanged();
             }
+            break;
+        case Percentage:
+            node->setPercentage(value.toFloat());
             break;
         case Organisation:
             ((RepoNodePerson*) node)->setOrganisation(value.toString());

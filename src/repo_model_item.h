@@ -52,6 +52,7 @@ public :
         Image,
         X,
         Y,
+        Percentage,
 
         //-------
         // Person
