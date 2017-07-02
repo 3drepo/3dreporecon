@@ -52,10 +52,10 @@ ItemDelegate {
         anchors.leftMargin: 10
         width: 60
         height: 60
-        rimColor: "green"
+
         backgroundColor: "transparent"
         foregroundColor: "#ddd"
-        support: percentage
+        percentage: model.percentage
 
     }
 

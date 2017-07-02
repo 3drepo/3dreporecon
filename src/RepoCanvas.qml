@@ -30,7 +30,6 @@ import Qt.labs.settings 1.0
 import repo 1.0
 
 Flickable {
-//    property QtObject graphModel
     property int w: 19200
     property int h: 10800
     property RepoModelItemPainter start: null
@@ -60,8 +59,8 @@ Flickable {
         }
     }
 
-    Behavior on contentX { NumberAnimation { duration: 100 } }
-    Behavior on contentY { NumberAnimation { duration: 100 } }
+    Behavior on contentX { NumberAnimation { duration: 500 } }
+    Behavior on contentY { NumberAnimation { duration: 500 } }
 
     DropArea {
         anchors.fill: parent.fill
@@ -174,7 +173,7 @@ Flickable {
                     height: 200 // 50 * model.links.length + 100
                     Drag.active: draggable.drag.active
                     focus: true
-                    support: percentage
+                    percentage: model.percentage
 
 
                     // State machine
@@ -194,7 +193,7 @@ Flickable {
                         font.pointSize: parent.width / 10
                         font.weight: Font.DemiBold
                         elide: Text.ElideRight
-                        color: parent.getSupportColor(percentage)
+                        color: parent.getPercentageColor(model.percentage)
                     }
 
                     Text {

@@ -35,13 +35,11 @@ class RepoModelItemPainter : public QQuickPaintedItem
 
     Q_PROPERTY(QImage image READ getImage WRITE setImage NOTIFY imageChanged)
 
-    Q_PROPERTY(QColor rimColor READ getRimColor WRITE setRimColor NOTIFY rimColorChanged)
-
     Q_PROPERTY(QColor backgroundColor READ getBackgroundColor WRITE setBackgroundColor NOTIFY backgroundColorChanged)
 
     Q_PROPERTY(QColor foregroundColor READ getForegroundColor WRITE setForegroundColor NOTIFY foregroundColorChanged)
 
-    Q_PROPERTY(float support READ getSupport WRITE setSupport NOTIFY supportChanged)
+    Q_PROPERTY(float percentage READ getPercentage WRITE setPercentage NOTIFY percentageChanged)
 
 public:
 
@@ -55,19 +53,19 @@ public:
     QImage getImage() const;
     void setImage(const QImage &image);
 
-    QColor getRimColor() const;
-    void setRimColor(const QColor &color);
-
     QColor getBackgroundColor() const;
     void setBackgroundColor(const QColor &color);
 
     QColor getForegroundColor() const;
     void setForegroundColor(const QColor &color);
 
-    float getSupport() const;
-    void setSupport(float support);
+    float getPercentage() const;
+    void setPercentage(float percentage);
 
-    Q_INVOKABLE static QColor getSupportColor(float support);
+    /**
+     * Percentage is between 0.0 and 1.0
+     */
+    Q_INVOKABLE static QColor getPercentageColor(float percentage);
 
 signals :
 
@@ -75,13 +73,11 @@ signals :
 
     void imageChanged();
 
-    void rimColorChanged();
-
     void backgroundColorChanged();
 
     void foregroundColorChanged();
 
-    void supportChanged();
+    void percentageChanged();
 
 private :
 
@@ -89,13 +85,11 @@ private :
 
     QImage _image;
 
-    QColor _rimColor;
-
     QColor _backgroundColor;
 
     QColor _foregroundColor;
 
-    float _support;
+    float _percentage;
 
 };
 

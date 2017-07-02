@@ -23,15 +23,13 @@ using namespace repo;
 
 RepoModelItemPainter::RepoModelItemPainter(QQuickItem *parent)
     : QQuickPaintedItem(parent)
-    , _rimColor(Qt::blue)
     , _backgroundColor(QColor("#081028"))
     , _foregroundColor(Qt::blue)
+    , _percentage(0.0)
 {}
 
 void RepoModelItemPainter::paint(QPainter *painter)
 {
-    qDebug() << QTime::currentTime().toString() << " painting";
-
     painter->setRenderHint(QPainter::Antialiasing);
 
     int w = boundingRect().width();
@@ -50,7 +48,7 @@ void RepoModelItemPainter::paint(QPainter *painter)
     // Outter rim border
     QPen p;
     p.setWidth(border);
-    p.setColor(getSupportColor(_support)); //_rimColor);
+    p.setColor(getPercentageColor(_percentage));
     painter->setPen(p);
     painter->drawArc(border, border,
                      w - 2 * border,
@@ -103,21 +101,6 @@ void RepoModelItemPainter::setImage(const QImage &image)
     }
 }
 
-QColor RepoModelItemPainter::getRimColor() const
-{
-    return _rimColor;
-}
-
-void RepoModelItemPainter::setRimColor(const QColor &color)
-{
-    if (_rimColor != color)
-    {
-        _rimColor = color;
-        this->update(boundingRect().toRect());
-        emit rimColorChanged();
-    }
-}
-
 QColor RepoModelItemPainter::getBackgroundColor() const
 {
     return _backgroundColor;
@@ -148,29 +131,29 @@ void RepoModelItemPainter::setForegroundColor(const QColor &color)
     }
 }
 
-float RepoModelItemPainter::getSupport() const
+float RepoModelItemPainter::getPercentage() const
 {
-    return _support;
+    return _percentage;
 }
 
-void RepoModelItemPainter::setSupport(float support)
+void RepoModelItemPainter::setPercentage(float percentage)
 {
-    if (_support != support)
+    if (_percentage != percentage)
     {
-        _support = support;
+        _percentage = percentage;
         this->update(boundingRect().toRect());
-        emit supportChanged();
+        emit percentageChanged();
     }
 }
 
 
-QColor RepoModelItemPainter::getSupportColor(float support)
+QColor RepoModelItemPainter::getPercentageColor(float percentage)
 {
     int r = 255;
     int g = 255;
-    if (support < 0.5)
-        g = (support * 2 * 255);
+    if (percentage < 0.5)
+        g = (percentage * 2 * 255);
     else
-        r = ((1 - support) * 2 ) * 255;
-    return QColor(r, g, (1 - support) * 128);
+        r = ((1 - percentage) * 2 ) * 255;
+    return QColor(r, g, (1 - percentage) * 128);
 }

@@ -270,11 +270,16 @@ ApplicationWindow {
             id: stackView
             anchors.fill: parent
             clip: true
+
+
+
             initialItem: RepoNodesListView {
                 id: listView
                 highlightFollowsCurrentItem: true
                 highlightMoveDuration: 200
                 model: repoModel
+
+
 
                 delegate: RepoNodesListViewDelegate {
                     highlighted: ListView.isCurrentItem
@@ -283,6 +288,11 @@ ApplicationWindow {
                         stackView.push("qrc:/src/RepoNodeDetailsView.qml")
                         var personal = stackView.currentItem
                         personal.select(index)
+
+
+
+                        canvas.contentX = model.x - window.width/2
+                        canvas.contentY = model.y - window.height/2
                     }
                 }
             }
