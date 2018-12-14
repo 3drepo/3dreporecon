@@ -7,3 +7,5 @@ Graphical Customer Relationship Management Software
 ## Dependencies
 - [Mongo C Driver 1.13.0](https://github.com/mongodb/mongo-c-driver/releases/tag/1.13.0): http://mongoc.org/libmongoc/current/installing.html
 - [Mongo C++ Driver 3.4.0](https://github.com/mongodb/mongo-cxx-driver/releases): http://mongocxx.org/mongocxx-v3/installation/
+- OpenSSL
+-- Windows binaries: https://slproweb.com/products/Win32OpenSSL.html
