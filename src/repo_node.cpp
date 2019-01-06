@@ -16,6 +16,7 @@
 */
 
 #include "repo_node.h"
+#include <iostream>
 
 using namespace repo;
 
@@ -27,103 +28,183 @@ RepoNode::RepoNode(const RepoNode &node)
     : QMap<QString, QVariant>(node)
 {}
 
-QUuid RepoNode::id() const
+QString RepoNode::id() const
 {
-    return value("_id").toUuid();
+    return value("_id").toString();
 }
 
 void RepoNode::setId()
 {
-    setId(QUuid::createUuid());
+    setId(QUuid::createUuid().toString());
 }
 
-void RepoNode::setId(const QUuid &id)
+void RepoNode::setId(const QString &id)
 {
     insert("_id", id);
 }
 
-QString RepoNode::name() const
+QString RepoNode::user() const
 {
-    return value("name").toString();
+    return value("user").toString();
 }
 
-void RepoNode::setName(const QString &name)
+void RepoNode::setUser(const QString &user)
 {
-    insert("name", name);
+    insert("user", user);
 }
 
-QString RepoNode::notes() const
+QMap<QString, QVariant> RepoNode::customData() const
 {
-    return value("notes").toString();
+    return value("customData").toMap();
 }
 
-void RepoNode::setNotes(const QString &notes)
+QString RepoNode::email() const
 {
-    insert("notes", notes);
+    return customData().value("email").toString();
 }
 
-QString RepoNode::type() const
+//void RepoNode::setEmail(const QString &email)
+//{
+////    ((QMap<QString, QVariant>) value("customData")).insert("email", email);
+////    customData().insert("email", email);
+//}
+
+QString RepoNode::firstName() const
 {
-    return value("type").toString();
+    return customData().value("firstName").toString();
 }
 
-QImage RepoNode::image() const
+QString RepoNode::lastName() const
 {
-    QImage image;
-    QByteArray encoded = value("image").toString().toLatin1();
-    if (!encoded.isEmpty())
-        image.loadFromData(QByteArray::fromBase64(encoded), "PNG");
-    return image;
+    return customData().value("lastName").toString();
 }
 
-void RepoNode::setImage(const QImage &image)
+bool RepoNode::hereEnabled() const
 {
-    QByteArray data;
-    QBuffer buffer(&data);
-    buffer.open(QIODevice::WriteOnly);
-    image.save(&buffer, "PNG");
-    insert("image", QString::fromLatin1(data.toBase64()));
+    return customData().value("hereEnabled").toBool();
 }
 
-double RepoNode::x() const
+void RepoNode::setHereEnabled(bool on)
 {
-    return value("x").toDouble();
+     QMap<QString, QVariant> cd = customData();
+     cd.insert("hereEnabled", on);
+     insert("customData", cd);
 }
 
-double RepoNode::y() const
+QDateTime RepoNode::lastLoginAt() const
 {
-    return value("y").toDouble();
+    return customData().value("lastLoginAt").toDateTime();
 }
 
-void RepoNode::setX(double x)
+QDateTime RepoNode::createdAt() const
 {
-    insert("x", x);
+    return customData().value("createdAt").toDateTime();
 }
 
-void RepoNode::setY(double y)
+bool RepoNode::mailListOptOut() const
 {
-    insert("y", y);
+    return customData().value("mailListOptOut").toBool();
 }
 
-QList<QVariant> RepoNode::links() const
+bool RepoNode::vrEnabled() const
 {
-    return value("links").toList();
+    return customData().value("vrEnabled").toBool();
 }
 
-void RepoNode::setLinks(QList<QVariant> &links)
+void RepoNode::setVrEnabled(bool on)
 {
-    insert("links", links);
+     QMap<QString, QVariant> cd = customData();
+     cd.insert("vrEnabled", on);
+     insert("customData", cd);
 }
 
-float RepoNode::percentage() const
+QImage RepoNode::avatar() const
 {
-    return value("percentage").toFloat();
+
+    QImage avatar;
+//    QByteArray encoded = customData().value("avatar").toMap().value("data").toByteArray();
+
+//    QMap<QString, QVariant> avatarObject =  customData().value("avatar").toMap();
+//    if (user() == "jozef")
+//    {
+//        std::cout << customData().value("avatar").toMap().value("data").data() << std::endl;
+
+
+
+//        if (!encoded.isEmpty())
+//            avatar.loadFromData(QByteArray::fromBase64(encoded));
+
+//        if (avatar.isNull())
+//            qDebug("null image");
+//    }
+    return avatar;
 }
 
-void RepoNode::setPercentage(float percentage)
-{
-    insert("percentage", percentage);
-}
+//QString RepoNode::notes() const
+//{
+//    return value("notes").toString();
+//}
+
+//void RepoNode::setNotes(const QString &notes)
+//{
+//    insert("notes", notes);
+//}
+
+//QString RepoNode::type() const
+//{
+//    return value("type").toString();
+//}
+
+
+
+//void RepoNode::setImage(const QImage &image)
+//{
+//    QByteArray data;
+//    QBuffer buffer(&data);
+//    buffer.open(QIODevice::WriteOnly);
+//    image.save(&buffer, "PNG");
+//    insert("image", QString::fromLatin1(data.toBase64()));
+//}
+
+//double RepoNode::x() const
+//{
+//    return value("x").toDouble();
+//}
+
+//double RepoNode::y() const
+//{
+//    return value("y").toDouble();
+//}
+
+//void RepoNode::setX(double x)
+//{
+//    insert("x", x);
+//}
+
+//void RepoNode::setY(double y)
+//{
+//    insert("y", y);
+//}
+
+//QList<QVariant> RepoNode::links() const
+//{
+//    return value("links").toList();
+//}
+
+//void RepoNode::setLinks(QList<QVariant> &links)
+//{
+//    insert("links", links);
+//}
+
+//float RepoNode::percentage() const
+//{
+//    return value("percentage").toFloat();
+//}
+
+//void RepoNode::setPercentage(float percentage)
+//{
+//    insert("percentage", percentage);
+//}
 
 //void RepoNode::addLink(const QUuid &id)
 //{

@@ -35,8 +35,10 @@ public :
 
     Q_OBJECT
 
-    Q_PROPERTY(double x READ getX WRITE setX NOTIFY xChanged)
-    Q_PROPERTY(double y READ getY WRITE setY NOTIFY yChanged)
+    Q_PROPERTY(QUuid id READ getId)
+//    Q_PROPERTY(double x READ getX NOTIFY xChanged)
+//    Q_PROPERTY(double y READ getY NOTIFY yChanged)
+
 
 public :
 
@@ -46,7 +48,17 @@ public :
         // Node
         //-------
         Id = Qt::UserRole + 1,
+        User,
+        Email,
+        FirstName,
+        LastName,
         Name,
+        HereEnabled,
+        LastLoginAt,
+        CreatedAt,
+        MailListOptOut,
+        VrEnabled,
+        Image/*,
         Notes,
         Type,
         Image,
@@ -63,12 +75,12 @@ public :
         Links,
         Organisation,
         Mobile,
-        Work
+        Work*/
     };
 
 public:
 
-    RepoModelItem(RepoNode *node = NULL);
+    RepoModelItem(RepoNode *node = nullptr);
     ~RepoModelItem();
 
     QVariant data(int role = Qt::UserRole + 1) const;
@@ -77,16 +89,14 @@ public:
 
     RepoNode* getNode() { return node; }
 
-    double getX() const;
-    double getY() const;
+    QUuid getId() const;
+//    double getX() const;
+//    double getY() const;
 
-    void setX(double x);
-    void setY(double y);
+//signals:
 
-signals:
-
-    void xChanged();
-    void yChanged();
+//    void xChanged();
+//    void yChanged();
 
 private :
 

@@ -17,8 +17,6 @@
 
 #include "repo_material_icons.h"
 
-#include <iostream>
-
 using namespace repo;
 
 //------------------------------------------------------------------------------

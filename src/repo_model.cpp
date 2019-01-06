@@ -1,29 +1,59 @@
+/**
+*  Copyright (C) 2018 3D Repo Ltd
+*
+*  This program is free software: you can redistribute it and/or modify
+*  it under the terms of the GNU Affero General Public License as
+*  published by the Free Software Foundation, either version 3 of the
+*  License, or (at your option) any later version.
+*
+*  This program is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU Affero General Public License for more details.
+*
+*  You should have received a copy of the GNU Affero General Public License
+*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include "repo_model.h"
+#include "repo_db_mongo.h"
 
 using namespace repo;
 
 QHash<int, QByteArray> RepoModel::roles = {
-    {RepoModelItem::Id,  "id"},
-    {RepoModelItem::Name, "name"},
-    {RepoModelItem::Notes, "notes"},
-    {RepoModelItem::Type, "type"},
-    {RepoModelItem::Image, "image"},
-    {RepoModelItem::X, "x"},
-    {RepoModelItem::Y, "y"},
-    {RepoModelItem::Percentage, "percentage"},
-    {RepoModelItem::JobTitle, "jobTitle"},
-    {RepoModelItem::LinkedIn, "linkedIn"},
+    {RepoModelItem::Id, "id"},
+    {RepoModelItem::User, "user"},
     {RepoModelItem::Email, "email"},
-    {RepoModelItem::Organisation, "organisation"},
-    {RepoModelItem::Mobile, "mobile"},
-    {RepoModelItem::Work, "work"},
-    {RepoModelItem::Links, "links"}
+    {RepoModelItem::FirstName, "firstName"},
+    {RepoModelItem::LastName, "lastName"},
+    {RepoModelItem::Name, "name"},
+    {RepoModelItem::HereEnabled, "hereEnabled"},
+    {RepoModelItem::LastLoginAt, "lastLoginAt"},
+    {RepoModelItem::CreatedAt, "createdAt"},
+    {RepoModelItem::MailListOptOut, "mailListOptOut"},
+    {RepoModelItem::VrEnabled, "vrEnabled"},
+    {RepoModelItem::Image, "image"}
+
+//    {RepoModelItem::Notes, "notes"},
+//    {RepoModelItem::Type, "type"},
+//    {RepoModelItem::Image, "image"},
+//    {RepoModelItem::X, "x"},
+//    {RepoModelItem::Y, "y"},
+//    {RepoModelItem::Percentage, "percentage"},
+//    {RepoModelItem::JobTitle, "jobTitle"},
+//    {RepoModelItem::LinkedIn, "linkedIn"},
+//    {RepoModelItem::Email, "email"},
+//    {RepoModelItem::Organisation, "organisation"},
+//    {RepoModelItem::Mobile, "mobile"},
+//    {RepoModelItem::Work, "work"},
+//    {RepoModelItem::Links, "links"}
 };
 
 RepoModel::RepoModel()
     : QSortFilterProxyModel()
     , model(new QStandardItemModel())
-    , jsonFile("c:\\Users\\jozef\\workspace\\3DRepo\\3dreporecon\\resources\\nodes.json")
+    , db(RepoDBMongo::instance())
+   // , jsonFile("c:\\Users\\jozef\\workspace\\3DRepo\\3dreporecon\\resources\\nodes.json")
 {
     setDynamicSortFilter(true);
     setFilterCaseSensitivity(Qt::CaseInsensitive);
@@ -35,28 +65,29 @@ RepoModel::RepoModel()
 
 RepoModel::~RepoModel()
 {
-    RepoJsonParser::write(this->toList(), jsonFile.absoluteFilePath());
+   // RepoJsonParser::write(this->toList(), jsonFile.absoluteFilePath());
     delete model;
 }
 
 void RepoModel::populate()
-{
-    for (QVariant node : RepoJsonParser::read(jsonFile.absoluteFilePath()))
+{   
+    db.connect("localhost", 9997, "adminUser", "zNU378qnEZKbaGEq");
+    for (QVariant node : db.fetchData())
         appendRow(new RepoModelItem(new (RepoNode)(node.toMap())));
 }
 
 QVariant RepoModel::data(const QModelIndex &proxyIndex, int role) const
 {
     QVariant data;
-    if (role == RepoModelItem::Links)
-    {
-        QList<QObject *> links = this->links(this->item(proxyIndex.row()));
-        data.setValue(links);
-    }
-    else
-    {
+//    if (role == RepoModelItem::Links)
+//    {
+//        QList<QObject *> links = this->links(this->item(proxyIndex.row()));
+//        data.setValue(links);
+//    }
+//    else
+//    {
         data = QSortFilterProxyModel::data(proxyIndex, role);
-    }
+//    }
     return data;
 }
 
@@ -98,8 +129,8 @@ QUuid RepoModel::appendRow(int x, int y)
 {
     RepoNode *node = new RepoNode();
     node->setId();
-    node->setX(x);
-    node->setY(y);
+//    node->setX(x);
+//    node->setY(y);
     return appendRow(new RepoModelItem(node));
 }
 
@@ -115,36 +146,41 @@ bool RepoModel::removeRow(int proxyRow, const QModelIndex &proxyParentIndex)
 {    
     RepoModelItem* item = this->item(proxyRow, proxyParentIndex);
     bool success = false;
-    if (item)
-    {
-        for (QVariant id : item->data(RepoModelItem::Links).toList())
-        {
-            RepoModelItem* linkedItem = itemsByID[id.toUuid()];
-            if (linkedItem)
-            {
-                QList<QVariant> links = linkedItem->data(RepoModelItem::Links).toList();
-                links.removeAll(item->data(RepoModelItem::Id));
-                this->setData(linkedItem, links, RepoModelItem::Links);
-            }
-        }        
-        this->setData(item, QList<QVariant>(), RepoModelItem::Links);
-        itemsByID.remove(item->data(RepoModelItem::Id).toUuid());
-        success = model->removeRow(model->indexFromItem(item).row());
-        item = NULL; // item has been deleted by removeRow
-    }
+//    if (item)
+//    {
+//        for (QVariant id : item->data(RepoModelItem::Links).toList())
+//        {
+//            RepoModelItem* linkedItem = itemsByID[id.toUuid()];
+//            if (linkedItem)
+//            {
+//                QList<QVariant> links = linkedItem->data(RepoModelItem::Links).toList();
+//                links.removeAll(item->data(RepoModelItem::Id));
+//                this->setData(linkedItem, links, RepoModelItem::Links);
+//            }
+//        }
+//        this->setData(item, QList<QVariant>(), RepoModelItem::Links);
+//        itemsByID.remove(item->data(RepoModelItem::Id).toUuid());
+//        success = model->removeRow(model->indexFromItem(item).row());
+//        item = nullptr; // item has been deleted by removeRow
+//    }
     return success;
 }
 
 bool RepoModel::setData(RepoModelItem *item, const QVariant &value, int role)
 {
     bool success = false;
-    if (success = (item != NULL))
+    if ((success = (item != nullptr)))
     {
-        if (success = (value != item->data(role)))
+        if ((success = (value != item->data(role))))
         {
             item->setData(value, role);
             QModelIndex index = this->mapFromSource(model->indexFromItem(item));
             emit dataChanged(index, index, QVector<int>() << role);
+
+            if (role == RepoModelItem::VrEnabled)
+                db.update(item->data(RepoModelItem::Id), value, RepoDBAbstract::VrEnabled);
+            else if (role == RepoModelItem::HereEnabled)
+                db.update(item->data(RepoModelItem::Id), value, RepoDBAbstract::HereEnabled);
         }
     }
     return success;
@@ -180,7 +216,7 @@ bool RepoModel::filterAcceptsRow(int sourceRow, const QModelIndex &) const
 {
     bool accept = false;
     RepoModelItem *item = (RepoModelItem*) model->item(sourceRow);
-    if (item != NULL)
+    if (item != nullptr)
     {
         QString comparator = filterCaseSensitivity() == Qt::CaseInsensitive
                 ? _filter.toLower()
@@ -188,7 +224,11 @@ bool RepoModel::filterAcceptsRow(int sourceRow, const QModelIndex &) const
         QString name = filterCaseSensitivity() == Qt::CaseInsensitive
                 ? item->data(RepoModelItem::Name).toString().toLower()
                 : item->data(RepoModelItem::Name).toString();
-        accept = name.contains(comparator);
+        QString email = filterCaseSensitivity() == Qt::CaseInsensitive
+                ? item->data(RepoModelItem::Email).toString().toLower()
+                : item->data(RepoModelItem::Email).toString();
+
+        accept = name.contains(comparator) || email.contains(comparator);
     }
     return accept;
 }
@@ -212,17 +252,17 @@ RepoModelItem* RepoModel::item(const QUuid &id) const
 QList<QObject *> RepoModel::links(const RepoModelItem* item) const
 {
     QList<QObject *> endPoints;
-    if (item)
-    {
-        QList<QVariant> links = item->data(RepoModelItem::Links).toList();
-        for (QVariant l : links)
-        {
-            if (RepoModelItem *endItem = this->item(l.toUuid()))
-            {
-                endPoints.append(endItem);
-            }
-        }
-    }
+//    if (item)
+//    {
+//        QList<QVariant> links = item->data(RepoModelItem::Links).toList();
+//        for (QVariant l : links)
+//        {
+//            if (RepoModelItem *endItem = this->item(l.toUuid()))
+//            {
+//                endPoints.append(endItem);
+//            }
+//        }
+//    }
     return endPoints;
 }
 
@@ -238,23 +278,23 @@ QList<QObject *> RepoModel::links(const QUuid &id) const
 
 void RepoModel::addLink(const QUuid &id1, const QUuid &id2)
 {
-    RepoModelItem *item1 = itemsByID[id1];
-    RepoModelItem *item2 = itemsByID[id2];
+//    RepoModelItem *item1 = itemsByID[id1];
+//    RepoModelItem *item2 = itemsByID[id2];
 
-    if (item1 && item2)
-    {
-        QList<QVariant> links1 = item1->data(RepoModelItem::Links).toList();
-        if (!links1.contains(id2))
-        {
-            links1.append(id2);
-            this->setData(item1, links1, RepoModelItem::Links);
-        }
+//    if (item1 && item2)
+//    {
+//        QList<QVariant> links1 = item1->data(RepoModelItem::Links).toList();
+//        if (!links1.contains(id2))
+//        {
+//            links1.append(id2);
+//            this->setData(item1, links1, RepoModelItem::Links);
+//        }
 
-        QList<QVariant> links2 = item2->data(RepoModelItem::Links).toList();
-        if (!links2.contains(id1))
-        {
-            links2.append(id1);
-            this->setData(item2, links2, RepoModelItem::Links);
-        }
-    }
+//        QList<QVariant> links2 = item2->data(RepoModelItem::Links).toList();
+//        if (!links2.contains(id1))
+//        {
+//            links2.append(id1);
+//            this->setData(item2, links2, RepoModelItem::Links);
+//        }
+//    }
 }

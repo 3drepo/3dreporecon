@@ -53,6 +53,7 @@ ApplicationWindow {
     }
 
 
+    RepoUnity { id: unity; }
 
     header: ToolBar {
         id: toolbar
@@ -79,15 +80,16 @@ ApplicationWindow {
 
             ToolButton {
                 id: menuButton
-                anchors.left: parent.left
-                anchors.leftMargin: 4
+               // anchors.left: parent.left
+                //anchors.leftMargin: 4
                 implicitWidth: 84
                 implicitHeight: 84
 
                 //                ToolTip.visible: hovered
                 //                ToolTip.text: qsTr("Menu")
 
-                onClicked: drawer.open()
+//                onClicked: drawer.open()
+                onClicked: unity.runUnity()
 
                 contentItem: Image {
                     fillMode: Image.Pad
@@ -101,16 +103,18 @@ ApplicationWindow {
 
             Image {
                 id: repoLogo
-                anchors.left: menuButton.right
-                anchors.leftMargin: 12
+               // anchors.left: menuButton.right
+               // anchors.leftMargin: 12
                 source: "qrc:/resources/3D-Repo_white.svg"
+//                sourceSize.width: width
+//                sourceSize.height: height
                 fillMode: Image.PreserveAspectFit
                 antialiasing: true
             }
 
             ToolButton {
-                anchors.right: profileButton.left
-                anchors.rightMargin: -24
+               // anchors.right: profileButton.left
+               // anchors.rightMargin: -24
                 implicitWidth: 84
                 implicitHeight: 84
 
@@ -127,8 +131,8 @@ ApplicationWindow {
 
             ToolButton {
                 id: profileButton
-                anchors.right: parent.right
-                anchors.rightMargin: 4
+               // anchors.right: parent.right
+               // anchors.rightMargin: 4
                 implicitWidth: 84
                 implicitHeight: 84
 
@@ -257,6 +261,7 @@ ApplicationWindow {
     //        }
 
     Rectangle {
+        id: sidePanel
         anchors.left: buttonsColumn.right
         height: parent.height
         anchors.leftMargin: 12
@@ -291,7 +296,7 @@ ApplicationWindow {
 
 
 
-                        canvas.contentX = model.x - window.width/2
+                        canvas.contentX = model.x - window.width/2 - sidePanel.width/2
                         canvas.contentY = model.y - window.height/2
                     }
                 }

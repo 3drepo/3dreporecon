@@ -129,130 +129,141 @@ Flickable {
             // Links repeater
             //
             //------------------------------------------------------------------
-            Repeater {
-                model: repoModel
-                delegate: Rectangle {
-                    id : node
-                    width: 0
-                    height: 0
-                    focus: false
-                    color: "transparent"
-                    x: model.x
-                    y: model.y
+//            Repeater {
+//                model: repoModel
+//                delegate: Rectangle {
+//                    id : node
+//                    width: 0
+//                    height: 0
+//                    focus: false
+//                    color: "transparent"
+//                    x: model.x
+//                    y: model.y
 
-                    property var nodeModelLinks : model.links
-                    Repeater {
-                        id: linkRepeater
-                        model: nodeModelLinks
-                        delegate: RepoModelItemLinkPainter {
-                            x1: 0
-                            y1: 0
-                            x2: model.modelData.x - node.x
-                            y2: model.modelData.y - node.y
-                        }
-                    }
-                }
-            }
+//                    property var nodeModelLinks : model.links
+//                    property var nodeModelId: model.id
+//                    Repeater {
+//                        id: linkRepeater
+//                        model: nodeModelLinks
+//                        delegate: RepoModelItemLinkPainter {
+//                            x1: 0
+//                            y1: 0
+//                            x2: model.modelData.x - node.x
+//                            y2: model.modelData.y - node.y
+
+
+//                            MouseArea {
+//                                anchors.fill: parent
+
+//                                onClicked: {
+//                                    console.log(nodeModelId + ", " + model.modelData.id)
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+
+//            }
 
             //------------------------------------------------------------------
             //
             // Nodes repeater
             //
             //------------------------------------------------------------------
-            Repeater {
-                model: repoModel
-                delegate: RepoModelItemPainter {
+//            Repeater {
+//                model: repoModel
+//                delegate: RepoModelItemPainter {
 
-                    uuid: model.id
-                    Binding on image {
-                        when: model.image !== "undefined"
-                        value: model.image
-                    }
+//                    uuid: model.id
+//                    Binding on image {
+//                        when: model.image !== "undefined"
+//                        value: model.image
+//                    }
 
-                    width: 200 // 50 * model.links.length + 100
-                    height: 200 // 50 * model.links.length + 100
-                    Drag.active: draggable.drag.active
-                    focus: true
-                    percentage: model.percentage
-
-
-                    // State machine
-                    // http://doc.qt.io/qt-4.8/qml-propertychanges.html
-
-                    x: model.x - width/2
-                    y: model.y - height/2
-
-                    onXChanged: repoModel.setData(index, x + width/2, "x")
-                    onYChanged: repoModel.setData(index, y + height/2, "y")
-
-                    Text {
-                        id: nameText
-                        y: parent.height * 1.05
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        text: name
-                        font.pointSize: parent.width / 10
-                        font.weight: Font.DemiBold
-                        elide: Text.ElideRight
-                        color: parent.getPercentageColor(model.percentage)
-                    }
-
-                    Text {
-                        text: model.links.length
-                        color: "red"
-                        font.pointSize: parent.width / 10
-                        anchors.right: parent.right
-                    }
-
-                    MouseArea {
-                        id: draggable
-                        anchors.fill: parent
-                        drag.target: parent
-                        hoverEnabled: true
-                        propagateComposedEvents: false
-                        acceptedButtons: Qt.AllButtons
-
-                        //                        onPositionChanged: {
-                        //                            link.x2 = model.x //Qt.binding(function() { return mouseX - link.x; })
-                        //                            link.y2 = model.y //Qt.binding(function() { return mouseY - link.y; })
-                        //                        }
-
-                        onClicked: {
-
-                            //                            link.x1 = model.x
-                            //                            link.y1 = model.y
-                            //                            link.visible = true
+//                    width: 200 // 50 * model.links.length + 100
+//                    height: 200 // 50 * model.links.length + 100
+//                    Drag.active: draggable.drag.active
+//                    focus: true
+//                    percentage: model.percentage
 
 
+//                    // State machine
+//                    // http://doc.qt.io/qt-4.8/qml-propertychanges.html
 
-                            if (start == null)
-                            {
-                                start = parent;
-                            }
-                            else
-                            {
-                                if (start != parent)
-                                {
-                                    repoModel.addLink(start.uuid, parent.uuid)
-                                }
-                                start = null;
-                            }
+//                    x: model.x - width/2
+//                    y: model.y - height/2
 
-                            // Delete on right click
-                            if (mouse.button === Qt.RightButton)
-                            {
-                                // TODO: show confirmation dialog to prevent
-                                // accidental deletes
-                                repoModel.removeRow(index)
-                            }
-                            else {
-//                                console.log(graphModel.index)
-                            }
+//                    onXChanged: repoModel.setData(index, x + width/2, "x")
+//                    onYChanged: repoModel.setData(index, y + height/2, "y")
+
+//                    Text {
+//                        id: nameText
+//                        y: parent.height * 1.05
+//                        anchors.horizontalCenter: parent.horizontalCenter
+//                        text: name
+//                        font.pointSize: parent.width / 10
+//                        font.weight: Font.DemiBold
+//                        elide: Text.ElideRight
+//                        color: parent.getPercentageColor(model.percentage)
+//                    }
+
+//                    Text {
+//                        text: model.links.length
+//                        color: "red"
+//                        font.pointSize: parent.width / 10
+//                        anchors.right: parent.right
+//                    }
+
+//                    MouseArea {
+//                        id: draggable
+//                        anchors.fill: parent
+//                        drag.target: parent
+//                        hoverEnabled: true
+//                        propagateComposedEvents: false
+//                        acceptedButtons: Qt.AllButtons
+
+//                        //                        onPositionChanged: {
+//                        //                            link.x2 = model.x //Qt.binding(function() { return mouseX - link.x; })
+//                        //                            link.y2 = model.y //Qt.binding(function() { return mouseY - link.y; })
+//                        //                        }
+
+//                        onClicked: {
+
+//                            //                            link.x1 = model.x
+//                            //                            link.y1 = model.y
+//                            //                            link.visible = true
 
 
-                        }
-                    }
-                }
-            }
+
+//                            if (start == null)
+//                            {
+//                                start = parent;
+//                            }
+//                            else
+//                            {
+//                                if (start != parent)
+//                                {
+//                                    repoModel.addLink(start.uuid, parent.uuid)
+//                                }
+//                                start = null;
+//                            }
+
+//                            // Delete on right click
+//                            if (mouse.button === Qt.RightButton)
+//                            {
+//                                // TODO: show confirmation dialog to prevent
+//                                // accidental deletes
+//                                repoModel.removeRow(index)
+//                            }
+//                            else {
+//                                //                                console.log(graphModel.index)
+//                            }
+
+
+//                        }
+//                    }
+//                }
+//            }
 
 
         }

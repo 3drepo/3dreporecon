@@ -40,8 +40,8 @@ QImage RepoModelImageProvider::requestImage(const QString &id, QSize *size, cons
     RepoModelItem *item = model->item(QUuid(str));
     if (item)
     {
-        image = item->data(RepoModelItem::Image).value<QImage>();
-        image = image.scaled(width, height);
+//        image = item->data(RepoModelItem::Image).value<QImage>();
+//        image = image.scaled(width, height);
     }
     *size = QSize(width, height);
     return image;

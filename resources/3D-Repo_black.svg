@@ -9,9 +9,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="27.537304mm"
-   height="7.9022222mm"
-   viewBox="0 0 97.573124 28"
+   width="98"
+   height="28"
+   viewBox="0 0 97.999996 28"
    id="svg3355"
    version="1.1"
    inkscape:version="0.91 r13725"
@@ -28,9 +28,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4"
-     inkscape:cx="-95.130826"
-     inkscape:cy="-62.515005"
+     inkscape:zoom="5.6"
+     inkscape:cx="53.243739"
+     inkscape:cy="-2.246029"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -38,11 +38,12 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:window-width="1536"
-     inkscape:window-height="801"
+     inkscape:window-width="1080"
+     inkscape:window-height="1857"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
-     inkscape:window-maximized="1" />
+     inkscape:window-maximized="1"
+     units="px" />
   <metadata
      id="metadata3360">
     <rdf:RDF>
@@ -59,35 +60,41 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-7.6282921,-8.9452152)">
+     transform="translate(-7.6282968,-8.94522)">
     <g
-       transform="translate(-90.714286,-240.71429)"
+       transform="matrix(1.004375,0,0,1,-91.14453,-240.71429)"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        id="flowRoot3363">
       <path
          d="m 111.46258,252.61951 c 0,-1.64 -1.32,-2.96 -2.96,-2.96 l -7.2,0 c -1.600002,0 -2.960002,1.32 -2.960002,2.96 l 0,5.68 4.840002,1.12 0,-4.96 3.48,0 0,6.76 -3.32,0 0,4.8 3.32,0 0,6.8 -3.48,0 0,-5 -4.840002,1.12 0,5.76 c 0,1.6 1.36,2.96 2.960002,2.96 l 7.2,0 c 1.64,0 2.96,-1.36 2.96,-2.96 l 0.04,-9.16 c 0,-1.04 -0.48,-1.76 -1.08,-2.4 0.68,-0.56 1.08,-1.36 1.08,-2.28 l -0.04,-8.24 z"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Sullivan fill';-inkscape-font-specification:'Sullivan fill';fill:#000000;stroke:none"
-         id="path4138" />
+         id="path4138"
+         inkscape:connector-curvature="0" />
       <path
          d="m 114.3582,249.65951 0,28 10.16,0 c 1.6,0 2.96,-1.36 2.96,-2.96 l 0,-22.08 c 0,-1.64 -1.36,-2.96 -2.96,-2.96 l -10.16,0 z m 8.28,23.16 -3.48,0 0,-18.36 3.48,0 0,18.36 z"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Sullivan fill';-inkscape-font-specification:'Sullivan fill';fill:#000000;stroke:none"
-         id="path4140" />
+         id="path4140"
+         inkscape:connector-curvature="0" />
       <path
          d="m 150.64883,277.65951 -2,-11.92 c 1.04,-0.48 1.68,-1.52 1.68,-2.64 l 0,-10.48 c 0,-1.64 -1.32,-2.96 -2.92,-2.96 l -10.16,0 0,28 4.8,0 0,-11.64 1.84,0 1.96,11.64 4.8,0 z m -5.12,-16.44 -3.48,0 0,-6.76 3.48,0 0,6.76 z"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Sullivan fill';-inkscape-font-specification:'Sullivan fill';fill:#000000;stroke:none"
-         id="path4142" />
+         id="path4142"
+         inkscape:connector-curvature="0" />
       <path
          d="m 157.67383,272.85951 0,-3.48 6.64,0 0,-4.84 -6.64,0 0,-3.44 8.32,0 0,-4.8 -13.12,0 0,21.36 13.12,0 0,-4.8 -8.32,0 z"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Sullivan fill';-inkscape-font-specification:'Sullivan fill';fill:#000000;stroke:none"
-         id="path4144" />
+         id="path4144"
+         inkscape:connector-curvature="0" />
       <path
          d="m 180.83758,259.25951 c 0,-1.64 -1.32,-2.96 -2.96,-2.96 l -10.16,0 0,21.36 4.8,0 0,-8.32 5.36,0 c 1.64,0 2.96,-1.32 2.96,-2.96 l 0,-7.12 z m -4.84,5.28 -3.48,0 0,-3.44 3.48,0 0,3.44 z"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Sullivan fill';-inkscape-font-specification:'Sullivan fill';fill:#000000;stroke:none"
-         id="path4146" />
+         id="path4146"
+         inkscape:connector-curvature="0" />
       <path
          d="m 185.7557,256.29951 c -1.64,0 -2.96,1.32 -2.96,2.96 l 0,15.44 c 0,1.6 1.32,2.96 2.96,2.96 l 7.2,0 c 1.64,0 2.96,-1.36 2.96,-2.96 l 0,-15.44 c 0,-1.64 -1.32,-2.96 -2.96,-2.96 l -7.2,0 z m 5.32,16.52 -3.48,0 0,-11.72 3.48,0 0,11.72 z"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Sullivan fill';-inkscape-font-specification:'Sullivan fill';fill:#000000;stroke:none"
-         id="path4148" />
+         id="path4148"
+         inkscape:connector-curvature="0" />
     </g>
   </g>
 </svg>

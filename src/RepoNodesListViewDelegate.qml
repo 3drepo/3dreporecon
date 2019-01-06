@@ -75,8 +75,8 @@ ItemDelegate {
         }
 
         Text {
-            id: jobTitleText
-            text: jobTitle
+            id: emailText
+            text: email
             width: nameText.width
             font.pointSize: 9
             color: "#999"

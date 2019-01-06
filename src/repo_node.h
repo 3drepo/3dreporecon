@@ -25,6 +25,7 @@
 #include <QDebug>
 #include <QList>
 #include <QBuffer>
+#include <QDateTime>
 
 namespace repo
 {
@@ -40,41 +41,70 @@ public:
 
     RepoNode(const RepoNode &node);
 
-    QUuid id() const;
+    QString id() const;
 
     void setId();
 
-    void setId(const QUuid &id);
+    void setId(const QString &id);
 
-    QString name() const;
+    QString user() const;
 
-    void setName(const QString &name);
+    void setUser(const QString &user);
 
-    QString notes() const;
+    QMap<QString, QVariant> customData() const;
 
-    void setNotes(const QString &notes);
+    QString email() const;
 
-    QString type() const;
+//    void setEmail(const QString &email);
 
-    QImage image() const;
+    QString firstName() const;
 
-    void setImage(const QImage &image);
+    QString lastName() const;
 
-    double x() const;
+    bool hereEnabled() const;
 
-    double y() const;
+    void setHereEnabled(bool on);
 
-    void setX(double x);
+    QDateTime lastLoginAt() const;
 
-    void setY(double y);
+    QDateTime createdAt() const;
 
-    QList<QVariant> links() const;
+    bool mailListOptOut() const;
 
-    void setLinks(QList<QVariant> &links);
+    bool vrEnabled() const;
 
-    float percentage() const;
+    void setVrEnabled(bool on);
 
-    void setPercentage(float percentage);
+    QImage avatar() const;
+
+
+
+
+//    QString notes() const;
+
+//    void setNotes(const QString &notes);
+
+//    QString type() const;
+
+
+
+//    void setImage(const QImage &image);
+
+//    double x() const;
+
+//    double y() const;
+
+//    void setX(double x);
+
+//    void setY(double y);
+
+//    QList<QVariant> links() const;
+
+//    void setLinks(QList<QVariant> &links);
+
+//    float percentage() const;
+
+//    void setPercentage(float percentage);
 
 //    void addLink(const QUuid &id);
 };

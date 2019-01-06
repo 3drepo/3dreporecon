@@ -23,10 +23,14 @@
 #include <QDebug>
 #include <QPoint>
 
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+
 #include "repo_model_item.h"
 #include "repo_node.h"
 #include "repo_csv_parser.h"
 #include "repo_json_parser.h"
+#include "repo_db_abstract.h"
 
 namespace repo
 {
@@ -112,6 +116,8 @@ private :
     QHash<QUuid, RepoModelItem *> itemsByID;
 
     QFileInfo jsonFile;
+
+    RepoDBAbstract &db;
 };
 
 }

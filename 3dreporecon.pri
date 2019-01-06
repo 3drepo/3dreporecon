@@ -26,7 +26,10 @@ HEADERS += \
     $$PWD/src/repo_model_item_painter.h \
     $$PWD/src/repo_model_item_link_painter.h \
     $$PWD/src/repo_json_parser.h \
-    $$PWD/src/repo_model_image_provider.h
+    $$PWD/src/repo_model_image_provider.h \
+    $$PWD/src/repo_unity.h \
+    $$PWD/src/repo_db_abstract.h \
+    $$PWD/src/repo_db_mongo.h
 
 SOURCES +=  \
     $$PWD/src/main.cpp \
@@ -42,6 +45,9 @@ SOURCES +=  \
     $$PWD/src/repo_model_item_painter.cpp \
     $$PWD/src/repo_model_item_link_painter.cpp \
     $$PWD/src/repo_json_parser.cpp \
-    $$PWD/src/repo_model_image_provider.cpp
+    $$PWD/src/repo_model_image_provider.cpp \
+    $$PWD/src/repo_unity.cpp \
+    $$PWD/src/repo_db_abstract.cpp \
+    $$PWD/src/repo_db_mongo.cpp
 
 FORMS += 

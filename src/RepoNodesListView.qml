@@ -122,6 +122,8 @@ ListView {
                 horizontalAlignment: Image.AlignHCenter
                 verticalAlignment: Image.AlignVCenter
                 source:  "image://materialicons/add"
+                sourceSize.width: 32
+                sourceSize.height: 32
             }
         }
     }

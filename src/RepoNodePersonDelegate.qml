@@ -30,6 +30,7 @@ Flickable {
     height: nodePersonListView.height
     contentHeight: img.height + grid.height + 60
 
+
     RepoModelItemPainter {
         id: img
         anchors.top: parent.top
@@ -69,7 +70,10 @@ Flickable {
         }
 
         MouseArea {
-            anchors.fill: parent
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+            width: 100
+            height: 100
             onClicked: fileDialog.open()
             propagateComposedEvents: true
         }
@@ -83,15 +87,18 @@ Flickable {
         columns: 1
         anchors.top: img.bottom
         anchors.horizontalCenter: parent.horizontalCenter
+        horizontalItemAlignment: Grid.AlignHCenter
         anchors.topMargin: 10
-        spacing: 10
-        width: parent.width - 60
+        anchors.bottomMargin: 80
+        //spacing: 10
+        width: parent.width
 
         TextField {
             id: nameField
-            width: parent.width
+            width: parent.width - 30
             placeholderText: qsTr("Name")
             text: name
+            enabled: false
             font.pointSize: 12
             onTextChanged: {
                 repoModel.setData(index, text, "name")
@@ -99,73 +106,76 @@ Flickable {
         }
 
         TextField {
-            text: jobTitle
-            placeholderText: qsTr("Job Title")
-            width: parent.width
+            placeholderText: qsTr("Username")
+            text: user
+            enabled: false
+            width: parent.width - 30
             anchors.topMargin: 2
             font.pointSize: 10
             // see http://www.qtcentre.org/threads/65095-How-to-elide-text-in-TextEdit
             onTextChanged: {
-                repoModel.setData(index, text, "jobTitle")
-            }
-        }
-
-        TextField {
-            text: organisation
-            placeholderText: qsTr("Organisation")
-            width: parent.width
-            anchors.topMargin: 2
-            font.pointSize: 10
-            onTextChanged: {
-                repoModel.setData(index, text, "organisation")
+                repoModel.setData(index, text, "user")
             }
         }
 
         TextField {
             text: email
             placeholderText: qsTr("Email")
-            width: parent.width
+            enabled: false
+            width: parent.width - 30
             anchors.topMargin: 2
-            font.pointSize: 10
             onTextChanged: {
                 repoModel.setData(index, text, "email")
             }
         }
 
-        TextField {
-            text: mobile
-            placeholderText: qsTr("Mobile")
+        SwitchDelegate {
+            text: qsTr("Virtual reality")
+            checked: vrEnabled
             width: parent.width
+            height: 50
             anchors.topMargin: 2
-            font.pointSize: 10
-            onTextChanged: {
-                repoModel.setData(index, text, "mobile")
+            onCheckedChanged: {
+                repoModel.setData(index, checked, "vrEnabled")
             }
         }
 
-        TextField {
-            text: work
-            placeholderText: qsTr("Work")
+        SwitchDelegate {
+            text: qsTr("HERE maps")
+            checked: hereEnabled
             width: parent.width
-            anchors.topMargin: 2
-            font.pointSize: 10
-            onTextChanged: {
-                repoModel.setData(index, text, "work")
+            onCheckedChanged: {
+                repoModel.setData(index, checked, "hereEnabled")
             }
         }
 
-        TextArea {
-            text: notes
-            placeholderText: qsTr("Notes")
-            width: parent.width
-            anchors.topMargin: 2
-            wrapMode: TextEdit.Wrap
 
-            font.pointSize: 10
-            onTextChanged: {
-                repoModel.setData(index, text, "notes")
+        GroupBox {
+            width: parent.width
+
+            background: Rectangle {
+                border.width: 0
+            }
+
+            label: SwitchDelegate {
+                id: discretionaryAccountCheckbox
+                width: parent.width
+                checked: true
+                text: qsTr("Discretionary account")
+            }
+
+            ColumnLayout {
+                anchors.fill: parent
+                enabled: discretionaryAccountCheckbox.checked
+                TextField { placeholderText: "Collaborators";  Layout.preferredWidth: parent.width }
+                TextField { placeholderText: qsTr("Data"); Layout.preferredWidth: parent.width}
+                TextField { placeholderText: qsTr("Expiry date"); Layout.preferredWidth: parent.width }
             }
         }
+
+
+
+
     }
     ScrollIndicator.vertical: ScrollIndicator { }
     //    }

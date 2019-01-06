@@ -39,52 +39,80 @@ QVariant RepoModelItem::data(int role) const
         case Id:
             data = node->id();
             break;
+        case User:
+            data = node->user();
+            break;
+        case Email:
+            data = node->email();
+            break;
+        case FirstName:
+            data = node->firstName();
+            break;
+        case LastName:
+            data = node->lastName();
+            break;
         case Name:
-            data = node->name();
+            data = node->firstName() + " " + node->lastName();
             break;
-        case Notes:
-            data = node->notes();
+        case HereEnabled :
+            data = node->hereEnabled();
             break;
-        case Type:
-            data = node->type();
+        case LastLoginAt:
+            data = node->lastLoginAt();
+            break;
+        case CreatedAt:
+            data = node->createdAt();
+            break;
+        case MailListOptOut:
+            data = node->mailListOptOut();
+            break;
+        case VrEnabled:
+            data = node->vrEnabled();
             break;
         case Image:
         {
-            QImage image = node->image();
-            if (!image.isNull())
-                data = node->image();
+            QImage avatar = node->avatar();
+            if (!avatar.isNull())
+                data = node->avatar();
             break;
         }
-        case X:
-            data = node->x();
-            break;
-        case Y:
-            data = node->y();
-            break;
-        case Percentage:
-            data = node->percentage();
-            break;
-        case JobTitle:
-            data = ((RepoNodePerson*) node)->jobTitle();
-            break;
-        case LinkedIn:
-            data = ((RepoNodePerson*) node)->linkedIn();
-            break;
-        case Email:
-            data = ((RepoNodePerson*) node)->email();
-            break;
-        case Organisation:
-            data = ((RepoNodePerson*) node)->organisation();
-            break;
-        case Mobile:
-            data = ((RepoNodePerson*) node)->mobile();
-            break;
-        case Work:
-            data = ((RepoNodePerson*) node)->work();
-            break;
-        case Links:
-            data = node->links();
-            break;
+            //        case Notes:
+            //            data = node->notes();
+            //            break;
+            //        case Type:
+            //            data = node->type();
+            //            break;
+
+            //        case X:
+            //            data = node->x();
+            //            break;
+            //        case Y:
+            //            data = node->y();
+            //            break;
+            //        case Percentage:
+            //            data = node->percentage();
+            //            break;
+            //        case JobTitle:
+            //            data = ((RepoNodePerson*) node)->jobTitle();
+            //            break;
+            //        case LinkedIn:
+            //            data = ((RepoNodePerson*) node)->linkedIn();
+            //            break;
+            //        case Email:
+            //            data = ((RepoNodePerson*) node)->email();
+            //            break;
+            //        case Organisation:
+            //            data = ((RepoNodePerson*) node)->organisation();
+            //            break;
+            //        case Mobile:
+            //            data = ((RepoNodePerson*) node)->mobile();
+            //            break;
+            //        case Work:
+            //            data = ((RepoNodePerson*) node)->work();
+            //            break;
+            //        case Links:
+            //            data = node->links();
+            //            break;
         }
     }
     return data;
@@ -96,85 +124,87 @@ void RepoModelItem::setData(const QVariant &value, int role)
     {
         switch (role)
         {
-        case JobTitle:
-        {
-            ((RepoNodePerson*)node)->setJobTitle(value.toString());
+        //        case JobTitle:
+        //        {
+        //            ((RepoNodePerson*)node)->setJobTitle(value.toString());
+        //            break;
+        //        }
+        //        case Email:
+        //        {
+        //            ((RepoNodePerson*)node)->setEmail(value.toString());
+        //            break;
+        //        }
+        case User:
+            node->setUser(value.toString());
             break;
-        }
-        case Email:
-        {
-            ((RepoNodePerson*)node)->setEmail(value.toString());
+        case HereEnabled:
+            node->setHereEnabled(value.toBool());
             break;
-        }
-        case Name:
-        {
-            node->setName(value.toString());
+        case VrEnabled:
+            node->setVrEnabled(value.toBool());
             break;
-        }
-        case Notes:
-            node->setNotes(value.toString());
-            break;
-        case Image:
-        {
-            QImage image = value.value<QImage>();
-            node->setImage(image);
-            break;
-        }
-        case X:
-            if (data(role) != value)
-            {
-                node->setX(value.toDouble());
-                emit xChanged();
-            }
-            break;
-        case Y:
-            if (data(role) != value)
-            {
-                node->setY(value.toDouble());
-                emit yChanged();
-            }
-            break;
-        case Percentage:
-            node->setPercentage(value.toFloat());
-            break;
-        case Organisation:
-            ((RepoNodePerson*) node)->setOrganisation(value.toString());
-            break;
-        case Mobile:
-            ((RepoNodePerson*) node)->setMobile(value.toString());
-            break;
-        case Work:
-            ((RepoNodePerson*) node)->setWork(value.toString());
-            break;
-        case Links:
-            node->setLinks(value.toList());
-            break;
+            //        case Notes:
+            //            node->setNotes(value.toString());
+            //            break;
+            //        case Image:
+            //        {
+            //            QImage image = value.value<QImage>();
+            //            node->setImage(image);
+            //            break;
+            //        }
+            //        case X:
+            //            if (data(role) != value)
+            //            {
+            //                node->setX(value.toDouble());
+            //                emit xChanged();
+            //            }
+            //            break;
+            //        case Y:
+            //            if (data(role) != value)
+            //            {
+            //                node->setY(value.toDouble());
+            //                emit yChanged();
+            //            }
+            //            break;
+            //        case Percentage:
+            //            node->setPercentage(value.toFloat());
+            //            break;
+            //        case Organisation:
+            //            ((RepoNodePerson*) node)->setOrganisation(value.toString());
+            //            break;
+            //        case Mobile:
+            //            ((RepoNodePerson*) node)->setMobile(value.toString());
+            //            break;
+            //        case Work:
+            //            ((RepoNodePerson*) node)->setWork(value.toString());
+            //            break;
+            //        case Links:
+            ////            node->setLinks(value.toList());
+            //            break;
         }
     }
 }
 
-double RepoModelItem::getX() const
+QUuid RepoModelItem::getId() const
 {
-    double x;
+    QUuid id;
     if (node)
-        x = data(X).toDouble();
-    return x;
+        id = data(Id).toUuid();
+    return id;
 }
 
-double RepoModelItem::getY() const
-{
-    double y;
-    if (node)
-        y = data(Y).toDouble();
-    return y;
-}
+//double RepoModelItem::getX() const
+//{
+//    double x;
+//    if (node)
+//        x = data(X).toDouble();
+//    return x;
+//}
 
-void RepoModelItem::setX(double x)
-{
-    setData(x, X);
-}
-
-void RepoModelItem::setY(double y)
-{
-    setData(y, Y);
-}
+//double RepoModelItem::getY() const
+//{
+//    double y;
+//    if (node)
+//        y = data(Y).toDouble();
+//    return y;
+//}

@@ -19,12 +19,15 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 
+#include <QWindow>
+
 #include "repo_material_icons_image_provider.h"
 #include "repo_model.h"
 #include "repo_model_image_provider.h"
 #include "repo_model.h"
 #include "repo_model_item_painter.h"
 #include "repo_model_item_link_painter.h"
+#include "repo_unity.h"
 
 int main(int argc, char *argv[])
 {
@@ -32,6 +35,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<repo::RepoModelItem>("repo", 1, 0, "RepoModelItem");
     qmlRegisterType<repo::RepoModelItemPainter>("repo", 1, 0, "RepoModelItemPainter");
     qmlRegisterType<repo::RepoModelItemLinkPainter>("repo", 1, 0, "RepoModelItemLinkPainter");
+    qmlRegisterType<RepoUnity>("repo", 1, 0, "RepoUnity");
 
     QGuiApplication::setApplicationName("3D Repo Recon");
     QGuiApplication::setOrganizationName("3D Repo");
@@ -42,8 +46,23 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("repoModel", &model);
     engine.addImageProvider(QLatin1String("materialicons"), new repo::RepoMaterialIconsImageProvider);
-    engine.addImageProvider(QLatin1String("modelimages"), new repo::RepoModelImageProvider(&model));
+    engine.addImageProvider(QLatin1String("modelimages"), new repo::RepoModelImageProvider(&model));   
+
     engine.load(QUrl(QLatin1String("qrc:/src/main.qml")));
+
+
+
+    WId wid;
+    QObject* m_rootObject = engine.rootObjects().first();
+    if(m_rootObject) {
+        QWindow *window = qobject_cast<QWindow *>(m_rootObject);
+        if(window) {
+            wid = window->winId();
+//            RepoUnity * u = new RepoUnity(wid);
+            RepoUnity::wid = wid;
+            qDebug() << wid;
+        }
+    }
 
     return app.exec();
 }
