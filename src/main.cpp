@@ -28,6 +28,8 @@
 #include "repo_model_item_painter.h"
 #include "repo_model_item_link_painter.h"
 #include "repo_unity.h"
+#include "repo_db_abstract.h"
+#include "repo_db_mongo.h"
 
 int main(int argc, char *argv[])
 {
@@ -35,9 +37,11 @@ int main(int argc, char *argv[])
     qmlRegisterType<repo::RepoModelItem>("repo", 1, 0, "RepoModelItem");
     qmlRegisterType<repo::RepoModelItemPainter>("repo", 1, 0, "RepoModelItemPainter");
     qmlRegisterType<repo::RepoModelItemLinkPainter>("repo", 1, 0, "RepoModelItemLinkPainter");
+    qmlRegisterType<repo::RepoDBMongo>("repo", 1, 0, "RepoDBMongo");
     qmlRegisterType<RepoUnity>("repo", 1, 0, "RepoUnity");
 
     QGuiApplication::setApplicationName("3D Repo Recon");
+    QGuiApplication::setOrganizationDomain("3drepo.org");
     QGuiApplication::setOrganizationName("3D Repo");
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
@@ -45,6 +49,7 @@ int main(int argc, char *argv[])
     repo::RepoModel model;
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("repoModel", &model);
+    engine.rootContext()->setContextProperty("repoDatabase", &repo::RepoDBMongo::instance());
     engine.addImageProvider(QLatin1String("materialicons"), new repo::RepoMaterialIconsImageProvider);
     engine.addImageProvider(QLatin1String("modelimages"), new repo::RepoModelImageProvider(&model));   
 

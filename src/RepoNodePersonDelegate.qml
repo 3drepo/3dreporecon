@@ -49,7 +49,7 @@ Flickable {
             id: dial
             width: 290
             height: 290
-            value: percentage
+//            value: percentage
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
             onValueChanged: {
@@ -57,7 +57,7 @@ Flickable {
                 repoModel.setData(index, value, "percentage")
             }
             snapMode: Dial.SnapAlways
-            stepSize: 0.2
+            stepSize: 0.5
             Material.accent: img.getPercentageColor(value)
 
 

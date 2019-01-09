@@ -120,23 +120,12 @@ void RepoNode::setVrEnabled(bool on)
 
 QImage RepoNode::avatar() const
 {
-
     QImage avatar;
-//    QByteArray encoded = customData().value("avatar").toMap().value("data").toByteArray();
-
-//    QMap<QString, QVariant> avatarObject =  customData().value("avatar").toMap();
-//    if (user() == "jozef")
-//    {
-//        std::cout << customData().value("avatar").toMap().value("data").data() << std::endl;
-
-
-
-//        if (!encoded.isEmpty())
-//            avatar.loadFromData(QByteArray::fromBase64(encoded));
-
-//        if (avatar.isNull())
-//            qDebug("null image");
-//    }
+    QByteArray encoded = customData().value("avatar").toMap().value("data").toMap().value("$binary").toByteArray();
+    if (!encoded.isEmpty()) {
+        avatar.loadFromData(QByteArray::fromBase64(encoded));
+        avatar = avatar.scaled(200, 200,Qt::KeepAspectRatio);
+    }
     return avatar;
 }
 

@@ -59,8 +59,6 @@ RepoModel::RepoModel()
     setFilterCaseSensitivity(Qt::CaseInsensitive);
     setSortCaseSensitivity(Qt::CaseInsensitive);
     setSourceModel(model);
-
-    populate();
 }
 
 RepoModel::~RepoModel()
@@ -71,7 +69,7 @@ RepoModel::~RepoModel()
 
 void RepoModel::populate()
 {   
-    db.connect("localhost", 9997, "adminUser", "zNU378qnEZKbaGEq");
+    model->clear();
     for (QVariant node : db.fetchData())
         appendRow(new RepoModelItem(new (RepoNode)(node.toMap())));
 }

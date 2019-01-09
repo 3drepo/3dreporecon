@@ -14,5 +14,6 @@
         <file>src/RepoNodeImage.qml</file>
         <file>src/RepoNodeDetailsView.qml</file>
         <file>src/RepoNodePersonDelegate.qml</file>
+	<file>src/RepoDialogLogin.qml</file>
     </qresource>
 </RCC>

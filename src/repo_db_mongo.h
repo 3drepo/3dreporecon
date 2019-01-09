@@ -32,9 +32,11 @@ namespace repo
 class RepoDBMongo : public RepoDBAbstract
 {
 
+    Q_OBJECT
+
 public:
 
-    static RepoDBMongo& instance()
+    Q_INVOKABLE static RepoDBMongo& instance()
     {
         static RepoDBMongo instance;
         static mongocxx::instance inst{};
@@ -43,15 +45,14 @@ public:
 
 public:
 
-    virtual void connect(const QString &host = "localhost",
-                         uint16_t port = 27017,
+    Q_INVOKABLE virtual void connect(const QString &host = "localhost:27017",
                          const QString &username = QString(),
                          const QString &password = QString());
 
-    virtual QList<QVariant> fetchData();
+    Q_INVOKABLE virtual QList<QVariant> fetchData() const const;
 
     //! Returns error message or empty string if no error.
-    virtual QString update(const QVariant &id, const QVariant &value, const Field &field);
+    Q_INVOKABLE virtual QString update(const QVariant &id, const QVariant &value, const Field &field);
 
 private:
 

@@ -45,7 +45,7 @@ public:
 
     ~RepoModel();
 
-    void populate();
+    Q_INVOKABLE void populate();
 
 public :
 

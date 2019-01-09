@@ -49,11 +49,15 @@ ApplicationWindow {
             id: canvas
         }
 
+    }
+
+    Component.onCompleted: {
+        repoLoginDialog.open()
 
     }
 
-
     RepoUnity { id: unity; }
+    RepoDialogLogin { id: repoLoginDialog }
 
     header: ToolBar {
         id: toolbar
@@ -113,8 +117,8 @@ ApplicationWindow {
             }
 
             ToolButton {
-               // anchors.right: profileButton.left
-               // anchors.rightMargin: -24
+//                anchors.right: profileButton.left
+//                anchors.rightMargin: -24
                 implicitWidth: 84
                 implicitHeight: 84
 
@@ -155,6 +159,10 @@ ApplicationWindow {
                     y: parent.height
                     transformOrigin: Menu.TopRight
 
+                    MenuItem {
+                        text: "Sign in"
+                        onTriggered: repoLoginDialog.open()
+                    }
                     MenuItem {
                         text: "Settings"
                         onTriggered: settingsDialog.open()

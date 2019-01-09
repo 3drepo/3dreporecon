@@ -22,8 +22,9 @@
 
 namespace repo {
 
-class RepoDBAbstract
+class RepoDBAbstract : public QObject
 {
+    Q_OBJECT
 
 public:
 
@@ -31,12 +32,6 @@ public:
         VrEnabled,
         HereEnabled
     };
-
-//    virtual RepoDBAbstract& instance() = 0;
-//    {
-//        static RepoDBAbstract instance;
-//        return instance;
-//    }
 
     RepoDBAbstract(RepoDBAbstract const&) = delete;
     void operator=(RepoDBAbstract const&) = delete;
@@ -47,15 +42,14 @@ protected:
 
 public:
 
-    virtual void connect(const QString &host = "localhost",
-                         uint16_t port = 0,
+    Q_INVOKABLE virtual void connect(const QString &host = "localhost",
                          const QString &username = QString(),
                          const QString &password = QString()) = 0;
 
-    virtual QList<QVariant> fetchData() = 0;
+    Q_INVOKABLE virtual QList<QVariant> fetchData() const = 0 ;
 
     //! Returns error message or empty string if no error.
-    virtual QString update(const QVariant &id, const QVariant &value, const Field &field) = 0;
+    Q_INVOKABLE virtual QString update(const QVariant &id, const QVariant &value, const Field &field) = 0;
 
 };
 }

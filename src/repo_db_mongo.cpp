@@ -29,32 +29,51 @@
 #include <mongocxx/collection.hpp>
 #include <bsoncxx/builder/stream/helpers.hpp>
 #include <bsoncxx/stdx/optional.hpp>
+#include <mongocxx/exception/query_exception.hpp>
 #include <mongocxx/exception/logic_error.hpp>
 #include <mongocxx/exception/bulk_write_exception.hpp>
 
 using namespace repo;
 
 void RepoDBMongo::connect(const QString &host,
-                                 uint16_t port,
-                                 const QString &username,
-                                 const QString &password)
+                          const QString &username,
+                          const QString &password)
 {
     std::string address = "mongodb://" +
             username.toStdString() + ":" +
             password.toStdString() + "@" +
-            host.toStdString() + ":" +
-            std::to_string(port) + "/?authSource=admin";
+            host.toStdString() +
+            "/?authSource=admin";
     connection = mongocxx::client{mongocxx::uri{address}};
 }
 
-QList<QVariant> RepoDBMongo::fetchData()
+/// @return A mongocxx::cursor with the results.  If the query fails,
+/// the cursor throws mongocxx::query_exception when the returned cursor
+/// is iterated.
+///
+/// @throws mongocxx::logic_error if the options are invalid, or if the unsupported option
+/// modifiers "$query" or "$explain" are used.
+
+
+QList<QVariant> RepoDBMongo::fetchData() const
 {
     QList<QVariant> list;
-    mongocxx::v_noabi::cursor cursor = connection["admin"]["system.users"].find({});
-    for (auto&& doc : cursor) {
-        QString jsonString = QString::fromStdString(bsoncxx::to_json(doc));
-        QJsonDocument document = QJsonDocument::fromJson(jsonString.toUtf8());
-        list.append(document.toVariant());
+    QString error;
+    try {
+        mongocxx::v_noabi::cursor cursor = connection["admin"]["system.users"].find({});
+        for (auto&& doc : cursor) {
+            QString jsonString = QString::fromStdString(bsoncxx::to_json(doc));
+            QJsonDocument document = QJsonDocument::fromJson(jsonString.toUtf8());
+            list.append(document.toVariant());
+        }
+    } catch (mongocxx::query_exception e1) {
+        // if the query fails, this is thrown by the cursor
+        error = QString::fromStdString(std::string(e1.what()));
+        qDebug(e1.what());
+    } catch (mongocxx::logic_error e2) {
+        // if the update is invalid
+        error = QString::fromStdString(std::string(e2.what()));
+        qDebug(e2.what());
     }
     return list;
 }
@@ -66,19 +85,19 @@ QString RepoDBMongo::update(const QVariant &id, const QVariant &value, const Fie
 
         // Filter to find the document by (in this case by the supplied _id)
         bsoncxx::document::view_or_value filterDocument = bsoncxx::builder::stream::document{}
-                                                  << "_id" << id.toString().toStdString()
-                                                  << bsoncxx::builder::stream::finalize;
+                << "_id" << id.toString().toStdString()
+                << bsoncxx::builder::stream::finalize;
 
         // Document to update
         auto builder = bsoncxx::builder::stream::document{};
         builder << "$set" << bsoncxx::builder::stream::open_document;
         switch(field)
         {
-            case VrEnabled:
-                builder << "customData.vrEnabled" << value.toBool();
+        case VrEnabled:
+            builder << "customData.vrEnabled" << value.toBool();
             break;
         case HereEnabled:
-                builder << "customData.hereEnabled" << value.toBool();
+            builder << "customData.hereEnabled" << value.toBool();
             break;
         }
         builder << bsoncxx::builder::stream::close_document;

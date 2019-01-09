@@ -43,7 +43,7 @@ class RepoModelItemPainter : public QQuickPaintedItem
 
 public:
 
-    RepoModelItemPainter(QQuickItem *parent = 0);
+    RepoModelItemPainter(QQuickItem *parent = nullptr);
 
     void paint(QPainter *painter);
 

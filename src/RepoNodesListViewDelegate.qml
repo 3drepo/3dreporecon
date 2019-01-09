@@ -55,7 +55,7 @@ ItemDelegate {
 
         backgroundColor: "transparent"
         foregroundColor: "#ddd"
-        percentage: model.percentage
+//        percentage: model.percentage
 
     }
 
