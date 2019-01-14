@@ -29,21 +29,29 @@
 #include <mongocxx/collection.hpp>
 #include <bsoncxx/builder/stream/helpers.hpp>
 #include <bsoncxx/stdx/optional.hpp>
+#include <mongocxx/result/update.hpp>
 #include <mongocxx/exception/query_exception.hpp>
 #include <mongocxx/exception/logic_error.hpp>
 #include <mongocxx/exception/bulk_write_exception.hpp>
 
 using namespace repo;
 
-void RepoDBMongo::connect(const QString &host,
+void RepoDBMongo::connect(const QString &hostPort,
                           const QString &username,
                           const QString &password)
 {
-    std::string address = "mongodb://" +
-            username.toStdString() + ":" +
-            password.toStdString() + "@" +
-            host.toStdString() +
-            "/?authSource=admin";
+    std::string address;
+    if (!username.isEmpty() && !password.isEmpty()) {
+        address = "mongodb://" +
+                username.toStdString() + ":" +
+                password.toStdString() + "@" +
+                hostPort.toStdString() +
+                "/?authSource=admin";
+    }
+    else {
+        address = "mongodb://" +
+                hostPort.toStdString();
+    }
     connection = mongocxx::client{mongocxx::uri{address}};
 }
 
@@ -104,6 +112,7 @@ QString RepoDBMongo::update(const QVariant &id, const QVariant &value, const Fie
         bsoncxx::document::view_or_value updateDocument = builder << bsoncxx::builder::stream::finalize;
 
         // Execute the update using the filter and the update documents
+        // bsoncxx::stdx::optional<mongocxx::result::update> result =
         connection["admin"]["system.users"].update_one(
                     filterDocument,
                     updateDocument);

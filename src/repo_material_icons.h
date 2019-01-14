@@ -42,7 +42,7 @@ class RepoMaterialIcons : public QObject
 private:
 
     //! Singleton constructor
-    RepoMaterialIcons(QObject *parent = 0);
+    RepoMaterialIcons(QObject *parent = nullptr);
 
     //! Singleton destructor
     ~RepoMaterialIcons() {}

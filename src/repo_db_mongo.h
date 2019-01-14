@@ -45,11 +45,11 @@ public:
 
 public:
 
-    Q_INVOKABLE virtual void connect(const QString &host = "localhost:27017",
+    Q_INVOKABLE virtual void connect(const QString &hostPort = "localhost:27017",
                          const QString &username = QString(),
                          const QString &password = QString());
 
-    Q_INVOKABLE virtual QList<QVariant> fetchData() const const;
+    Q_INVOKABLE virtual QList<QVariant> fetchData() const;
 
     //! Returns error message or empty string if no error.
     Q_INVOKABLE virtual QString update(const QVariant &id, const QVariant &value, const Field &field);

@@ -26,7 +26,7 @@ import repo 1.0
 
 Dialog {
     id: repoLoginDialog
-    title: qsTR("Sign in")
+    title: qsTr("Sign in")
     x: Math.round((window.width - width) / 2)
     y: Math.round((window.height - height) / 2) - 80
     width: 400

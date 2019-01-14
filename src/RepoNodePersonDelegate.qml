@@ -149,32 +149,36 @@ Flickable {
             }
         }
 
-
         GroupBox {
+            id: discretionaryAccountGroupBox
             width: parent.width
-
+            clip: true
+            Behavior on height { NumberAnimation { duration: 100 } }
             background: Rectangle {
                 border.width: 0
             }
-
             label: SwitchDelegate {
                 id: discretionaryAccountCheckbox
                 width: parent.width
                 checked: true
                 text: qsTr("Discretionary account")
+                onCheckedChanged: {
+                    if (discretionaryAccountCheckbox.checked)
+                        discretionaryAccountGroupBox.height = 200
+                    else
+                        discretionaryAccountGroupBox.height = discretionaryAccountCheckbox.height
+                }
             }
-
             ColumnLayout {
+                id: discretionaryAccountContents
                 anchors.fill: parent
+                width: parent.width - 220
                 enabled: discretionaryAccountCheckbox.checked
                 TextField { placeholderText: "Collaborators";  Layout.preferredWidth: parent.width }
                 TextField { placeholderText: qsTr("Data"); Layout.preferredWidth: parent.width}
                 TextField { placeholderText: qsTr("Expiry date"); Layout.preferredWidth: parent.width }
             }
         }
-
-
-
 
     }
     ScrollIndicator.vertical: ScrollIndicator { }
