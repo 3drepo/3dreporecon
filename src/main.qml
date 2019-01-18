@@ -21,6 +21,7 @@ import QtQuick.Layouts 1.0
 import QtQuick.Controls.Material 2.1
 import QtQuick.Controls 2.1
 import QtQuick.Controls.Styles 1.4
+import Qt.labs.settings 1.0
 
 import repo 1.0
 
@@ -29,6 +30,14 @@ ApplicationWindow {
     visible: true
     width: 1280
     height: 720
+
+    Settings {
+        property alias x: window.x
+        property alias y: window.y
+        property alias width: window.width
+        property alias height: window.height
+    }
+
     title: qsTr("3D Repo Recon")
 
     //        background: Image {
@@ -84,7 +93,7 @@ ApplicationWindow {
 
             ToolButton {
                 id: menuButton
-               // anchors.left: parent.left
+                // anchors.left: parent.left
                 //anchors.leftMargin: 4
                 implicitWidth: 84
                 implicitHeight: 84
@@ -92,7 +101,7 @@ ApplicationWindow {
                 //                ToolTip.visible: hovered
                 //                ToolTip.text: qsTr("Menu")
 
-//                onClicked: drawer.open()
+                //                onClicked: drawer.open()
                 onClicked: unity.runUnity()
 
                 contentItem: Image {
@@ -107,18 +116,18 @@ ApplicationWindow {
 
             Image {
                 id: repoLogo
-               // anchors.left: menuButton.right
-               // anchors.leftMargin: 12
+                // anchors.left: menuButton.right
+                // anchors.leftMargin: 12
                 source: "qrc:/resources/3D-Repo_white.svg"
-//                sourceSize.width: width
-//                sourceSize.height: height
+                //                sourceSize.width: width
+                //                sourceSize.height: height
                 fillMode: Image.PreserveAspectFit
                 antialiasing: true
             }
 
             ToolButton {
-//                anchors.right: profileButton.left
-//                anchors.rightMargin: -24
+                //                anchors.right: profileButton.left
+                //                anchors.rightMargin: -24
                 implicitWidth: 84
                 implicitHeight: 84
 
@@ -135,8 +144,8 @@ ApplicationWindow {
 
             ToolButton {
                 id: profileButton
-               // anchors.right: parent.right
-               // anchors.rightMargin: 4
+                // anchors.right: parent.right
+                // anchors.rightMargin: 4
                 implicitWidth: 84
                 implicitHeight: 84
 

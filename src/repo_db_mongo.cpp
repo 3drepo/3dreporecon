@@ -70,8 +70,12 @@ QList<QVariant> RepoDBMongo::fetchData() const
     try {
         mongocxx::v_noabi::cursor cursor = connection["admin"]["system.users"].find({});
         for (auto&& doc : cursor) {
+
+          //  std::cout << bsoncxx::to_json(doc) << std::endl;
+
             QString jsonString = QString::fromStdString(bsoncxx::to_json(doc));
             QJsonDocument document = QJsonDocument::fromJson(jsonString.toUtf8());
+//            qDebug(jsonString.toStdString().c_str());
             list.append(document.toVariant());
         }
     } catch (mongocxx::query_exception e1) {

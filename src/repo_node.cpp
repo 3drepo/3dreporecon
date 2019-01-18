@@ -58,6 +58,21 @@ QMap<QString, QVariant> RepoNode::customData() const
     return value("customData").toMap();
 }
 
+QMap<QString, QVariant> RepoNode::billing() const
+{
+    return customData().value("billing").toMap();
+}
+
+QMap<QString, QVariant> RepoNode::subscriptions() const
+{
+    return billing().value("subscriptions").toMap();
+}
+QMap<QString, QVariant> RepoNode::enterprise() const
+{
+    return subscriptions().value("enterprise").toMap();
+}
+
+
 QString RepoNode::email() const
 {
     return customData().value("email").toString();
@@ -127,6 +142,34 @@ QImage RepoNode::avatar() const
         avatar = avatar.scaled(200, 200,Qt::KeepAspectRatio);
     }
     return avatar;
+}
+
+qulonglong RepoNode::enterpriseData() const
+{
+    qulonglong data = enterprise().value("data").toULongLong();
+    return data;
+}
+
+void RepoNode::setEnterpriseData(qulonglong data)
+{
+    QMap<QString, QVariant> cd = customData();
+    QMap<QString, QVariant> b = billing();
+    QMap<QString, QVariant> s = subscriptions();
+    QMap<QString, QVariant> e = enterprise();
+    e.insert("data", data);
+    s.insert("enterprise", e);
+    b.insert("subscriptions",s);
+    cd.insert("billing", b);
+    this->insert("customData", cd);
+}
+
+QDateTime RepoNode::enterpriseExpiryDate() const
+{
+    QDateTime dt;
+    QString dateValue = enterprise().value("expiryDate").toMap().value("$date").toString();
+    if (!dateValue.isNull())
+        dt = QDateTime::fromMSecsSinceEpoch(dateValue.toLongLong());
+    return dt;
 }
 
 //QString RepoNode::notes() const

@@ -76,6 +76,12 @@ QVariant RepoModelItem::data(int role) const
                 data = node->avatar();
             break;
         }
+        case EnterpriseData:
+            data = megabytesToString(static_cast<quint64>(node->enterpriseData()));
+            break;
+        case EnterpriseExpiryDate:
+            data = node->enterpriseExpiryDate();
+            break;
             //        case Notes:
             //            data = node->notes();
             //            break;
@@ -143,6 +149,9 @@ void RepoModelItem::setData(const QVariant &value, int role)
         case VrEnabled:
             node->setVrEnabled(value.toBool());
             break;
+        case EnterpriseData:
+            node->setEnterpriseData(stringToMegabytes(value.toString()));
+            break;
             //        case Notes:
             //            node->setNotes(value.toString());
             //            break;
@@ -191,6 +200,24 @@ QUuid RepoModelItem::getId() const
     if (node)
         id = data(Id).toUuid();
     return id;
+}
+
+QString RepoModelItem::megabytesToString(quint64 megabytes) const
+{
+    QString mega;
+    if (megabytes > 0)
+        mega = QLocale::system().formattedDataSize((quint64) megabytes * qPow(1024, 2),
+                                                   0,
+                                                   QLocale::DataSizeTraditionalFormat);
+    return mega;
+}
+
+quint64 RepoModelItem::stringToMegabytes(const QString str) const
+{
+    Q_ASSERT(str.contains(" "));
+    QStringList split = str.split(" ");
+    const static QStringList extension = {"bytes", "kB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
+    return (split[0].toULongLong() * qPow(1024, extension.indexOf(QRegExp(split[1], Qt::CaseSensitivity::CaseInsensitive)))) / qPow(1024, 2);
 }
 
 //double RepoModelItem::getX() const

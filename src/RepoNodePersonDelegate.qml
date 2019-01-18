@@ -22,7 +22,6 @@ import repo 1.0
 import QtGraphicalEffects 1.0
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Controls.Material 2.2
-
 import QtQuick.Dialogs 1.0
 
 Flickable {
@@ -49,7 +48,7 @@ Flickable {
             id: dial
             width: 290
             height: 290
-//            value: percentage
+            //            value: percentage
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
             onValueChanged: {
@@ -163,8 +162,10 @@ Flickable {
                 checked: true
                 text: qsTr("Discretionary account")
                 onCheckedChanged: {
-                    if (discretionaryAccountCheckbox.checked)
-                        discretionaryAccountGroupBox.height = 200
+                    if (discretionaryAccountCheckbox.checked) {
+                        discretionaryAccountGroupBox.height = 220
+                        enterpriseAccountCheckbox.checked = false
+                    }
                     else
                         discretionaryAccountGroupBox.height = discretionaryAccountCheckbox.height
                 }
@@ -172,7 +173,8 @@ Flickable {
             ColumnLayout {
                 id: discretionaryAccountContents
                 anchors.fill: parent
-                width: parent.width - 220
+                anchors.leftMargin: 20
+                anchors.rightMargin: 3
                 enabled: discretionaryAccountCheckbox.checked
                 TextField { placeholderText: "Collaborators";  Layout.preferredWidth: parent.width }
                 TextField { placeholderText: qsTr("Data"); Layout.preferredWidth: parent.width}
@@ -180,7 +182,54 @@ Flickable {
             }
         }
 
+
+        GroupBox {
+            id: enterpriseAccountGroupBox
+            width: parent.width
+            clip: true
+            Behavior on height { NumberAnimation { duration: 100 } }
+            background: Rectangle {
+                border.width: 0
+            }
+            label: SwitchDelegate {
+                id: enterpriseAccountCheckbox
+                width: parent.width
+                checked: true
+                text: qsTr("Enterprise account")
+                onCheckedChanged: {
+                    if (enterpriseAccountCheckbox.checked) {
+                        enterpriseAccountGroupBox.height = RepoInputCollaborators.height
+                        discretionaryAccountCheckbox.checked = false
+                    }
+                    else
+                        enterpriseAccountGroupBox.height = enterpriseAccountCheckbox.height
+                }
+            }
+            ColumnLayout {
+                id: enterpriseAccountContents
+                spacing: 15
+                anchors.fill: parent
+                anchors.leftMargin: 20
+                anchors.rightMargin: 3
+                enabled: enterpriseAccountCheckbox.checked
+
+
+                RepoInputCollaborators { Layout.preferredWidth: parent.width }
+                RepoInputDataSize { dataSize: enterpriseData; Layout.preferredWidth: parent.width }
+                RepoInputCalendar {
+                    //                    Component.onCompleted: {
+                    //                        if (enterpriseExpiryDate.month)
+                    //                            calendar.selectedDate = enterpriseExpiryDate
+                    //                    }
+                    calendar.selectedDate : enterpriseExpiryDate
+                    Layout.preferredWidth: parent.width
+                }
+            }
+        }
+
+
     }
+
     ScrollIndicator.vertical: ScrollIndicator { }
     //    }
 

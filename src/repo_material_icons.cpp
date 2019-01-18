@@ -27,7 +27,7 @@ QColor RepoMaterialIcons::COLOR_SELECTED	= QColor(10,10,10);
 
 RepoMaterialIcons::RepoMaterialIcons(QObject* parent)
 	: QObject(parent)
-	, rawFont(0)
+    , rawFont(nullptr)
 {
     QFile res(":/resources/MaterialIcons-Regular.ttf");
     if(!res.open(QIODevice::ReadOnly))

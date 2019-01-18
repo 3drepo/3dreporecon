@@ -19,6 +19,9 @@
 
 #include <QString>
 #include <QStandardItem>
+#include <QLocale>
+#include <QDebug>
+#include <QtMath>
 
 #include "repo_node.h"
 #include "repo_node_company.h"
@@ -58,7 +61,10 @@ public :
         CreatedAt,
         MailListOptOut,
         VrEnabled,
-        Image/*,
+        Image,
+        EnterpriseData,
+        EnterpriseExpiryDate
+        /*,
         Notes,
         Type,
         Image,
@@ -90,6 +96,12 @@ public:
     RepoNode* getNode() { return node; }
 
     QUuid getId() const;
+
+    QString megabytesToString(quint64 megabytes) const;
+
+    //! Takes input in form of "12 GB" for instance. Must contain space!
+    quint64 stringToMegabytes(const QString str) const;
+
 //    double getX() const;
 //    double getY() const;
 

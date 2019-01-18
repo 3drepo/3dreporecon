@@ -141,6 +141,11 @@ public:
         return getIconStatic(0xE872, color);
     }
 
+    static QIcon getCalendarIcon(const QColor &color = QColor(Qt::white))
+    {
+        return getIconStatic(0xE24F, color);
+    }
+
 
 //    //! Returns commit icon.
 //    static QIcon getCommitIcon()

@@ -15,5 +15,8 @@
         <file>src/RepoNodeDetailsView.qml</file>
         <file>src/RepoNodePersonDelegate.qml</file>
 	<file>src/RepoDialogLogin.qml</file>
+	<file>src/RepoInputCalendar.qml</file>
+	<file>src/RepoInputDataSize.qml</file>
+	<file>src/RepoInputCollaborators.qml</file>
     </qresource>
 </RCC>

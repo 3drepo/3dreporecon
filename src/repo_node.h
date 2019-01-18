@@ -27,6 +27,8 @@
 #include <QBuffer>
 #include <QDateTime>
 
+#include <iostream>
+
 namespace repo
 {
 
@@ -50,8 +52,6 @@ public:
     QString user() const;
 
     void setUser(const QString &user);
-
-    QMap<QString, QVariant> customData() const;
 
     QString email() const;
 
@@ -77,7 +77,22 @@ public:
 
     QImage avatar() const;
 
+    //! Returns enterprise account data allocation in MiB
+    qulonglong enterpriseData() const;
 
+    void setEnterpriseData(qulonglong data);
+
+    QDateTime enterpriseExpiryDate() const;
+
+private :
+
+    QMap<QString, QVariant> customData() const;
+
+    QMap<QString, QVariant> billing() const;
+
+    QMap<QString, QVariant> subscriptions() const;
+
+    QMap<QString, QVariant> enterprise() const;
 
 
 //    QString notes() const;
