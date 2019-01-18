@@ -88,7 +88,7 @@ ApplicationWindow {
 
 
         RowLayout {
-            spacing: 0
+            spacing: 14
             anchors.fill: parent
 
             ToolButton {
@@ -108,7 +108,7 @@ ApplicationWindow {
                     fillMode: Image.Pad
                     horizontalAlignment: Image.AlignHCenter
                     verticalAlignment: Image.AlignVCenter
-                    source: "image://materialicons/menu"
+                    source: "image://materialicons/menu/" + Material.color(Material.Grey)
                     sourceSize.width: 32
                     sourceSize.height: 32
                 }
@@ -116,36 +116,33 @@ ApplicationWindow {
 
             Image {
                 id: repoLogo
-                // anchors.left: menuButton.right
-                // anchors.leftMargin: 12
                 source: "qrc:/resources/3D-Repo_white.svg"
-                //                sourceSize.width: width
-                //                sourceSize.height: height
                 fillMode: Image.PreserveAspectFit
                 antialiasing: true
             }
 
-            ToolButton {
-                //                anchors.right: profileButton.left
-                //                anchors.rightMargin: -24
-                implicitWidth: 84
-                implicitHeight: 84
+            // Spacer item
+            Item { Layout.fillWidth: true }
 
-                contentItem: Image {
-                    fillMode: Image.Pad
-                    horizontalAlignment: Image.AlignHCenter
-                    verticalAlignment: Image.AlignVCenter
-                    source: "image://materialicons/notificationsNone"
-                    sourceSize.width: 32
-                    sourceSize.height: 32
-                }
+//            ToolButton {
+//                anchors.rightMargin: -24
+//                implicitWidth: 84
+//                implicitHeight: 84
+//                Layout.alignment: Qt.AlignRight
+//                contentItem: Image {
+//                    fillMode: Image.Pad
+//                    horizontalAlignment: Image.AlignHCenter
+//                    verticalAlignment: Image.AlignVCenter
+//                    source: "image://materialicons/notificationsNone"
+//                    sourceSize.width: 32
+//                    sourceSize.height: 32
+//                }
 
-            }
+//            }
 
             ToolButton {
                 id: profileButton
-                // anchors.right: parent.right
-                // anchors.rightMargin: 4
+                anchors.rightMargin: 4
                 implicitWidth: 84
                 implicitHeight: 84
 
@@ -168,18 +165,9 @@ ApplicationWindow {
                     y: parent.height
                     transformOrigin: Menu.TopRight
 
-                    MenuItem {
-                        text: "Sign in"
-                        onTriggered: repoLoginDialog.open()
-                    }
-                    MenuItem {
-                        text: "Settings"
-                        onTriggered: settingsDialog.open()
-                    }
-                    MenuItem {
-                        text: "About"
-                        onTriggered: aboutDialog.open()
-                    }
+                    MenuItem { text: qsTr("Sign in"); onTriggered: repoLoginDialog.open() }
+                    MenuItem { text: qsTr("Settings"); onTriggered: settingsDialog.open() }
+                    MenuItem { text: qsTr("About"); onTriggered: aboutDialog.open() }
                 }
             }
 
@@ -206,7 +194,7 @@ ApplicationWindow {
                 fillMode: Image.Pad
                 horizontalAlignment: Image.AlignHCenter
                 verticalAlignment: Image.AlignVCenter
-                source: "image://materialicons/people"
+                source: "image://materialicons/people/" + Material.accent
                 sourceSize.width: 32
                 sourceSize.height: 32
             }
@@ -224,7 +212,7 @@ ApplicationWindow {
                 fillMode: Image.Pad
                 horizontalAlignment: Image.AlignHCenter
                 verticalAlignment: Image.AlignVCenter
-                source: "image://materialicons/assignment"
+                source: "image://materialicons/assignment/" + Material.color(Material.Grey)
                 sourceSize.width: 32
                 sourceSize.height: 32
             }
@@ -249,7 +237,7 @@ ApplicationWindow {
                 fillMode: Image.Pad
                 horizontalAlignment: Image.AlignHCenter
                 verticalAlignment: Image.AlignVCenter
-                source: "image://materialicons/business"
+                source: "image://materialicons/business/" + Material.color(Material.Grey)
                 sourceSize.width: 32
                 sourceSize.height: 32
             }

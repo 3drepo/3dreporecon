@@ -76,11 +76,29 @@ QVariant RepoModelItem::data(int role) const
                 data = node->avatar();
             break;
         }
+        case Enterprise:
+            data = !node->enterprise().isEmpty();
+            break;
         case EnterpriseData:
             data = megabytesToString(static_cast<quint64>(node->enterpriseData()));
             break;
         case EnterpriseExpiryDate:
             data = node->enterpriseExpiryDate();
+            break;
+        case EnterpriseCollaborators:
+            data = node->enterpriseCollaborators();
+            break;
+        case Discretionary:
+            data = !node->discretionary().isEmpty();
+            break;
+        case DiscretionaryData:
+            data = megabytesToString(static_cast<quint64>(node->discretionaryData()));
+            break;
+        case DiscretionaryExpiryDate:
+            data = node->discretionaryExpiryDate();
+            break;
+        case DiscretionaryCollaborators:
+            data = node->discretionaryCollaborators();
             break;
             //        case Notes:
             //            data = node->notes();

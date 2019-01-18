@@ -39,7 +39,6 @@ ColumnLayout {
         anchors.topMargin: 0
         id: collaboratorsComboBox
         editable: true
-        //textRole: "text"
         Layout.preferredWidth: parent.width
         validator: RegExpValidator { regExp: /([0-9]+|unlimited)/ }
 
@@ -63,7 +62,7 @@ ColumnLayout {
 
         Component.onCompleted: {
             if (collaborators) {
-                if (find(enterpriseData) === -1) {
+                if (find(collaborators) === -1) {
                     dataModel.append({text: collaborators})
                 }
                 currentIndex = find(collaborators);

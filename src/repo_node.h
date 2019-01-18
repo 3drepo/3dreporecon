@@ -29,11 +29,13 @@
 
 #include <iostream>
 
+#include "repo_node_schema.h"
+
 namespace repo
 {
 
 class RepoNode : public QMap<QString, QVariant>
-{
+{     
 
 public:
 
@@ -77,12 +79,37 @@ public:
 
     QImage avatar() const;
 
-    //! Returns enterprise account data allocation in MiB
+    //! Returns enterprise account data allocation in MB
     qulonglong enterpriseData() const;
 
     void setEnterpriseData(qulonglong data);
 
     QDateTime enterpriseExpiryDate() const;
+
+    //!TODO setEnterpriseExpiryDate
+
+    QString enterpriseCollaborators() const;
+
+    void setEnterpriseCollaborators(const QString str = RepoNodeSchema::UNLIMITED);
+
+    void setEnterpriseCollaborators(int count);
+
+    //! Returns discretionary account data allocation in MB
+    qulonglong discretionaryData() const;
+
+    void setDiscretionaryData(qulonglong data);
+
+    QDateTime discretionaryExpiryDate() const;
+
+    QString discretionaryCollaborators() const;
+
+//    void setDiscretionaryCollaborators(const QString str = RepoNodeSchema::unlimited);
+
+//    void setDiscretionaryCollaborators(int count);
+
+    QMap<QString, QVariant> enterprise() const;
+
+    QMap<QString, QVariant> discretionary() const;
 
 private :
 
@@ -92,7 +119,8 @@ private :
 
     QMap<QString, QVariant> subscriptions() const;
 
-    QMap<QString, QVariant> enterprise() const;
+
+
 
 
 //    QString notes() const;

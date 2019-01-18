@@ -33,8 +33,15 @@ QHash<int, QByteArray> RepoModel::roles = {
     {RepoModelItem::MailListOptOut, "mailListOptOut"},
     {RepoModelItem::VrEnabled, "vrEnabled"},
     {RepoModelItem::Image, "image"},
+    {RepoModelItem::Enterprise, "enterprise"},
     {RepoModelItem::EnterpriseData, "enterpriseData"},
-    {RepoModelItem::EnterpriseExpiryDate, "enterpriseExpiryDate"}
+    {RepoModelItem::EnterpriseExpiryDate, "enterpriseExpiryDate"},
+    {RepoModelItem::EnterpriseCollaborators, "enterpriseCollaborators"},
+    {RepoModelItem::Discretionary, "discretionary"},
+    {RepoModelItem::DiscretionaryData, "discretionaryData"},
+    {RepoModelItem::DiscretionaryExpiryDate, "discretionaryExpiryDate"},
+    {RepoModelItem::DiscretionaryCollaborators, "discretionaryCollaborators"}
+
 
 //    {RepoModelItem::Notes, "notes"},
 //    {RepoModelItem::Type, "type"},

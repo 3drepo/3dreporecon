@@ -29,7 +29,6 @@ Flickable {
     height: nodePersonListView.height
     contentHeight: img.height + grid.height + 60
 
-
     RepoModelItemPainter {
         id: img
         anchors.top: parent.top
@@ -150,25 +149,19 @@ Flickable {
 
         GroupBox {
             id: discretionaryAccountGroupBox
+
             width: parent.width
             clip: true
             Behavior on height { NumberAnimation { duration: 100 } }
+            height: discretionaryAccountCheckbox.checked ? RepoInputCollaborators.height : discretionaryAccountCheckbox.height
             background: Rectangle {
                 border.width: 0
             }
             label: SwitchDelegate {
                 id: discretionaryAccountCheckbox
                 width: parent.width
-                checked: true
+                checked: discretionary
                 text: qsTr("Discretionary account")
-                onCheckedChanged: {
-                    if (discretionaryAccountCheckbox.checked) {
-                        discretionaryAccountGroupBox.height = 220
-                        enterpriseAccountCheckbox.checked = false
-                    }
-                    else
-                        discretionaryAccountGroupBox.height = discretionaryAccountCheckbox.height
-                }
             }
             ColumnLayout {
                 id: discretionaryAccountContents
@@ -176,34 +169,28 @@ Flickable {
                 anchors.leftMargin: 20
                 anchors.rightMargin: 3
                 enabled: discretionaryAccountCheckbox.checked
-                TextField { placeholderText: "Collaborators";  Layout.preferredWidth: parent.width }
-                TextField { placeholderText: qsTr("Data"); Layout.preferredWidth: parent.width}
-                TextField { placeholderText: qsTr("Expiry date"); Layout.preferredWidth: parent.width }
+                RepoInputCollaborators { collaborators: discretionaryCollaborators; Layout.preferredWidth: parent.width }
+                RepoInputDataSize { dataSize: discretionaryData; Layout.preferredWidth: parent.width }
+                RepoInputCalendar { calendar.selectedDate: discretionaryExpiryDate; Layout.preferredWidth: parent.width }
             }
         }
 
 
         GroupBox {
             id: enterpriseAccountGroupBox
+
             width: parent.width
             clip: true
             Behavior on height { NumberAnimation { duration: 100 } }
+            height: enterpriseAccountCheckbox.checked ? RepoInputCollaborators.height : enterpriseAccountCheckbox.height
             background: Rectangle {
                 border.width: 0
             }
             label: SwitchDelegate {
                 id: enterpriseAccountCheckbox
                 width: parent.width
-                checked: true
                 text: qsTr("Enterprise account")
-                onCheckedChanged: {
-                    if (enterpriseAccountCheckbox.checked) {
-                        enterpriseAccountGroupBox.height = RepoInputCollaborators.height
-                        discretionaryAccountCheckbox.checked = false
-                    }
-                    else
-                        enterpriseAccountGroupBox.height = enterpriseAccountCheckbox.height
-                }
+                checked: enterprise
             }
             ColumnLayout {
                 id: enterpriseAccountContents
@@ -212,9 +199,7 @@ Flickable {
                 anchors.leftMargin: 20
                 anchors.rightMargin: 3
                 enabled: enterpriseAccountCheckbox.checked
-
-
-                RepoInputCollaborators { Layout.preferredWidth: parent.width }
+                RepoInputCollaborators { collaborators: enterpriseCollaborators; Layout.preferredWidth: parent.width }
                 RepoInputDataSize { dataSize: enterpriseData; Layout.preferredWidth: parent.width }
                 RepoInputCalendar {
                     //                    Component.onCompleted: {
@@ -252,5 +237,4 @@ Flickable {
             console.log("Canceled")
         }
     }
-
 }

@@ -20,6 +20,7 @@
 
 using namespace repo;
 
+
 RepoNode::RepoNode(const QMap<QString, QVariant> &map)
     : QMap<QString, QVariant>(map)
 {}
@@ -30,7 +31,7 @@ RepoNode::RepoNode(const RepoNode &node)
 
 QString RepoNode::id() const
 {
-    return value("_id").toString();
+    return value(RepoNodeSchema::_ID).toString();
 }
 
 void RepoNode::setId()
@@ -40,42 +41,46 @@ void RepoNode::setId()
 
 void RepoNode::setId(const QString &id)
 {
-    insert("_id", id);
+    insert(RepoNodeSchema::_ID, id);
 }
 
 QString RepoNode::user() const
 {
-    return value("user").toString();
+    return value(RepoNodeSchema::USER).toString();
 }
 
 void RepoNode::setUser(const QString &user)
 {
-    insert("user", user);
+    insert(RepoNodeSchema::USER, user);
 }
 
 QMap<QString, QVariant> RepoNode::customData() const
 {
-    return value("customData").toMap();
+    return value(RepoNodeSchema::CUSTOM_DATA).toMap();
 }
 
 QMap<QString, QVariant> RepoNode::billing() const
 {
-    return customData().value("billing").toMap();
+    return customData().value(RepoNodeSchema::BILLING).toMap();
 }
 
 QMap<QString, QVariant> RepoNode::subscriptions() const
 {
-    return billing().value("subscriptions").toMap();
+    return billing().value(RepoNodeSchema::SUBSCRIPTIONS).toMap();
 }
 QMap<QString, QVariant> RepoNode::enterprise() const
 {
-    return subscriptions().value("enterprise").toMap();
+    return subscriptions().value(RepoNodeSchema::ENTERPRISE).toMap();
 }
 
+QMap<QString, QVariant> RepoNode::discretionary() const
+{
+    return subscriptions().value(RepoNodeSchema::DISCRETIONARY).toMap();
+}
 
 QString RepoNode::email() const
 {
-    return customData().value("email").toString();
+    return customData().value(RepoNodeSchema::EMAIL).toString();
 }
 
 //void RepoNode::setEmail(const QString &email)
@@ -86,57 +91,57 @@ QString RepoNode::email() const
 
 QString RepoNode::firstName() const
 {
-    return customData().value("firstName").toString();
+    return customData().value(RepoNodeSchema::FIRST_NAME).toString();
 }
 
 QString RepoNode::lastName() const
 {
-    return customData().value("lastName").toString();
+    return customData().value(RepoNodeSchema::LAST_NAME).toString();
 }
 
 bool RepoNode::hereEnabled() const
 {
-    return customData().value("hereEnabled").toBool();
+    return customData().value(RepoNodeSchema::HERE_ENABLED).toBool();
 }
 
 void RepoNode::setHereEnabled(bool on)
 {
      QMap<QString, QVariant> cd = customData();
-     cd.insert("hereEnabled", on);
-     insert("customData", cd);
+     cd.insert(RepoNodeSchema::HERE_ENABLED, on);
+     insert(RepoNodeSchema::CUSTOM_DATA, cd);
 }
 
 QDateTime RepoNode::lastLoginAt() const
 {
-    return customData().value("lastLoginAt").toDateTime();
+    return customData().value(RepoNodeSchema::LAST_LOGIN_AT).toDateTime();
 }
 
 QDateTime RepoNode::createdAt() const
 {
-    return customData().value("createdAt").toDateTime();
+    return customData().value(RepoNodeSchema::CREATED_AT).toDateTime();
 }
 
 bool RepoNode::mailListOptOut() const
 {
-    return customData().value("mailListOptOut").toBool();
+    return customData().value(RepoNodeSchema::MAIL_LIST_OPT_OUT).toBool();
 }
 
 bool RepoNode::vrEnabled() const
 {
-    return customData().value("vrEnabled").toBool();
+    return customData().value(RepoNodeSchema::VR_ENABLED).toBool();
 }
 
 void RepoNode::setVrEnabled(bool on)
 {
      QMap<QString, QVariant> cd = customData();
-     cd.insert("vrEnabled", on);
-     insert("customData", cd);
+     cd.insert(RepoNodeSchema::VR_ENABLED, on);
+     insert(RepoNodeSchema::CUSTOM_DATA, cd);
 }
 
 QImage RepoNode::avatar() const
 {
     QImage avatar;
-    QByteArray encoded = customData().value("avatar").toMap().value("data").toMap().value("$binary").toByteArray();
+    QByteArray encoded = customData().value(RepoNodeSchema::AVATAR).toMap().value(RepoNodeSchema::DATA).toMap().value(RepoNodeSchema::$BINARY).toByteArray();
     if (!encoded.isEmpty()) {
         avatar.loadFromData(QByteArray::fromBase64(encoded));
         avatar = avatar.scaled(200, 200,Qt::KeepAspectRatio);
@@ -146,7 +151,7 @@ QImage RepoNode::avatar() const
 
 qulonglong RepoNode::enterpriseData() const
 {
-    qulonglong data = enterprise().value("data").toULongLong();
+    qulonglong data = enterprise().value(RepoNodeSchema::DATA).toULongLong();
     return data;
 }
 
@@ -156,20 +161,91 @@ void RepoNode::setEnterpriseData(qulonglong data)
     QMap<QString, QVariant> b = billing();
     QMap<QString, QVariant> s = subscriptions();
     QMap<QString, QVariant> e = enterprise();
-    e.insert("data", data);
-    s.insert("enterprise", e);
-    b.insert("subscriptions",s);
-    cd.insert("billing", b);
-    this->insert("customData", cd);
+    e.insert(RepoNodeSchema::DATA, data);
+    s.insert(RepoNodeSchema::ENTERPRISE, e);
+    b.insert(RepoNodeSchema::SUBSCRIPTIONS,s);
+    cd.insert(RepoNodeSchema::BILLING, b);
+    this->insert(RepoNodeSchema::CUSTOM_DATA, cd);
 }
 
 QDateTime RepoNode::enterpriseExpiryDate() const
 {
     QDateTime dt;
-    QString dateValue = enterprise().value("expiryDate").toMap().value("$date").toString();
+    QString dateValue = enterprise().value(RepoNodeSchema::EXPIRY_DATE).toMap().value(RepoNodeSchema::$DATE).toString();
     if (!dateValue.isNull())
         dt = QDateTime::fromMSecsSinceEpoch(dateValue.toLongLong());
     return dt;
+}
+
+QString RepoNode::enterpriseCollaborators() const
+{
+    return enterprise().value(RepoNodeSchema::COLLABORATORS).toString();
+}
+
+void RepoNode::setEnterpriseCollaborators(const QString str)
+{
+    QMap<QString, QVariant> cd = customData();
+    QMap<QString, QVariant> b = billing();
+    QMap<QString, QVariant> s = subscriptions();
+    QMap<QString, QVariant> e = enterprise();
+
+    e.insert(RepoNodeSchema::COLLABORATORS, str);
+
+    s.insert(RepoNodeSchema::ENTERPRISE, e);
+    b.insert(RepoNodeSchema::SUBSCRIPTIONS,s);
+    cd.insert(RepoNodeSchema::BILLING, b);
+    this->insert(RepoNodeSchema::CUSTOM_DATA, cd);
+}
+
+void RepoNode::setEnterpriseCollaborators(int count)
+{
+    QMap<QString, QVariant> cd = customData();
+    QMap<QString, QVariant> b = billing();
+    QMap<QString, QVariant> s = subscriptions();
+    QMap<QString, QVariant> e = enterprise();
+
+    e.insert(RepoNodeSchema::COLLABORATORS, count);
+
+    s.insert(RepoNodeSchema::ENTERPRISE, e);
+    b.insert(RepoNodeSchema::SUBSCRIPTIONS,s);
+    cd.insert(RepoNodeSchema::BILLING, b);
+    this->insert(RepoNodeSchema::CUSTOM_DATA, cd);
+}
+
+qulonglong RepoNode::discretionaryData() const
+{
+    qulonglong data = discretionary().value(RepoNodeSchema::DATA).toULongLong();
+    return data;
+}
+
+void RepoNode::setDiscretionaryData(qulonglong data)
+{
+    QMap<QString, QVariant> cd = customData();
+    QMap<QString, QVariant> b = billing();
+    QMap<QString, QVariant> s = subscriptions();
+    QMap<QString, QVariant> d = discretionary();
+
+    d.insert(RepoNodeSchema::DATA, data);
+
+    s.insert(RepoNodeSchema::DISCRETIONARY, d);
+    b.insert(RepoNodeSchema::SUBSCRIPTIONS,s);
+    cd.insert(RepoNodeSchema::BILLING, b);
+    this->insert(RepoNodeSchema::CUSTOM_DATA, cd);
+}
+
+QDateTime RepoNode::discretionaryExpiryDate() const
+{
+    QDateTime dt;
+    QString dateValue = discretionary().value(RepoNodeSchema::EXPIRY_DATE).toMap().value(RepoNodeSchema::$DATE).toString();
+    if (!dateValue.isNull())
+        dt = QDateTime::fromMSecsSinceEpoch(dateValue.toLongLong());
+    return dt;
+}
+
+
+QString RepoNode::discretionaryCollaborators() const
+{
+    return discretionary().value(RepoNodeSchema::COLLABORATORS).toString();
 }
 
 //QString RepoNode::notes() const

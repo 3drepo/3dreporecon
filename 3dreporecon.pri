@@ -29,7 +29,8 @@ HEADERS += \
     $$PWD/src/repo_model_image_provider.h \
     $$PWD/src/repo_unity.h \
     $$PWD/src/repo_db_abstract.h \
-    $$PWD/src/repo_db_mongo.h
+    $$PWD/src/repo_db_mongo.h \
+    $$PWD/src/repo_node_schema.h
 
 SOURCES +=  \
     $$PWD/src/main.cpp \
@@ -48,6 +49,7 @@ SOURCES +=  \
     $$PWD/src/repo_model_image_provider.cpp \
     $$PWD/src/repo_unity.cpp \
     $$PWD/src/repo_db_abstract.cpp \
-    $$PWD/src/repo_db_mongo.cpp
+    $$PWD/src/repo_db_mongo.cpp \
+    $$PWD/src/repo_node_schema.cpp
 
 FORMS += 
