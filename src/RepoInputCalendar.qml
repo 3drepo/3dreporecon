@@ -54,7 +54,7 @@ ColumnLayout {
 
             //        horizontalAlignment: Image.AlignHCenter
             //        verticalAlignment: Image.AlignVCenter
-            source: "image://materialicons/calendar/#333"
+            source: "image://materialicons/calendar/" + Material.DarkGrey
             sourceSize.width: parent.height * 0.8
             sourceSize.height: parent.height * 0.8
             Layout.fillWidth: true

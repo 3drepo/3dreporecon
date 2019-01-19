@@ -81,7 +81,7 @@ ListView {
                 fillMode: Image.Pad
                 horizontalAlignment: Image.AlignHCenter
                 verticalAlignment: Image.AlignVCenter
-                source: searchField.text.length > 0 ? "image://materialicons/clear/#FF757575" : "image://materialicons/search/#FF757575"
+                source: searchField.text.length > 0 ? "image://materialicons/clear/" + Material.DarkGrey : "image://materialicons/search/" + Material.DarkGrey
                 sourceSize.width: 32
                 sourceSize.height: 32
             }

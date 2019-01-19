@@ -146,6 +146,11 @@ public:
         return getIconStatic(0xE24F, color);
     }
 
+    static QIcon getSaveIcon(const QColor &color = QColor(Qt::white))
+    {
+        return getIconStatic(0xE161, color);
+    }
+
 
 //    //! Returns commit icon.
 //    static QIcon getCommitIcon()

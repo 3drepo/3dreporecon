@@ -18,9 +18,11 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.1
 import QtQuick.Layouts 1.0
-import repo 1.0
+import QtQuick.Controls.Material 2.2
 import QtGraphicalEffects 1.0
 import QtQuick.Controls.Styles 1.4
+
+import repo 1.0
 
 ItemDelegate {
     id: delegateItem
@@ -74,12 +76,11 @@ ItemDelegate {
             elide: Text.ElideRight
         }
 
-        Text {
+        Label {
             id: emailText
             text: email
             width: nameText.width
-            font.pointSize: 9
-            color: "#999"
+            color: Material.color(Material.Grey)
             elide: Text.ElideRight
         }
     }

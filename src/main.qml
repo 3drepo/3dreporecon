@@ -88,7 +88,7 @@ ApplicationWindow {
 
 
         RowLayout {
-            spacing: 14
+            spacing: 16
             anchors.fill: parent
 
             ToolButton {
@@ -108,7 +108,7 @@ ApplicationWindow {
                     fillMode: Image.Pad
                     horizontalAlignment: Image.AlignHCenter
                     verticalAlignment: Image.AlignVCenter
-                    source: "image://materialicons/menu/" + Material.color(Material.Grey)
+                    source: "image://materialicons/menu"
                     sourceSize.width: 32
                     sourceSize.height: 32
                 }
@@ -124,21 +124,21 @@ ApplicationWindow {
             // Spacer item
             Item { Layout.fillWidth: true }
 
-//            ToolButton {
-//                anchors.rightMargin: -24
-//                implicitWidth: 84
-//                implicitHeight: 84
-//                Layout.alignment: Qt.AlignRight
-//                contentItem: Image {
-//                    fillMode: Image.Pad
-//                    horizontalAlignment: Image.AlignHCenter
-//                    verticalAlignment: Image.AlignVCenter
-//                    source: "image://materialicons/notificationsNone"
-//                    sourceSize.width: 32
-//                    sourceSize.height: 32
-//                }
+            //            ToolButton {
+            //                anchors.rightMargin: -24
+            //                implicitWidth: 84
+            //                implicitHeight: 84
+            //                Layout.alignment: Qt.AlignRight
+            //                contentItem: Image {
+            //                    fillMode: Image.Pad
+            //                    horizontalAlignment: Image.AlignHCenter
+            //                    verticalAlignment: Image.AlignVCenter
+            //                    source: "image://materialicons/notificationsNone"
+            //                    sourceSize.width: 32
+            //                    sourceSize.height: 32
+            //                }
 
-//            }
+            //            }
 
             ToolButton {
                 id: profileButton
@@ -212,7 +212,7 @@ ApplicationWindow {
                 fillMode: Image.Pad
                 horizontalAlignment: Image.AlignHCenter
                 verticalAlignment: Image.AlignVCenter
-                source: "image://materialicons/assignment/" + Material.color(Material.Grey)
+                source: "image://materialicons/assignment"
                 sourceSize.width: 32
                 sourceSize.height: 32
             }
@@ -237,7 +237,7 @@ ApplicationWindow {
                 fillMode: Image.Pad
                 horizontalAlignment: Image.AlignHCenter
                 verticalAlignment: Image.AlignVCenter
-                source: "image://materialicons/business/" + Material.color(Material.Grey)
+                source: "image://materialicons/business"
                 sourceSize.width: 32
                 sourceSize.height: 32
             }
@@ -280,34 +280,26 @@ ApplicationWindow {
             id: stackView
             anchors.fill: parent
             clip: true
-
-
-
             initialItem: RepoNodesListView {
                 id: listView
+                cacheBuffer: 1000
                 highlightFollowsCurrentItem: true
                 highlightMoveDuration: 200
                 model: repoModel
-
-
-
                 delegate: RepoNodesListViewDelegate {
                     highlighted: ListView.isCurrentItem
                     onClicked: {
                         listView.currentIndex = index
+//                        stackView.push("qrc:/src/RepoUserDetails.qml")
                         stackView.push("qrc:/src/RepoNodeDetailsView.qml")
                         var personal = stackView.currentItem
                         personal.select(index)
-
-
-
                         canvas.contentX = model.x - window.width/2 - sidePanel.width/2
                         canvas.contentY = model.y - window.height/2
                     }
                 }
             }
         }
-
     }
 
 

@@ -29,6 +29,11 @@ Flickable {
     height: nodePersonListView.height
     contentHeight: img.height + grid.height + 60
 
+//    Rectangle {
+//    color: Material.primary
+//    width: nodePersonListView.width
+
+
     RepoModelItemPainter {
         id: img
         anchors.top: parent.top
@@ -55,7 +60,7 @@ Flickable {
                 repoModel.setData(index, value, "percentage")
             }
             snapMode: Dial.SnapAlways
-            stepSize: 0.5
+            stepSize: 0.1
             Material.accent: img.getPercentageColor(value)
 
 
@@ -88,50 +93,27 @@ Flickable {
         horizontalItemAlignment: Grid.AlignHCenter
         anchors.topMargin: 10
         anchors.bottomMargin: 80
-        //spacing: 10
         width: parent.width
 
-        TextField {
-            id: nameField
-            width: parent.width - 30
-            placeholderText: qsTr("Name")
-            text: name
-            enabled: false
-            font.pointSize: 12
-            onTextChanged: {
-                repoModel.setData(index, text, "name")
-            }
-        }
+        Text { text: name; font.pointSize: 12}
 
-        TextField {
-            placeholderText: qsTr("Username")
-            text: user
-            enabled: false
-            width: parent.width - 30
-            anchors.topMargin: 2
-            font.pointSize: 10
-            // see http://www.qtcentre.org/threads/65095-How-to-elide-text-in-TextEdit
-            onTextChanged: {
-                repoModel.setData(index, text, "user")
-            }
-        }
+        Item { height: 4; width: 1}
 
-        TextField {
-            text: email
-            placeholderText: qsTr("Email")
-            enabled: false
-            width: parent.width - 30
-            anchors.topMargin: 2
-            onTextChanged: {
-                repoModel.setData(index, text, "email")
-            }
+        Text { text: email; font.pointSize: 10; color: Material.color(Material.Grey) }
+
+        Item { height: 30; width: 1}
+
+
+        Rectangle {
+            implicitHeight: 1
+            color: Material.color(Material.Grey, Material.Shade300)
+            width: parent.width
         }
 
         SwitchDelegate {
             text: qsTr("Virtual reality")
             checked: vrEnabled
             width: parent.width
-            height: 50
             anchors.topMargin: 2
             onCheckedChanged: {
                 repoModel.setData(index, checked, "vrEnabled")
@@ -168,6 +150,7 @@ Flickable {
                 anchors.fill: parent
                 anchors.leftMargin: 20
                 anchors.rightMargin: 3
+                spacing: 15
                 enabled: discretionaryAccountCheckbox.checked
                 RepoInputCollaborators { collaborators: discretionaryCollaborators; Layout.preferredWidth: parent.width }
                 RepoInputDataSize { dataSize: discretionaryData; Layout.preferredWidth: parent.width }
@@ -214,6 +197,7 @@ Flickable {
 
 
     }
+
 
     ScrollIndicator.vertical: ScrollIndicator { }
     //    }

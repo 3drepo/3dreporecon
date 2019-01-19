@@ -25,15 +25,16 @@ import QtQuick.Controls.Material 2.0
 import repo 1.0
 
 Item {
+
     id: repoNodeDetailsView
 
     Rectangle {
         id: topBar
         width: repoNodeDetailsView.width
         height: 84
-        color: "white"
+        color: Material.primary
         radius: 4
-        z: 2
+        z: 3
         anchors.top: repoNodeDetailsView.top
         anchors.left: repoNodeDetailsView.left
         anchors.right: repoNodeDetailsView.right
@@ -50,37 +51,27 @@ Item {
                 fillMode: Image.Pad
                 horizontalAlignment: Image.AlignHCenter
                 verticalAlignment: Image.AlignVCenter
-                source: "image://materialicons/arrowBack/#FF757575"
+                source: "image://materialicons/arrowBack/#fff" //
                 sourceSize.width: 32
                 sourceSize.height: 32
             }
         }
 
-        ToolButton {
-            id: deletePersonButton
+        Label {
+            id: userLabel
+            color: "white"
+            text: "tester" // repoModel.data(nodePersonListView.currentIndex, "user")
+            font.pointSize: 12
             anchors.verticalCenter: parent.verticalCenter
-            anchors.right: personEmailButton.left
-            anchors.rightMargin: -24
-            implicitWidth: 84
-            implicitHeight: 84
-            onClicked:{
-                //Qt.openUrlExternally("mailto:" + repoModel.data(nodePersonListView.currentIndex, "email"))
-            }
-            contentItem: Image {
-                fillMode: Image.Pad
-                horizontalAlignment: Image.AlignHCenter
-                verticalAlignment: Image.AlignVCenter
-                source: "image://materialicons/delete/#FF757575"
-                sourceSize.width: 32
-                sourceSize.height: 32
-            }
+            anchors.left: personBackButton.right
+            anchors.leftMargin: 0
         }
 
         ToolButton {
             id: personEmailButton
             anchors.verticalCenter: parent.verticalCenter
-            anchors.right: parent.right
-            anchors.rightMargin: 0
+            anchors.right: personSaveButton.left
+            anchors.rightMargin: -24
             implicitWidth: 84
             implicitHeight: 84
             onClicked:{
@@ -90,20 +81,52 @@ Item {
                 fillMode: Image.Pad
                 horizontalAlignment: Image.AlignHCenter
                 verticalAlignment: Image.AlignVCenter
-                source: "image://materialicons/email/#FF757575"
+                source: "image://materialicons/email/#fff"
                 sourceSize.width: 32
                 sourceSize.height: 32
             }
         }
 
-        Rectangle {
-            implicitHeight: 1
-            color: "#ddd"
-            anchors.top: parent.bottom
-            anchors.left: parent.left
+        ToolButton {
+            id: personSaveButton
+            anchors.verticalCenter: parent.verticalCenter
             anchors.right: parent.right
+            anchors.rightMargin: 0
+            implicitWidth: 84
+            implicitHeight: 84
+            onClicked:{
+
+            }
+            contentItem: Image {
+                fillMode: Image.Pad
+                horizontalAlignment: Image.AlignHCenter
+                verticalAlignment: Image.AlignVCenter
+                source: "image://materialicons/save/#fff"
+                sourceSize.width: 32
+                sourceSize.height: 32
+            }
         }
+
+//        Rectangle {
+//            implicitHeight: 1
+//            color: Material.color(Material.Grey, Material.Shade300)
+//            anchors.top: parent.bottom
+//            anchors.left: parent.left
+//            anchors.right: parent.right
+//        }
     }
+
+    DropShadow {
+            z: 2
+            anchors.fill: topBar
+            horizontalOffset: 0
+            verticalOffset: 5
+            cached: true
+//            radius: 8.0
+            samples: 16
+            color: Material.color(Material.Grey, Material.Shade500)
+            source: topBar
+        }
 
     ListView {
         id: nodePersonListView
@@ -117,7 +140,6 @@ Item {
         snapMode: ListView.SnapToItem
         highlightFollowsCurrentItem: true
         delegate: RepoNodePersonDelegate {}
-
         keyNavigationWraps: true
 
 
@@ -125,8 +147,10 @@ Item {
 //            console.log(currentItem)
 //        }
 
-//        onCurrentIndexChanged: {
-//            console.log(currentItem)
+//        onCurrentItemChanged:
+//        {
+//            console.log(currentIndex)
+//            userLabel.text = repoModel.data(currentIndex, "user")
 //        }
     }
 

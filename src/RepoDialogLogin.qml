@@ -30,7 +30,7 @@ Dialog {
     x: Math.round((window.width - width) / 2)
     y: Math.round((window.height - height) / 2) - 80
     width: 400
-    height: 550
+    //    height: 550
     modal: true
     focus: true
 
@@ -65,23 +65,22 @@ Dialog {
             Layout.fillWidth: true
         }
 
-        TextField {
-            id: host
-            placeholderText: qsTr("Host")
-            Layout.fillWidth: true
+        ColumnLayout {
+            spacing: 0
+            Label { text: qsTr("Host"); color: host.focus ? Material.accent : Material.color(Material.Grey); }
+            TextField { id: host; placeholderText: qsTr("Host:port"); Layout.fillWidth: true }
         }
 
-        TextField {
-            id: username
-            placeholderText: qsTr("Username")
-            Layout.fillWidth: true
+        ColumnLayout {
+            spacing: 0
+            Label { text: qsTr("Username"); color: username.focus ? Material.accent : Material.color(Material.Grey); }
+            TextField { id: username; placeholderText: qsTr("Username"); Layout.fillWidth: true; }
         }
 
-        TextField {
-            id: password
-            placeholderText: qsTr("Password")
-            echoMode: TextInput.Password
-            Layout.fillWidth: true
+        ColumnLayout {
+            spacing: 0
+            Label { text: qsTr("Password"); color: password.focus ? Material.accent : Material.color(Material.Grey) }
+            TextField { id: password; placeholderText: qsTr("Password"); echoMode: TextInput.Password; Layout.fillWidth: true}
         }
 
         Label {

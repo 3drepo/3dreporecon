@@ -32,9 +32,7 @@ QPixmap RepoMaterialIconsImageProvider::requestPixmap(
     QString icon = iconInstructions[0];
     QColor color("white");
     if (iconInstructions.length() == 2)
-    {
         color = QColor(iconInstructions[1]);
-    }
 
     int width = requestedSize.width() > 0 ? requestedSize.width() : 32;
     int height = requestedSize.height() > 0 ? requestedSize.height() : 32;
@@ -69,6 +67,8 @@ QPixmap RepoMaterialIconsImageProvider::requestPixmap(
         pixmap = RepoMaterialIcons::getDeleteIcon(color).pixmap(width, height);
     else if (icon == "calendar")
         pixmap = RepoMaterialIcons::getCalendarIcon(color).pixmap(width, height);
+    else if (icon == "save")
+        pixmap = RepoMaterialIcons::getSaveIcon(color).pixmap(width, height);
 
     *size = QSize(width, height);
     return pixmap;

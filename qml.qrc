@@ -18,5 +18,6 @@
 	<file>src/RepoInputCalendar.qml</file>
 	<file>src/RepoInputDataSize.qml</file>
 	<file>src/RepoInputCollaborators.qml</file>
+	<file>src/RepoUserDetails.qml</file>
     </qresource>
 </RCC>

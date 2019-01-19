@@ -113,7 +113,7 @@ QList<RepoNode> RepoModel::nodes() const
     QList<RepoNode> nodes;
     for (int i = 0; i < model->rowCount(); ++i)
     {
-        RepoModelItem *item = (RepoModelItem *) (model->item(i));
+        RepoModelItem *item = static_cast<RepoModelItem*>(model->item(i));
         if (item)
             nodes.append(*(item->getNode()));
     }
@@ -125,7 +125,7 @@ QList<QVariant> RepoModel::toList() const
     QList<QVariant> nodes;
     for (int i = 0; i < model->rowCount(); ++i)
     {
-        RepoModelItem *item = (RepoModelItem *) (model->item(i));
+        RepoModelItem *item = static_cast<RepoModelItem*>(model->item(i));
         if (item)
             nodes.append(*(item->getNode()));
     }
@@ -195,7 +195,7 @@ bool RepoModel::setData(RepoModelItem *item, const QVariant &value, int role)
 
 bool RepoModel::setData(const QModelIndex &proxyIndex, const QVariant &value, int role)
 {
-    return setData((RepoModelItem*) model->itemFromIndex(mapToSource(proxyIndex)), value, role);
+    return setData(static_cast<RepoModelItem*>(model->itemFromIndex(mapToSource(proxyIndex))), value, role);
 }
 
 bool RepoModel::setData(int row, const QVariant &value, const QVariant &roleName)
@@ -222,7 +222,7 @@ int RepoModel::role(const QVariant &roleName) const
 bool RepoModel::filterAcceptsRow(int sourceRow, const QModelIndex &) const
 {
     bool accept = false;
-    RepoModelItem *item = (RepoModelItem*) model->item(sourceRow);
+    RepoModelItem *item = static_cast<RepoModelItem*>(model->item(sourceRow));
     if (item != nullptr)
     {
         QString comparator = filterCaseSensitivity() == Qt::CaseInsensitive
@@ -248,7 +248,7 @@ void RepoModel::filter(const QString &filter)
 
 RepoModelItem* RepoModel::item(int proxyRow, const QModelIndex &proxyParentIndex) const
 {
-    return (RepoModelItem*) model->itemFromIndex(mapToSource(index(proxyRow, 0, proxyParentIndex)));
+    return static_cast<RepoModelItem*>(model->itemFromIndex(mapToSource(index(proxyRow, 0, proxyParentIndex))));
 }
 
 RepoModelItem* RepoModel::item(const QUuid &id) const
