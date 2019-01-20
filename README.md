@@ -10,7 +10,10 @@ Graphical Customer Relationship Management Software
 - [Mongo C++ Driver 3.4.0](https://github.com/mongodb/mongo-cxx-driver/releases): http://mongocxx.org/mongocxx-v3/installation/
    
    Requires [Boost 1.6.0](https://www.boost.org/users/history/version_1_60_0.html) (see Windows pre-built binaries: https://sourceforge.net/projects/boost/files/boost-binaries/ )
-   CMake config example: https://user-images.githubusercontent.com/3008807/50425589-33cede00-0872-11e9-94b9-1d9df99a8621.png
+   CMake config example: https://user-images.githubusercontent.com/3008807/51441368-8b713580-1cc8-11e9-980d-c9a87c0021e9.png
+   
+   
+   
    
    
    
